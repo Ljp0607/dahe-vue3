@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
-
     {
       path: '/',
       name: 'index',
@@ -42,12 +41,27 @@ const router = createRouter({
 
     },
     //movie
-    // {
-    //   path: '/movie',
-    //   name: 'movie',
-    //   component: () => import('../views/movie/index.vue'),
-    //   children: []
-    // }
+    {
+      path: '/movie',
+      name: 'movie',
+      component: () => import('../views/movie/index.vue'),
+      children: [
+        {
+          path: '/movie',
+          name: 'index',
+          component: () => import('../views/movie/index.vue')
+        },
+        //达人 
+        {
+          path: '/movie/invite',
+          name: 'invite',
+          component: () => import('../views/movie/invite.vue')
+        }
+      ],
+      meta: {
+        title: '功能授权'
+      }
+    }
   ]
 })
 
