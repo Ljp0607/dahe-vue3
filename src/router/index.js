@@ -2,32 +2,52 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
-    //产品
 
     {
       path: '/',
-      name: 'HomeProduct',
-      component: () => import('../views/HomeRouter/HomeProduct.vue')
+      name: 'index',
+      component: () => import('../views/index.vue'),
     },
-    //媒体
+    //enter
     {
-      path: '/HomeMedia',
-      name: 'HomeMedia',
-      component: () => import('../views/HomeRouter/HomeMedia.vue')
-    },
-    //政务
+      path: '/enter',
+      name: 'enter',
+      component: () => import('../views/enter/index.vue'),
+      children: [
+        //产品
+        {
+          path: '/enter',
+          name: 'HomeProduct',
+          component: () => import('../views/enter/HomeProduct.vue')
+        },
+        //媒体
+        {
+          path: '/enter/HomeMedia',
+          name: 'HomeMedia',
+          component: () => import('../views/enter/HomeMedia.vue')
+        },
+        //政务
+        {
+          path: '/enter/HomeGover',
+          name: 'HomeGover',
+          component: () => import('../views/enter/HomeGover.vue')
+        },
+        //达人 
+        {
+          path: '/enter/HomeExpert',
+          name: 'HomeExpert',
+          component: () => import('../views/enter/HomeExpert.vue')
+        }
+      ]
 
-    {
-      path: '/HomeGover',
-      name: 'HomeGover',
-      component: () => import('../views/HomeRouter/HomeGover.vue')
     },
-    //达人 
-    {
-      path: '/HomeExpert',
-      name: 'HomeExpert',
-      component: () => import('../views/HomeRouter/HomeExpert.vue')
-    }
+    //movie
+    // {
+    //   path: '/movie',
+    //   name: 'movie',
+    //   component: () => import('../views/movie/index.vue'),
+    //   children: []
+    // }
   ]
 })
 

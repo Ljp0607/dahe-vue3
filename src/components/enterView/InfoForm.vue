@@ -12,7 +12,7 @@
     </div>
 
     <div class="message">{{ title }}</div>
-    <img class="image" src="../assets/05.png" alt="" />
+    <img class="image" src="../../assets/05.png" alt="" />
     <div class="introduce">
       您提供的信息仅供大河报·豫视频审核参考及开设账号，相关信息将严格保密。
     </div>
@@ -59,7 +59,7 @@
         v-show="!fieldValue"
         @click="show = true"
         class="county_img"
-        src="../assets/08.png"
+        src="../../assets/08.png"
         alt=""
       />
     </div>
@@ -78,7 +78,7 @@
 </template>
 <script setup>
 import { reactive, watch, getCurrentInstance, onMounted, ref } from "vue";
-import { useCounterStore } from "../stores/counter";
+import { useCounterStore } from "../../stores/counter";
 import { Toast, Dialog } from "vant";
 import "vant/es/toast/style";
 import "vant/es/dialog/style";

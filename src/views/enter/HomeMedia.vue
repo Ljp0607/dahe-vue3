@@ -1,13 +1,13 @@
-<!-- 达人 -->
+<!-- 媒体 -->
 <template>
   <div class="content">
-    <InfoForm :message="data.message" authType="4" title="达人号入驻信息" />
+    <InfoForm :message="data.message" authType="1" title="媒体号入驻信息" />
   </div>
 </template>
 
 <script setup>
 import { reactive, onMounted } from "vue";
-import InfoForm from "../../components/InfoForm.vue";
+import InfoForm from "../../components/enterView/InfoForm.vue";
 components: {
   InfoForm;
 }
@@ -15,32 +15,44 @@ const data = reactive({
   message: [
     {
       type: "input",
-      name: "真实姓名",
+      name: "媒体名称",
       value: "",
       // placeholder: "请输入企业名称",
       fileList: [],
     },
     {
       type: "input",
-      name: "身份证号",
+      name: "开设账号名称",
       value: "",
       // placeholder: "请输入品牌名称",
       fileList: [],
     },
     {
       type: "input",
-      name: "联系手机",
+      name: "联系人",
       value: "",
       // placeholder: "请输入品牌名称",
       fileList: [],
     },
+    {
+      type: "input",
+      name: "联系方式",
+      value: "",
+      // placeholder: "请输入品牌名称",
+      fileList: [],
+    },
+    {
+      type: "upload",
+      name: "相关资质文件",
+      value: "",
+      placeholder: "",
+      fileList: [],
+    },
   ],
-  user: 1,
 });
 
 onMounted(() => {});
 </script>
-
 <style lang="less" scoped>
 .content {
   display: flex;

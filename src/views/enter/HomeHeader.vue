@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="image">
-      <img class="bg1" src="../assets/01.png" alt="" />
-      <img class="bg2" src="../assets/02.png" alt="" />
+      <img class="bg1" src="../../assets/01.png" alt="" />
+      <img class="bg2" src="../../assets/02.png" alt="" />
     </div>
     <div class="advocacy">我为河南代言</div>
     <div class="company">大河报·豫视频</div>
@@ -11,15 +11,7 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import bg01 from "../assets/01.png";
-import bg02 from "../assets/02.png";
-const data = reactive({
-  bg01: bg01,
-  bg02: bg02,
-});
 </script>
-
 <style lang="less" scoped>
 .image {
   padding-top: 102px;
@@ -64,7 +56,7 @@ const data = reactive({
   height: 147px;
   line-height: 147px;
   text-align: center;
-  background-image: url("../assets/03.png");
+  background-image: url("@/assets/03.png");
   background-size: 100%;
 }
 </style>

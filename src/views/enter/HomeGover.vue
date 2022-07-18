@@ -7,7 +7,7 @@
 
 <script setup>
 import { reactive, onMounted } from "vue";
-import InfoForm from "../../components/InfoForm.vue";
+import InfoForm from "../../components/enterView/InfoForm.vue";
 components: {
   InfoForm;
 }

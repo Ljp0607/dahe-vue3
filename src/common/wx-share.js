@@ -1,6 +1,5 @@
-import jWeixin from "weixin-js-sdk";
+ import jWeixin from "weixin-js-sdk";
 function wxShareInit(shareData) {
-  /*  console.log(shareData); */
   if (!shareData) return;
   let debug = false;
   let wx = jWeixin;
