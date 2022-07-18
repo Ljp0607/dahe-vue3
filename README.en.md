@@ -1,7 +1,7 @@
-# dahe-vue3
+# dahe-enter
 
 #### Description
-大河vue3项目集
+大河报豫视频 产品号入驻页
 
 #### Software Architecture
 Software architecture description
