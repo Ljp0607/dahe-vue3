@@ -2,7 +2,7 @@
   <!-- 盒子模型 -->
   <div class="content">
     <!-- 标题 -->
-    <div class="title">邀请好友免费观影</div>
+    <div class="title" @click="lll">邀请好友免费观影</div>
     <!-- 规则 -->
     <div class="introduce">
       规则：中用类似于文件夹的符号表示的模型元素的组合。系统中的每只能为一个包所有套在另一个包中。
@@ -86,6 +86,7 @@
 
 <script setup>
 import { reactive } from "@vue/reactivity";
+import loginApi from "/apis/getUser";
 const pattern =
   /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/;
 
@@ -97,6 +98,11 @@ const Info = reactive({
   name: "",
   phone: "",
 });
+
+function lll() {
+  console.log(123);
+  loginApi("lll", "?userId=eeeee");
+}
 
 function onSubmit(res) {
   console.log(res);

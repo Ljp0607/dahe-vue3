@@ -1,11 +1,13 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import HomeView from '../views/index.vue'
+
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'index',
-      component: () => import('../views/index.vue'),
+      name: 'home',
+      component: HomeView
     },
     //enter
     {
@@ -38,7 +40,6 @@ const router = createRouter({
           component: () => import('../views/enter/HomeExpert.vue')
         }
       ]
-
     },
     //movie
     {
@@ -60,6 +61,15 @@ const router = createRouter({
       ],
       meta: {
         title: '功能授权'
+      }
+    },
+    //office
+    {
+      path: '/office',
+      name: 'office',
+      component: () => import('../views/office/index.vue'),
+      meta: {
+        title: '办事处'
       }
     }
   ]
