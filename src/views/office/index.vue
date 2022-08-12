@@ -12,12 +12,34 @@
         <div class="introduce">{{ image.carouselName }}</div>
       </van-swipe-item>
     </van-swipe>
+    <!-- 查看更多办事处 -->
     <!-- 中间banner -->
     <div class="main">
-      <div class="main_item" v-for="(item, index) in data.area" :key="index">
-        <div class="main_title">{{ item.areaName }}</div>
+      <div
+        class="main_item"
+        v-for="(item, index) in data.litterArea"
+        :key="index"
+      >
+        <div class="main_title" @click="item.show = !item.show">
+          <img
+            v-show="item.show"
+            class="img1"
+            src="../../assets/08.png"
+            alt=""
+          />
+          <img
+            v-show="!item.show"
+            class="img2"
+            src="../../assets/09.png"
+            alt=""
+          />
+          <div class="main_areaName">
+            {{ item.areaName }}
+          </div>
+        </div>
+
         <!-- 社区下属的办事处 -->
-        <div class="parent_office">
+        <div class="parent_office" v-show="item.show">
           <div
             class="office"
             v-for="(office, number) in item.areaList"
@@ -30,6 +52,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="moreOffice" @click="moreClick" v-show="data.moreOfficeShow">
+        点击查看更多办事处
       </div>
     </div>
     <!-- 下方新闻 -->
@@ -68,11 +93,20 @@ import { onMounted } from "@vue/runtime-core";
 const loading = ref(false);
 const finished = ref(false);
 const data = reactive({
+  moreOfficeShow: true,
+  litterArea: [],
   page_index: 0,
   list: [],
   images: [],
   area: [],
 });
+
+//点击查看更多
+function moreClick() {
+  data.litterArea = data.area;
+  data.moreOfficeShow = false;
+}
+
 //点击图片跳转相应链接
 function navigetImage(index) {
   window.open(data.images[index].action, "_self");
@@ -80,13 +114,12 @@ function navigetImage(index) {
 //点击跳转中间社区
 function navigetItem(e) {
   window.open(
-    `https://news.dahebao.cn/index.html?communityId=${e.action_type}`,
-    "_self"
+    `https://news.dahebao.cn/index.html?communityId=${e.community_id}`
   );
 }
 //点击新闻跳转相应链接
 function navigetNews(index) {
-  window.open(data.list[index].newsUrl, "_self");
+  window.open(data.list[index].newsUrl);
 }
 
 //获取新闻
@@ -115,16 +148,21 @@ function getNews() {
 function getData() {
   homepagedata()
     .then((res) => {
+      data.litterArea.push(
+        res.data.area[0],
+        res.data.area[1],
+        res.data.area[2]
+      );
       data.area = res.data.area;
       data.images = res.data.carousel;
       for (let i of data.area) {
+        i.show = false;
         for (let j of i.areaList) {
           if (j.community_name.indexOf("办事处") != -1) {
             j.community_name = j.community_name.replace("办事处", "");
           }
         }
       }
-      console.log(data.area);
     })
     .catch((err) => {
       console.log(err);
@@ -147,6 +185,7 @@ onMounted(() => {
 </script>
 <style lang="less" scoped>
 .content {
+  background: white;
   width: 100vw;
   min-height: 100vh;
   .swipe {
@@ -166,19 +205,32 @@ onMounted(() => {
     }
   }
   .main {
+    background: white;
+
     .main_item {
       .main_title {
-        margin: 20px;
-        font-size: 35px;
-        font-weight: 600;
+        margin: 40px 20px;
+
+        img {
+          width: 25px;
+          height: 25px;
+        }
+        .main_areaName {
+          margin-left: 30px;
+          display: inline-block;
+          font-size: 30px;
+          font-weight: 400;
+        }
       }
       .parent_office {
         display: flex;
+        flex-wrap: wrap;
         justify-content: flex-start;
         .office {
           background: #f5f5f5;
           border-radius: 10px;
-          margin-left: 37px;
+          margin-left: 30px;
+          margin-bottom: 30px;
           width: 150px;
           height: 150px;
           text-align: center;
@@ -192,6 +244,12 @@ onMounted(() => {
           }
         }
       }
+    }
+    .moreOffice {
+      margin-left: 220px;
+      color: red;
+      font-weight: 500;
+      font-size: 30px;
     }
   }
   .foot {
@@ -210,8 +268,7 @@ onMounted(() => {
         vertical-align: top;
         font-size: 30px;
         font-weight: 500;
-        width: 60vw;
-        height: 160px;
+        width: 460px;
         display: inline-block;
         .news_title {
           overflow: hidden;
@@ -232,7 +289,7 @@ onMounted(() => {
         }
       }
       .news_img {
-        margin-left: 5vw;
+        margin-left: 20px;
         display: inline-block;
         height: 160px;
         width: 200px;

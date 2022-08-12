@@ -1,15 +1,17 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/index.vue'
-
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
+    //首页
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('@/views/office/index.vue'),
+      meta: {
+        title: '办事处'
+      }
     },
-    //enter
+    //enter 产品入驻页
     {
       path: '/enter',
       name: 'enter',
@@ -41,29 +43,7 @@ const router = createRouter({
         }
       ]
     },
-    //movie
-    {
-      path: '/movie',
-      name: 'movie',
-      component: () => import('../views/movie/index.vue'),
-      children: [
-        {
-          path: '/movie',
-          name: 'index',
-          component: () => import('../views/movie/index.vue')
-        },
-        //达人 
-        {
-          path: '/movie/invite',
-          name: 'invite',
-          component: () => import('../views/movie/invite.vue')
-        }
-      ],
-      meta: {
-        title: '功能授权'
-      }
-    },
-    //office
+    // office 豫视频办事处
     {
       path: '/office',
       name: 'office',
@@ -71,7 +51,36 @@ const router = createRouter({
       meta: {
         title: '办事处'
       }
+    },
+    // interest 兴趣小组召集令
+    {
+      path: '/interest',
+      name: 'index',
+      component: () => import('@/views/interest/index.vue'),
+      meta: {
+        title: '豫视频兴趣小组组长招募'
+      }
+    },
+    // 达人 
+    {
+      path: '/Info',
+      name: 'Info',
+      component: () => import('@/views/interest/Info.vue'),
+      meta: {
+        title: '豫视频兴趣小组组长招募'
+      }
     }
+    ,
+    // 抽奖 
+    {
+      path: '/Lottery',
+      name: 'Lottery',
+      component: () => import('@/views/Lottery/index.vue'),
+      meta: {
+        title: '抽奖'
+      }
+    }
+
   ]
 })
 

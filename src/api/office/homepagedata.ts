@@ -1,5 +1,5 @@
-import request from "../request";
-import { API } from "../servicePort";
+import request from "../index/request";
+import { API } from "../index/servicePort";
 /**
  * @name 获取用户邀请记录
  */
