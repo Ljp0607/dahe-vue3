@@ -18,6 +18,7 @@
         >
           <div class="sector-inner">
             <span>{{ props.activity[index].awardName }}</span>
+            <img :src="props.activity[index].awardImage" alt="" />
           </div>
         </div>
       </div>
@@ -239,15 +240,7 @@ watch(
   left: 50%;
   top: -2px;
   transform-origin: left center;
-  // .name {
-  //   box-sizing: 1000;
-  //   position: absolute;
-  //   top: 20px;
-  //   left: 20px;
-  //   width: 90px;
-  //   height: 90px;
-  //   background: red;
-  // }
+ 
 }
 .sector:nth-child(1) {
   transform: rotate(-30deg);
@@ -290,6 +283,16 @@ watch(
   // margin-left: 38px;
   // margin: 0 auto;
   color: #d46854;
+}
+.sector-inner img {
+  width: 100px;
+  margin-left: 30px;
+  margin-bottom:5px ;
+  display: block;
+  position: fixed;
+  bottom: 0;
+  transform-origin: center top;
+  transform: rotate(150deg);
 }
 .pointer {
   position: absolute;

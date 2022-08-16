@@ -1,9 +1,16 @@
 <template>
   <!-- 盒子模型 -->
-  <div class="content">
+  <!--    :style="{ background: `url(${data.activity.background})` }" -->
+  <div
+    class="content"
+    :style="{ background: `url(${data.activity.background})` }"
+    style="background-size: 100% 100%; background-repeat: no-repeat"
+  >
+    <!-- <img :src="data.activity.background" alt="" class="background" /> -->
     <header>
       <!-- :src="data.activity.activityName" -->
       <img class="tip" :src="data.activity.activityName" alt="" />
+
       <div class="activityRule">{{ data.activity.activityRule }}</div>
     </header>
     <!-- 标题文字 -->
@@ -323,17 +330,30 @@ onMounted(() => {
   findDraw();
   //中奖人员名单
   drawRecordList();
+  console.log(data);
 });
-</script>
+</script>xw
 
 <style lang="less" scoped>
 .content {
   width: 100vw;
   min-height: 100vh;
-  background: #e4e4e4;
+  // background: #e4e4e4;
   padding-top: 100px;
   text-align: center;
   position: relative;
+  background-image: url("https://imgcdn.dahebao.cn/20220815/20220815163648962128.png");
+  // background-size: 100% 100%;
+  // background-repeat: no-repeat;
+  // .background {
+  //   width: 100vw;
+  //   min-height: 100vh;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   z-index: -1;
+  // }
+
   header {
     position: relative;
     img {
@@ -347,11 +367,13 @@ onMounted(() => {
       left: 80px;
       text-indent: 2rem;
       text-overflow: -o-ellipsis-lastline;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      overflow-y: scroll;
+      height: 160px;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+      // display: -webkit-box;
+      // -webkit-line-clamp: 2;
+      // -webkit-box-orient: vertical;
     }
   }
   .title {
