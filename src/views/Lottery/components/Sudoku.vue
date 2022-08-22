@@ -141,7 +141,7 @@ function getLottery(delay, index, sum, id) {
       // 如果转到最后一圈且转完了，把抽奖状态改为已经转完了
       if (index == sum && i == order_arr.length - 1) {
         Dialog.alert({
-          message: "恭喜获得" + props.activity[order_arr[i]].awardName,
+          message: props.activity[order_arr[i]].awardName,
         }).then(() => {
           props.changeShow();
         });

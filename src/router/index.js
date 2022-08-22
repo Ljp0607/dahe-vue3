@@ -79,6 +79,15 @@ const router = createRouter({
       meta: {
         title: '抽奖'
       }
+    },
+    //电影
+    {
+      path: '/movie',
+      name: 'movie',
+      component: () => import('@/views/movie/index.vue'),
+      meta: {
+        title: '电影票'
+      }
     }
 
   ]

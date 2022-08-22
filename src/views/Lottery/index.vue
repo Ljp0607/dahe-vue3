@@ -1,25 +1,37 @@
 <template>
   <!-- 盒子模型 -->
-  <!--    :style="{ background: `url(${data.activity.background})` }" -->
   <div
     class="content"
     :style="{ background: `url(${data.activity.background})` }"
     style="background-size: 100% 100%; background-repeat: no-repeat"
   >
-    <!-- <img :src="data.activity.background" alt="" class="background" /> -->
     <header>
-      <!-- :src="data.activity.activityName" -->
       <img class="tip" :src="data.activity.activityName" alt="" />
 
-      <div class="activityRule">{{ data.activity.activityRule }}</div>
+      <div
+        class="activityRule"
+        :style="{ color: data.titleColor ? data.titleColor : '' }"
+      >
+        {{ data.activity.activityRule }}
+      </div>
     </header>
     <!-- 标题文字 -->
     <div
       class="title"
       v-if="data.activity.drawType == 1 || data.activity.drawType == 2"
     >
-      <div class="text">抽奖次数</div>
-      <div class="time">{{ data.time }}次</div>
+      <div
+        class="text"
+        :style="{ color: data.timeColor ? data.timeColor : '' }"
+      >
+        抽奖次数
+      </div>
+      <div
+        class="time"
+        :style="{ color: data.numberColor ? data.numberColor : '' }"
+      >
+        {{ data.time }}次
+      </div>
     </div>
 
     <div class="title" v-else>
@@ -146,7 +158,6 @@ const address = ref("");
 const realName = ref("");
 const phone = ref("");
 const recordNo = ref("");
-
 //姓名正则
 const pattern =
   /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/;
@@ -180,7 +191,6 @@ function saveAddress() {
       // console.log(err);
     });
 }
-
 //调起遮罩层
 function changeShow() {
   if (data.activity.poolList[data.sum].awardFlag) {
@@ -297,6 +307,18 @@ function findDraw() {
         Toast("未登录，无法抽奖");
       }
     })
+    .then(() => {
+      if (data.activity.activityRule.indexOf("#") != -1) {
+        data.titleColor = "#" + data.activity.activityRule.split("#")[1];
+        data.timeColor = "#" + data.activity.activityRule.split("#")[2];
+        data.numberColor = "#" + data.activity.activityRule.split("#")[3];
+        data.activity.activityRule = data.activity.activityRule.split("#")[0];
+      }
+      data.activity.activityRule = data.activity.activityRule.replace(
+        /↵/g,
+        "/n"
+      );
+    })
     .catch((err) => {
       // console.log(err);
       Toast("获取抽奖配置失败，请刷新重试");
@@ -330,9 +352,8 @@ onMounted(() => {
   findDraw();
   //中奖人员名单
   drawRecordList();
-  console.log(data);
 });
-</script>xw
+</script>
 
 <style lang="less" scoped>
 .content {
@@ -343,17 +364,6 @@ onMounted(() => {
   text-align: center;
   position: relative;
   background-image: url("https://imgcdn.dahebao.cn/20220815/20220815163648962128.png");
-  // background-size: 100% 100%;
-  // background-repeat: no-repeat;
-  // .background {
-  //   width: 100vw;
-  //   min-height: 100vh;
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   z-index: -1;
-  // }
-
   header {
     position: relative;
     img {
@@ -362,18 +372,16 @@ onMounted(() => {
     }
     .activityRule {
       width: 580px;
+      white-space: pre-wrap;
       position: absolute;
-      top: 220px;
+      top: 200px;
       left: 80px;
-      text-indent: 2rem;
       text-overflow: -o-ellipsis-lastline;
       overflow-y: scroll;
       height: 160px;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
-      // display: -webkit-box;
-      // -webkit-line-clamp: 2;
-      // -webkit-box-orient: vertical;
+      line-height: 40px;
+      color: white;
+      text-align: left;
     }
   }
   .title {

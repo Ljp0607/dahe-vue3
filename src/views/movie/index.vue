@@ -5,7 +5,7 @@
     <div class="title" @click="lll">邀请好友免费观影</div>
     <!-- 规则 -->
     <div class="introduce">
-      规则：中用类似于文件夹的符号表示的模型元素的组合。系统中的每只能为一个包所有套在另一个包中。
+      {{ data.datas }}
     </div>
     <!-- 主图 -->
     <div class="main_picker">
@@ -86,6 +86,7 @@
 
 <script setup>
 import { reactive } from "@vue/reactivity";
+import { Toast } from "vant";
 import loginApi from "../../api/movie/getUser";
 const pattern =
   /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/;
@@ -93,17 +94,34 @@ const pattern =
 const data = reactive({
   show: false,
   showFriend: false,
+  datas: "我是定位组件",
 });
 const Info = reactive({
   name: "",
   phone: "",
 });
+const geolocation = new qq.maps.Geolocation(
+  "TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU",
+  "myapp"
+);
+const options = { timeout: 8000 };
 
 function lll() {
+  Toast("开始定位了");
+  geolocation.getLocation(showPosition, showErr, options);
   console.log(123);
-  loginApi("lll", "?userId=eeeee");
 }
+function showPosition(position) {
+  Toast("定位完成了");
 
+  console.log(position);
+  data.datas = position;
+}
+function showErr() {
+  Toast("定位失败了");
+  console.log("定位失败");
+  data.datas = "定位失败";
+}
 function onSubmit(res) {
   console.log(res);
   console.log(Info);

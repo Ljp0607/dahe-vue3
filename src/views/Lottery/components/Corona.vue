@@ -18,7 +18,7 @@
         >
           <div class="sector-inner">
             <span>{{ props.activity[index].awardName }}</span>
-            <img :src="props.activity[index].awardImage" alt="" />
+            <img :src="props.activity[index].awardImage" />
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@ function rotateAngle(i) {
   data.rotate_angle = `rotate(${data.rotateAngle}deg)`;
   setTimeout(function () {
     Dialog.alert({
-      message: "恭喜获得" + props.activity[i - 1].awardName,
+      message: props.activity[i - 1].awardName,
     }).then(() => {
       props.changeShow();
       // refresh();
@@ -224,11 +224,11 @@ watch(
 }
 .panel {
   position: relative;
-  height: 440px;
-  width: 440px;
-  border-radius: 220px;
-  border: #3375ca 8px solid;
-  background: #aaa;
+  height: 464px;
+  width: 464px;
+  border-radius: 232px;
+  // border: #3375ca 8px solid;
+  background: #3375ca;
 }
 
 .sector {
@@ -238,9 +238,8 @@ watch(
   border-radius: 0px 224px 224px 0;
   overflow: hidden;
   left: 50%;
-  top: -2px;
+  top: 8px;
   transform-origin: left center;
- 
 }
 .sector:nth-child(1) {
   transform: rotate(-30deg);
@@ -274,23 +273,27 @@ watch(
   box-sizing: border-box;
 }
 .sector-inner span {
-  width: 200px;
+  font-size: 28px;
   display: block;
+  width: 190px;
   position: fixed;
-  bottom: 0;
+  white-space: nowrap;
+  // text-overflow: ellipsis;
+  overflow: hidden;
+  // word-break: break-all;
+  bottom: 0px;
+  left: 10px;
   transform-origin: center top;
   transform: rotate(150deg);
-  // margin-left: 38px;
-  // margin: 0 auto;
   color: #d46854;
 }
 .sector-inner img {
-  width: 100px;
-  margin-left: 30px;
-  margin-bottom:5px ;
+  height: 90px;
+  width: 90px;
   display: block;
   position: fixed;
-  bottom: 0;
+  bottom: -16px;
+  left: 42px;
   transform-origin: center top;
   transform: rotate(150deg);
 }
