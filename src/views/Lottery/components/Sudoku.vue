@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- 抽奖区域 -->
-    <!-- #FFFFE0 -->
     <main>
       <div class="decorate_top">
         <div class="tip"></div>
@@ -80,17 +78,16 @@
   </div>
 </template>
 <script setup>
-import { onMounted, reactive, watch } from "vue";
+import { reactive, watch } from "vue";
 import "vant/es/dialog/style";
 import { Dialog } from "vant";
-
 const props = defineProps({
   start: Boolean,
-  activity: Array,
-  result: Number,
+  activity: Array, //抽奖配置
+  result: Number, //抽中的结果
   clickLottery: Function,
-  changeIsTurnOver: Function,
-  changeShow: Function,
+  changeIsTurnOver: Function, //抽奖的状态
+  changeShow: Function, //调领奖
 });
 //抽奖链接
 const data = reactive({
@@ -150,6 +147,7 @@ function getLottery(delay, index, sum, id) {
     }, delay * i);
   }
 }
+
 //点击抽奖
 function click() {
   props.clickLottery();
@@ -160,7 +158,6 @@ watch(
     startLottery(props.result);
   }
 );
-onMounted(() => {});
 </script>
 
 <style lang="less" scoped>
@@ -255,12 +252,12 @@ main {
   }
 
   img {
-    margin-top: 20px;
+    margin-top: 24px;
     width: 50px;
     height: 50px;
   }
   .giftName {
-    margin: 0 8px;
+    margin: 12px 8px;
     font-size: 25px;
     // text-overflow: ellipsis;
     white-space: nowrap;

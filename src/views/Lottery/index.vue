@@ -2,15 +2,24 @@
   <!-- 盒子模型 -->
   <div
     class="content"
-    :style="{ background: `url(${data.activity.background})` }"
+    :style="{
+      background: data.activity.background
+        ? `url(${data.activity.background})`
+        : '',
+    }"
     style="background-size: 100% 100%; background-repeat: no-repeat"
   >
     <header>
-      <img class="tip" :src="data.activity.activityName" alt="" />
-
+      <img class="header_title" :src="data.activity.activityName" />
+      <img class="header_rule" :src="data.activity.activityRuleImage" />
+      <!-- 活动规则颜色 -->
       <div
         class="activityRule"
-        :style="{ color: data.titleColor ? data.titleColor : '' }"
+        :style="{
+          color: data.activity.activityRuleStyle
+            ? data.activity.activityRuleStyle
+            : '#727272',
+        }"
       >
         {{ data.activity.activityRule }}
       </div>
@@ -20,15 +29,32 @@
       class="title"
       v-if="data.activity.drawType == 1 || data.activity.drawType == 2"
     >
+      <!-- 时间颜色 -->
+      <div
+        :style="{
+          color: data.activity.dateStyle ? data.activity.dateStyle : '#727272',
+        }"
+      >
+        时间：{{ data.activity.createTime }}-{{ data.activity.endDate }}
+      </div>
+      <!-- 抽奖次数颜色 -->
       <div
         class="text"
-        :style="{ color: data.timeColor ? data.timeColor : '' }"
+        :style="{
+          color: data.activity.drawCountFontStyle
+            ? data.activity.drawCountFontStyle
+            : '#414141',
+        }"
       >
         抽奖次数
       </div>
       <div
         class="time"
-        :style="{ color: data.numberColor ? data.numberColor : '' }"
+        :style="{
+          color: data.activity.drawCountStyle
+            ? data.activity.drawCountStyle
+            : '#EB2800',
+        }"
       >
         {{ data.time }}次
       </div>
@@ -107,17 +133,29 @@
     <!-- 下部电影票 -->
     <footer>
       <div>
-        <img class="tip" src="@/assets/movie/bg3.png" />
+        <img class="tip" :src="data.activity.drawRecordImage" />
       </div>
       <div class="groud">
-        <van-cell-group>
+        <div class="cell" v-for="(item, index) in data.recordList" :key="index">
+          <div>{{ item.realName }}</div>
+          <div>{{ item.awardName }}</div>
+          <div>{{ item.phone }}</div>
+        </div>
+        <!-- <van-cell-group>
           <van-cell
             v-for="item in data.recordList"
             :key="item"
             :title="item.realName"
-            :value="item.phone"
-          />
-        </van-cell-group>
+            :value="item.awardName"
+          >
+            <text class="" selectable="false" space="false" decode="false">
+              wef
+            </text>
+            <text class="" selectable="false" space="false" decode="false">
+              cfijfoi
+            </text>
+          </van-cell>
+        </van-cell-group> -->
       </div>
     </footer>
   </div>
@@ -181,14 +219,11 @@ function saveAddress() {
     )
     .then((res) => {
       Toast("保存成功");
-
       changeShow();
-      // console.log(res);
     })
     .catch((err) => {
       Toast(err);
       changeShow();
-      // console.log(err);
     });
 }
 //调起遮罩层
@@ -199,7 +234,6 @@ function changeShow() {
 }
 //抽奖
 function clickLottery() {
-  // console.log(data.activityNo);
   if (data.time > 0) {
     if (data.isTurnOver) {
       data.isTurnOver = false;
@@ -236,7 +270,6 @@ function clickLottery() {
           } else {
             Toast("出错了");
           }
-          console.log(data.sum);
         })
         .catch(() => {
           if (data.activity.drawType == 2) {
@@ -308,19 +341,12 @@ function findDraw() {
       }
     })
     .then(() => {
-      if (data.activity.activityRule.indexOf("#") != -1) {
-        data.titleColor = "#" + data.activity.activityRule.split("#")[1];
-        data.timeColor = "#" + data.activity.activityRule.split("#")[2];
-        data.numberColor = "#" + data.activity.activityRule.split("#")[3];
-        data.activity.activityRule = data.activity.activityRule.split("#")[0];
-      }
-      data.activity.activityRule = data.activity.activityRule.replace(
-        /↵/g,
-        "/n"
-      );
+      data.activity.createTime = data.activity.createTime.substring(0, 10);
+      data.activity.endDate = data.activity.endDate.substring(0, 10);
+      data.activity.createTime = data.activity.createTime.replace(/-/g, "/");
+      data.activity.endDate = data.activity.endDate.replace(/-/g, "/");
     })
     .catch((err) => {
-      // console.log(err);
       Toast("获取抽奖配置失败，请刷新重试");
     });
 }
@@ -359,29 +385,48 @@ onMounted(() => {
 .content {
   width: 100vw;
   min-height: 100vh;
-  // background: #e4e4e4;
+  background: #e4e4e4;
   padding-top: 100px;
   text-align: center;
   position: relative;
-  background-image: url("https://imgcdn.dahebao.cn/20220815/20220815163648962128.png");
+
   header {
+    min-height: 370px;
+    margin: 0 auto;
+    width: 650px;
     position: relative;
-    img {
-      width: 652px;
-      height: 362px;
+    .header_title {
+      width: 650px;
+      height: 100px;
+    }
+    .header_rule {
+      position: absolute;
+      top: 100px;
+      left: 0;
+      width: 173px;
+      height: 67px;
+      margin-top: 29px;
+      z-index: 1;
     }
     .activityRule {
-      width: 580px;
+      width: 638px;
+      height: 193px;
       white-space: pre-wrap;
       position: absolute;
-      top: 200px;
-      left: 80px;
+      top: 160px;
+      left: 6px;
       text-overflow: -o-ellipsis-lastline;
       overflow-y: scroll;
-      height: 160px;
-      line-height: 40px;
-      color: white;
+      line-height: 45px;
+      font-size: 28px;
+      font-weight: 400;
+      color: #6f6f6f;
+      // color: white;
       text-align: left;
+      background-color: #efefef;
+      opacity: 0.8;
+      box-sizing: border-box;
+      padding: 50px 19px;
     }
   }
   .title {
@@ -423,22 +468,34 @@ onMounted(() => {
   footer {
     margin: 0 auto;
     margin-top: 42px;
-    width: 702px;
-    height: 436px;
-    background-image: url("@/assets/movie/bg5.png");
-    background-size: 702px 436px;
-    background-repeat: no-repeat;
+    width: 662px;
+    height: 266px;
+    position: relative;
     text-align: left;
+    background-color: #ffffff;
     .tip {
-      margin: 20px 12px;
-      width: 205px;
+      z-index: 1;
+      position: absolute;
+      top: -40px;
+      left: -20px;
+      width: 169px;
       height: 67px;
     }
     .groud {
-      width: 70vw;
-      margin: 0 auto;
-      height: 200px;
+      width: 662px;
+      height: 266px;
+      padding: 27px 35px;
+      box-sizing: border-box;
       overflow-y: scroll;
+      .cell {
+        display: flex;
+        justify-content: space-around;
+        padding: 22px 0;
+        border-bottom: 1px dashed #efefef;
+        font-size: 26px;
+        font-weight: 400;
+        color: #6f6f6f;
+      }
     }
   }
 }

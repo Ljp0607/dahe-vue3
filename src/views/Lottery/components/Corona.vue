@@ -1,9 +1,7 @@
 <template>
   <!-- 抽奖区域 -->
-  <!-- #FFFFE0 -->
   <main>
     <div class="wrapper">
-      <div class="light" v-for="(item, index) in data.item" :key="index"></div>
       <div
         class="panel"
         :style="{
@@ -22,7 +20,10 @@
           </div>
         </div>
       </div>
-      <div class="pointer" @click="clickCoronak">开始抽奖</div>
+      <div class="pointer" @click="clickCoronak">
+        <!-- <img src="../../../assets/Lottery/02.png" @click="clickCoronak" /> -->
+        <div class="start">立即抽奖</div>
+      </div>
     </div>
   </main>
 </template>
@@ -126,101 +127,15 @@ watch(
 <style lang="less" scoped>
 .wrapper {
   position: relative;
-  height: 508px;
-  width: 508px;
-  background-color: #619ded;
-  box-shadow: 0 0 15px 10px #84d2f9;
-  border-radius: 50%;
+  height: 585px;
+  width: 585px;
+  background-image: url("../../../assets/Lottery/01.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  .light {
-    background: black;
-    position: absolute;
-    height: 10px;
-    width: 10px;
-    box-sizing: 100;
-    border-radius: 50%;
-    top: 10px;
-    left: 248px;
-    transform-origin: center 247px;
-  }
-  .light:nth-child(2) {
-    transform: rotate(15deg);
-  }
-  .light:nth-child(3) {
-    transform: rotate(30deg);
-  }
-  .light:nth-child(4) {
-    transform: rotate(45deg);
-  }
-  .light:nth-child(5) {
-    transform: rotate(60deg);
-  }
-  .light:nth-child(6) {
-    transform: rotate(75deg);
-  }
-  .light:nth-child(7) {
-    transform: rotate(90deg);
-  }
-  .light:nth-child(8) {
-    transform: rotate(105deg);
-  }
-  .light:nth-child(9) {
-    transform: rotate(120deg);
-  }
-  .light:nth-child(10) {
-    transform: rotate(135deg);
-  }
-  .light:nth-child(11) {
-    transform: rotate(150deg);
-  }
-  .light:nth-child(12) {
-    transform: rotate(165deg);
-  }
-  .light:nth-child(13) {
-    transform: rotate(180deg);
-  }
-  .light:nth-child(14) {
-    transform: rotate(195deg);
-  }
-  .light:nth-child(15) {
-    transform: rotate(210deg);
-  }
-  .light:nth-child(16) {
-    transform: rotate(225deg);
-  }
-  .light:nth-child(17) {
-    transform: rotate(240deg);
-  }
-  .light:nth-child(18) {
-    transform: rotate(255deg);
-  }
-  .light:nth-child(19) {
-    transform: rotate(270deg);
-  }
-  .light:nth-child(20) {
-    transform: rotate(285deg);
-  }
-  .light:nth-child(21) {
-    transform: rotate(300deg);
-  }
-  .light:nth-child(22) {
-    transform: rotate(315deg);
-  }
-  .light:nth-child(23) {
-    transform: rotate(330deg);
-  }
-  .light:nth-child(24) {
-    transform: rotate(345deg);
-  }
-  .light:nth-child(2n) {
-    background-color: #fbfffe;
-  }
-  .light:nth-child(2n + 1) {
-    background-color: #ffdf2a;
-  }
 }
 .panel {
   position: relative;
@@ -275,56 +190,42 @@ watch(
 .sector-inner span {
   font-size: 28px;
   display: block;
-  width: 190px;
+  width: 168px;
   position: fixed;
   white-space: nowrap;
   // text-overflow: ellipsis;
   overflow: hidden;
   // word-break: break-all;
-  bottom: 0px;
-  left: 10px;
+  bottom: 5px;
+  left: 18px;
   transform-origin: center top;
   transform: rotate(150deg);
   color: #d46854;
 }
 .sector-inner img {
-  height: 90px;
-  width: 90px;
+  height: 42px;
+  width: 42px;
   display: block;
   position: fixed;
-  bottom: -16px;
-  left: 42px;
+  bottom: 46px;
+  left: 55px;
   transform-origin: center top;
   transform: rotate(150deg);
 }
 .pointer {
+  width: 186px;
+  height: 222px;
+  background-image: url("../../../assets/Lottery/02.png");
+  background-size: 100% 100%;
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  height: 80px;
-  width: 80px;
-  color: #5997ec;
-  padding: 20px;
-  line-height: 40px;
-  text-align: center;
-  background-image: radial-gradient(#fee171, #fbc65a, #fcfeef);
-  border-radius: 50%;
-  border: 6px solid #5e97e8;
-  // transition: transform 3s cubic-bezier(0.2, 0.93, 0.43, 1);
-  // opacity: 0.4;
-  transition: 0.3s;
-}
-.pointer::after {
-  content: "";
-  position: absolute;
-  top: -104px;
-  left: 42px;
-  border-width: 50px 18px;
-  border-style: solid;
-  border-color: transparent;
-  border-bottom-color: #5e97e8;
-  // transform-origin: 20px center;
-  // transform: rotate(20deg);
+  .start {
+    margin: 0 auto;
+    margin-top: 80px;
+    width: 69px;
+    font-size: 34px;
+    font-family: Source Han Sans CN;
+    font-weight: bold;
+    color: #5997ec;
+  }
 }
 </style>
