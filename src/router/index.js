@@ -11,6 +11,15 @@ const router = createRouter({
         title: '办事处'
       }
     },
+    //测试
+    {
+      path: '/ceshi',
+      name: 'ceshi',
+      component: () => import('../views/ceshi/index.vue'),
+      meta: {
+        title: '测试'
+      }
+    },
     //enter 产品入驻页
     {
       path: '/enter',

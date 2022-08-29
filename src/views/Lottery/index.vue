@@ -141,21 +141,6 @@
           <div>{{ item.awardName }}</div>
           <div>{{ item.phone }}</div>
         </div>
-        <!-- <van-cell-group>
-          <van-cell
-            v-for="item in data.recordList"
-            :key="item"
-            :title="item.realName"
-            :value="item.awardName"
-          >
-            <text class="" selectable="false" space="false" decode="false">
-              wef
-            </text>
-            <text class="" selectable="false" space="false" decode="false">
-              cfijfoi
-            </text>
-          </van-cell>
-        </van-cell-group> -->
       </div>
     </footer>
   </div>
@@ -164,7 +149,7 @@
 <script setup>
 import { reactive, ref } from "@vue/reactivity";
 import "vant/es/dialog/style";
-import { Toast, Dialog, Cell, CellGroup } from "vant";
+import { Toast, Dialog } from "vant";
 import "vant/es/toast/style";
 import { onMounted } from "@vue/runtime-core";
 import { useCounterStore } from "../../stores/counter";
