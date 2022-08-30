@@ -136,7 +136,12 @@
         <img class="tip" :src="data.activity.drawRecordImage" />
       </div>
       <div class="groud">
-        <div class="cell" v-for="(item, index) in data.recordList" :key="index">
+        <div
+          class="cell"
+          v-for="(item, index) in data.recordList"
+          :key="index"
+          v-show="item.realName && item.awardName && item.phone"
+        >
           <div>{{ item.realName }}</div>
           <div>{{ item.awardName }}</div>
           <div>{{ item.phone }}</div>
@@ -371,7 +376,7 @@ onMounted(() => {
   width: 100vw;
   min-height: 100vh;
   background: #e4e4e4;
-  padding-top: 100px;
+  padding: 100px 0;
   text-align: center;
   position: relative;
 
@@ -483,5 +488,6 @@ onMounted(() => {
       }
     }
   }
+  
 }
 </style>

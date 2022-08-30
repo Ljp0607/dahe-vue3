@@ -1,1 +1,0 @@
-import{c as t,d as c,f as a,k as n}from"./index.c3c64a23.js";const r={__name:"index",setup(i){function o(){n.get("http://weibo.com/ajax/log/action?type=pic&uicode=20000391&fid=232152&act_code=4288&ext=&luicode=&t=1661767515919").then(e=>{console.log(e)}),console.log(233)}return(e,l)=>(t(),c("div",null,[a("button",{onClick:o},"\u70B9\u51FB\u83B7\u53D6")]))}};export{r as default};

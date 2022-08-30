@@ -219,11 +219,11 @@ watch(
   background-size: 100% 100%;
   position: absolute;
   .start {
+    display: inline-block;
     margin: 0 auto;
     margin-top: 80px;
-    width: 69px;
-    font-size: 34px;
-    font-family: Source Han Sans CN;
+    width: 75px;
+    font-size: 30px;
     font-weight: bold;
     color: #5997ec;
   }
