@@ -16,7 +16,10 @@
         >
           <div class="sector-inner">
             <span>{{ props.activity[index].awardName }}</span>
-            <img :src="props.activity[index].awardImage" />
+            <img
+              v-show="props.activity[index].awardImage"
+              :src="props.activity[index].awardImage"
+            />
           </div>
         </div>
       </div>

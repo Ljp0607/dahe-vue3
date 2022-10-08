@@ -8,19 +8,18 @@ import { onMounted } from "@vue/runtime-core";
 import { useCounterStore } from "./stores/counter";
 const store = useCounterStore();
 
-//获取userId
+// 获取userId
 function getUserId() {
   if (window.location.href.indexOf("userId") == -1) {
     store.$state.userId = "empty";
   } else if (window.location.href.indexOf("&") == -1) {
     store.$state.userId = window.location.href.match(/userId=(\S*)/)[1];
   } else {
-    const url = window.location.href.match(/userId=(\S*)/)[1];
-    if (url.indexOf("&") != -1) {
-      store.$state.userId = window.location.href.match(/userId=(\S*)&/)[1];
-    } else {
-      store.$state.userId = window.location.href.match(/userId=(\S*)/)[1];
+    let url = window.location.href.match(/userId=(\S*)/)[1];
+    while (url.indexOf("&") != -1) {
+      url = url.match(/(\S*)&/)[1];
     }
+    store.$state.userId = url;
   }
 }
 onMounted(() => {

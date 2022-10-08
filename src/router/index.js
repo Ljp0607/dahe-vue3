@@ -95,7 +95,14 @@ const router = createRouter({
       name: 'movie',
       component: () => import('@/views/movie/index.vue'),
       meta: {
-        title: '电影票'
+        title: '领取奖品'
+      }
+    }, {
+      path: '/invite',
+      name: 'invite',
+      component: () => import('@/views/movie/invite.vue'),
+      meta: {
+        title: '邀请好友'
       }
     }
 

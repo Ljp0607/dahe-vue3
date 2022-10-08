@@ -2,23 +2,25 @@
   <!-- 盒子模型 -->
   <div class="content">
     <!-- 标题 -->
-    <div class="title" @click="lll">邀请好友免费观影</div>
+    <div class="title">邀请好友免费观影</div>
     <!-- 规则 -->
     <div class="introduce">
-      {{ data.datas }}
+      规则：
+      中用类似于文件夹的符号表示的模型元素的组合。系统中的每只能为一个包所有套在另一个包中。
+      <!-- {{ data.datas }} -->
     </div>
     <!-- 主图 -->
     <div class="main_picker">
       <img src="@/assets/movie/bg1.png" alt="" />
     </div>
     <!-- 邀请跳转 -->
-    <div class="record">
+    <div class="record" @click="data.show = true">
       <img src="@/assets/movie/bg2.png" alt="" />
     </div>
     <!-- 两个点击按钮 -->
     <div class="submit">
-      <button class="get" @click="data.show = true">点击领取</button>
-      <button @click="data.showFriend = true" class="invite">邀请好友</button>
+      <button class="get" @click="data.showFriend = true">点击领取</button>
+      <button class="invite" @click="naviget">邀请好友</button>
     </div>
     <!-- 下部电影票 -->
     <div class="foot">
@@ -87,40 +89,23 @@
 <script setup>
 import { reactive } from "@vue/reactivity";
 import { Toast } from "vant";
-import loginApi from "../../api/movie/getUser";
+import { useRouter } from "vue-router";
+//解构赋值为router
+const router = useRouter();
 const pattern =
   /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$/;
 
 const data = reactive({
   show: false,
   showFriend: false,
-  datas: "我是定位组件",
 });
 const Info = reactive({
   name: "",
   phone: "",
 });
-const geolocation = new qq.maps.Geolocation(
-  "TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU",
-  "myapp"
-);
-const options = { timeout: 8000 };
-
-function lll() {
-  Toast("开始定位了");
-  geolocation.getLocation(showPosition, showErr, options);
-  console.log(123);
-}
-function showPosition(position) {
-  Toast("定位完成了");
-
-  console.log(position);
-  data.datas = position;
-}
-function showErr() {
-  Toast("定位失败了");
-  console.log("定位失败");
-  data.datas = "定位失败";
+function naviget() {
+  // console.log(router.);
+  router.push("invite");
 }
 function onSubmit(res) {
   console.log(res);

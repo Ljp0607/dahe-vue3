@@ -1,96 +1,123 @@
 <template>
   <!-- 盒子模型 -->
-  <div
-    class="content"
-    :style="{
+  <!--  :style="{
       background: data.activity.background
         ? `url(${data.activity.background})`
         : '',
-    }"
-    style="background-size: 100% 100%; background-repeat: no-repeat"
-  >
+    }" -->
+  <div class="content">
     <header>
-      <img class="header_title" :src="data.activity.activityName" />
-      <img class="header_rule" :src="data.activity.activityRuleImage" />
+      <div
+        class="header_title"
+        :style="{
+          background: data.activity.activityName
+            ? `url(${data.activity.activityName})`
+            : '',
+        }"
+        style="background-size: 100% 100%; background-repeat: no-repeat"
+      ></div>
+      <!-- <img class="header_rule" :src="data.activity.activityRuleImage" /> -->
       <!-- 活动规则颜色 -->
       <div
         class="activityRule"
         :style="{
-          color: data.activity.activityRuleStyle
-            ? data.activity.activityRuleStyle
-            : '#727272',
+          background: data.activity.activityRuleImage
+            ? `url(${data.activity.activityRuleImage})`
+            : '',
         }"
+        style="background-size: 100% 100%; background-repeat: no-repeat"
       >
-        {{ data.activity.activityRule }}
+        <div
+          class="activityRule"
+          :style="{
+            color: data.activity.activityRuleStyle
+              ? data.activity.activityRuleStyle
+              : '#727272',
+          }"
+        >
+          {{ data.activity.activityRule }}
+        </div>
       </div>
     </header>
-    <!-- 标题文字 -->
+
     <div
-      class="title"
-      v-if="data.activity.drawType == 1 || data.activity.drawType == 2"
+      class="main"
+      :style="{
+        background: data.activity.background
+          ? `url(${data.activity.background})`
+          : '',
+      }"
+      style="background-size: 100% 100%; background-repeat: no-repeat"
     >
-      <!-- 时间颜色 -->
+      <!-- 标题文字 -->
       <div
-        :style="{
-          color: data.activity.dateStyle ? data.activity.dateStyle : '#727272',
-        }"
+        class="title"
+        v-if="data.activity.drawType == 1 || data.activity.drawType == 2"
       >
-        时间：{{ data.activity.createTime }}-{{ data.activity.endDate }}
+        <!-- 时间颜色 -->
+        <div
+          :style="{
+            color: data.activity.dateStyle
+              ? data.activity.dateStyle
+              : '#727272',
+          }"
+        >
+          时间：{{ data.startDate }}-{{ data.endDate }}
+        </div>
+        <!-- 抽奖次数颜色 -->
+        <div
+          class="text"
+          :style="{
+            color: data.activity.drawCountFontStyle
+              ? data.activity.drawCountFontStyle
+              : '#414141',
+          }"
+        >
+          抽奖次数
+        </div>
+        <div
+          class="time"
+          :style="{
+            color: data.activity.drawCountStyle
+              ? data.activity.drawCountStyle
+              : '#EB2800',
+          }"
+        >
+          {{ data.time }}次
+        </div>
       </div>
-      <!-- 抽奖次数颜色 -->
-      <div
-        class="text"
-        :style="{
-          color: data.activity.drawCountFontStyle
-            ? data.activity.drawCountFontStyle
-            : '#414141',
-        }"
-      >
-        抽奖次数
-      </div>
-      <div
-        class="time"
-        :style="{
-          color: data.activity.drawCountStyle
-            ? data.activity.drawCountStyle
-            : '#EB2800',
-        }"
-      >
-        {{ data.time }}次
-      </div>
-    </div>
 
-    <div class="title" v-else>
-      <div class="text">暂无抽奖</div>
-    </div>
-
-    <!-- 抽奖区域 -->
-    <!-- 九宫格抽奖 -->
-    <div v-if="data.activity.drawType == 2">
-      <Sudoku
-        :activity="data.activity.poolList"
-        :result="data.result"
-        :clickLottery="clickLottery"
-        :changeIsTurnOver="changeIsTurnOver"
-        :start="data.start"
-        :changeShow="changeShow"
-      />
-    </div>
-    <!-- 轮盘抽奖 -->
-    <div v-else-if="data.activity.drawType == 1">
-      <Corona
-        :activity="data.activity.poolList"
-        :result="data.result"
-        :clickLottery="clickLottery"
-        :changeIsTurnOver="changeIsTurnOver"
-        :start="data.start"
-        :changeShow="changeShow"
-      />
-    </div>
-    <!--    无抽奖 -->
-    <div class="empty_img" v-else>
-      <img src="../../assets/movie/bg1.png" alt="" />
-      <!-- <Sudoku /> -->
+      <div class="title" v-else>
+        <div class="text">暂无抽奖</div>
+      </div>
+      <!-- 抽奖区域 -->
+      <!-- 九宫格抽奖 -->
+      <div v-if="data.activity.drawType == 2">
+        <Sudoku
+          :activity="data.activity.poolList"
+          :result="data.result"
+          :clickLottery="clickLottery"
+          :changeIsTurnOver="changeIsTurnOver"
+          :start="data.start"
+          :changeShow="changeShow"
+        />
+      </div>
+      <!-- 轮盘抽奖 -->
+      <div v-else-if="data.activity.drawType == 1">
+        <Corona
+          :activity="data.activity.poolList"
+          :result="data.result"
+          :clickLottery="clickLottery"
+          :changeIsTurnOver="changeIsTurnOver"
+          :start="data.start"
+          :changeShow="changeShow"
+        />
+      </div>
+      <!--    无抽奖 -->
+      <div class="empty_img" v-else>
+        <img src="../../assets/movie/bg1.png" alt="" />
+        <!-- <Sudoku /> -->
+      </div>
     </div>
     <!-- 遮罩层领奖 -->
     <van-overlay :show="show">
@@ -131,10 +158,14 @@
     </van-overlay>
 
     <!-- 下部电影票 -->
-    <footer>
-      <div>
-        <img class="tip" :src="data.activity.drawRecordImage" />
-      </div>
+    <footer
+      :style="{
+        background: data.activity.drawRecordImage
+          ? `url(${data.activity.drawRecordImage})`
+          : '',
+      }"
+      style="background-size: 100% 100%; background-repeat: no-repeat"
+    >
       <div class="groud">
         <div
           class="cell"
@@ -167,6 +198,8 @@ components: {
 const store = useCounterStore();
 //抽奖链接
 const data = reactive({
+  startDate: "",
+  endDate: "",
   sum: "",
   start: true,
   result: 0,
@@ -189,7 +222,6 @@ const recordNo = ref("");
 //姓名正则
 const pattern =
   /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/;
-
 //正则校验表达
 function onSubmit() {
   saveAddress();
@@ -295,8 +327,14 @@ function findCount() {
 function getActivityNo() {
   if (window.location.href.indexOf("activityNo") == -1) {
     Toast("请添加活动编码");
+  } else if (window.location.href.indexOf("&") == -1) {
+    data.activityNo = window.location.href.match(/activityNo=(\S*)/)[1];
   } else {
-    data.activityNo = window.location.href.match(/activityNo=(\S*)&/)[1];
+    let url = window.location.href.match(/activityNo=(\S*)&/)[1];
+    while (url.indexOf("&") != -1) {
+      url = url.match(/(\S*)&/)[1];
+    }
+    data.activityNo = url;
   }
 }
 //获取活动编码和配置
@@ -307,6 +345,7 @@ function findDraw() {
       activityNo: data.activityNo,
     })
     .then((res) => {
+      console.log(res);
       if (store.userId != "empty") {
         if (
           res.drawActivityConfig.drawType == 2 &&
@@ -331,12 +370,15 @@ function findDraw() {
       }
     })
     .then(() => {
-      data.activity.createTime = data.activity.createTime.substring(0, 10);
-      data.activity.endDate = data.activity.endDate.substring(0, 10);
-      data.activity.createTime = data.activity.createTime.replace(/-/g, "/");
-      data.activity.endDate = data.activity.endDate.replace(/-/g, "/");
+      if (data.activity.poolList.length > 0) {
+        data.startDate = data.activity.startDate.substring(0, 10);
+        data.endDate = data.activity.endDate.substring(0, 10);
+        data.startDate = data.startDate.replace(/-/g, "/");
+        data.endDate = data.endDate.replace(/-/g, "/");
+      }
     })
     .catch((err) => {
+      console.log(err, "err");
       Toast("获取抽奖配置失败，请刷新重试");
     });
 }
@@ -346,6 +388,7 @@ function drawRecordList() {
     .drawRecordList({
       userId: store.userId,
       activityNo: data.activityNo,
+      awardFlag: "1",
       page_index: 0,
       page_count: 50,
     })
@@ -374,64 +417,58 @@ onMounted(() => {
 <style lang="less" scoped>
 .content {
   width: 100vw;
-  min-height: 100vh;
+  min-height: 100%;
   background: #e4e4e4;
-  padding: 100px 0;
   text-align: center;
   position: relative;
 
   header {
-    min-height: 370px;
-    margin: 0 auto;
-    width: 650px;
+    min-height: 458px;
+    width: 750px;
     position: relative;
     .header_title {
-      width: 650px;
-      height: 100px;
-    }
-    .header_rule {
-      position: absolute;
-      top: 100px;
-      left: 0;
-      width: 173px;
-      height: 67px;
-      margin-top: 29px;
-      z-index: 1;
+      width: 750px;
+      height: 209px;
     }
     .activityRule {
-      width: 638px;
-      height: 193px;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      width: 750px;
+      height: 250px;
       white-space: pre-wrap;
-      position: absolute;
-      top: 160px;
-      left: 6px;
       text-overflow: -o-ellipsis-lastline;
       overflow-y: scroll;
-      line-height: 45px;
-      font-size: 28px;
+      line-height: 24px;
+      font-size: 24px;
       font-weight: 400;
       color: #6f6f6f;
-      // color: white;
       text-align: left;
-      background-color: #efefef;
-      opacity: 0.8;
-      box-sizing: border-box;
-      padding: 50px 19px;
+      // box-sizing: border-box;
+      // padding: 106px 75px 50px 75px;
+      .activityRule {
+        width: 604px;
+        height: 92px;
+        line-height: 30px;
+        margin: 106px 71px 51px 75px;
+      }
     }
   }
-  .title {
-    width: 100vw;
-    .text {
-      margin: 30px 0 35px 0;
-      font-size: 36px;
-      font-weight: 400;
-      color: #414141;
-    }
-    .time {
-      font-size: 36px;
-      margin-bottom: 45px;
-      font-weight: 400;
-      color: #eb2800;
+  .main {
+    width: 750px;
+    height: 759px;
+    .title {
+      width: 100vw;
+      .text {
+        margin: 26px 0 22px 0;
+        font-size: 36px;
+        font-weight: 400;
+        color: #414141;
+      }
+      .time {
+        font-size: 36px;
+        font-weight: 400;
+        color: #eb2800;
+      }
     }
   }
 
@@ -456,38 +493,36 @@ onMounted(() => {
   }
 
   footer {
-    margin: 0 auto;
-    margin-top: 42px;
-    width: 662px;
-    height: 266px;
-    position: relative;
+    // margin-top: 42px;
+    width: 750px;
+    height: 330px;
+    // position: relative;
     text-align: left;
-    background-color: #ffffff;
-    .tip {
-      z-index: 1;
-      position: absolute;
-      top: -40px;
-      left: -20px;
-      width: 169px;
-      height: 67px;
-    }
+    // background-color: #ffffff;
+    padding-top: 40px;
+    box-sizing: border-box;
     .groud {
+      margin: 0 auto;
+      margin-bottom: 20px;
+      padding: 20px 35px;
       width: 662px;
       height: 266px;
-      padding: 27px 35px;
+      // padding: 47px 35px;
       box-sizing: border-box;
       overflow-y: scroll;
       .cell {
+        line-height: 75px;
         display: flex;
         justify-content: space-around;
-        padding: 22px 0;
-        border-bottom: 1px dashed #efefef;
+        border-bottom: 1px dashed #bdbdbd;
         font-size: 26px;
         font-weight: 400;
         color: #6f6f6f;
+        div {
+          width: 30%;
+        }
       }
     }
   }
-  
 }
 </style>

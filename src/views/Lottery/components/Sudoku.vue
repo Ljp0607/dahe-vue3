@@ -65,7 +65,10 @@
       >
         <div v-if="props.activity">
           <!-- 奖品图片 -->
-          <img :src="props.activity[index].awardImage" />
+          <img
+            v-show="props.activity[index].awardImage"
+            :src="props.activity[index].awardImage"
+          />
           <!-- 奖品名字 -->
           <div class="giftName">
             {{ props.activity[index].awardName }}
