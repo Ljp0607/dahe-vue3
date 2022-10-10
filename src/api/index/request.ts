@@ -10,7 +10,6 @@ const request =
      * @desc: 描述
      * @author: camellia
      * @email: guanchao_gc@qq.com
-     * @date: 2020-12-21 
      * @param url 请求连接
      * @param params 请求参数
      * @param callback 回调方法
@@ -21,10 +20,10 @@ const request =
                 .get(url, {
                     params: params
                 })
-                .then(res => {
+                .then((res) => {
                     callback ? resolve(callback(res.data)) : resolve(res.data);
                 })
-                .catch(err => {
+                .catch((err) => {
                     reject(err);
                 });
         });

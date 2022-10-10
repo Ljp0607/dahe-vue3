@@ -97,14 +97,24 @@ const router = createRouter({
       meta: {
         title: '领取奖品'
       }
-    }, {
+    },
+    {
       path: '/invite',
       name: 'invite',
       component: () => import('@/views/movie/invite.vue'),
       meta: {
         title: '邀请好友'
       }
-    }
+    },
+    // Congress 代表大会
+    {
+      path: '/Congress',
+      name: 'Congress',
+      component: () => import('@/views/Congress/index.vue'),
+      meta: {
+        title: '喜迎二十大'
+      }
+    },
 
   ]
 })
