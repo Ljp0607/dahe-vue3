@@ -4,9 +4,9 @@ import 'default-passive-events'
 import axios from 'axios'
 import App from './App.vue'
 import router from './router'
+import 'viewerjs/dist/viewer.css'
+import VueViewer from 'v-viewer'
 import { Uploader, Icon, ConfigProvider, Toast, Cascader, Dialog, Overlay, Swipe, SwipeItem, List, Cell, CellGroup } from 'vant';
-
-
 const app = createApp(App)
 app.config.globalProperties.$axios = axios;
 app.use(Cascader);
@@ -23,6 +23,11 @@ app.use(List);
 app.use(SwipeItem);
 app.use(Cell);
 app.use(CellGroup);
+app.use(VueViewer, {
+    defaultOptions: {
+        // 自定义默认配置
+    }
+});
 router.beforeEach((to, from, next) => {
     /* 路由发生变化修改页面title */
     if (to.meta.title) {
@@ -30,6 +35,4 @@ router.beforeEach((to, from, next) => {
     }
     next()
 })
-
-
 app.mount('#app');

@@ -1,9 +1,9 @@
 import jWeixin from "weixin-js-sdk";
+import axios from "axios";
 function wxShareInit(shareData) {
   if (!shareData) return;
   let debug = false;
   let wx = jWeixin;
-  console.log(jWeixin)
   wx.config({
     debug: debug, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
     appId: shareData.appid, // 必填，公众号的唯一标识
@@ -45,11 +45,28 @@ function wxShareInit(shareData) {
       cancel: function () { },
     });
   });
-
   wx.error(function (res) {
     console.error("wx error:", res);
     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
   });
 }
-
-export default wxShareInit;
+function getShare(datas) {
+  axios({
+    method: "post",
+    url: "https://news.dahebao.cn/dahe/appshare/getshareinfo",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    params: {
+      sign: "637586292ebf2c5fabab863734fc6a12",
+      data: datas,
+    },
+  }).then((res) => {
+    let dataShare = res.data
+    // dataShare.img = "https://imgcdn.dahebao.cn/20221114/20221114182701109823.jpeg";
+    // dataShare.title = "大河问暖";
+    // dataShare.description = "在郑州，家里暖气有问题？上豫视频APP找邻妹妹！";
+    wxShareInit(dataShare)
+  });
+}
+export default getShare;

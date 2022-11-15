@@ -43,12 +43,17 @@ function _creatA(param) {
 function cailingaction(data) {
   if (isAndroid) {
     // alert(window.cailingaction)
-    window.cailingaction.claction(data)
+    if (window.android.claction) {
+      window.android.claction(data)
+    } else {
+      window.cailingaction.claction(data)
+
+    }
   }
   if (isiOS) {
-    console.log('isiOS')
+    // console.log('isiOS')
     data = encodeURIComponent(data)
-    console.log(data)
+    // console.log(data)
     window.location.href = '/ios://cailingaction@?' + data
   }
 }
@@ -73,7 +78,7 @@ function newsadaction(action, actiontype, other, id) {
 }
 /**
  * 新闻详情页
- * @param {*} action 1.微信好友,2.微信朋友圈,3.微博,4.新闻 5.订阅号  6.社区 7.查看更多评论 8.订阅号关注交互
+ * @param {*} action 1.微信好友,2.微信朋友圈,3.微博,4.新闻 5.订阅号  6.社区 7.查看更多评论 8.订阅号关注交互 10.专题
  * @param {*} url 默认为空 当为5是是订阅号id,为6时社区的url,
  * @param {*} id
  */
@@ -85,11 +90,20 @@ function newsaction(action, url, id) {
     if (action == 6) {
       window.location.href = `/ios://community@?${url}**${action}**${action}**${action}`
     } else {
-      window.location.href = `/ios://newsaction@${action}**${url}**${id}`
+      window.location.href = `/ios://newsaction@?${action}**${url}**${id}`
     }
   }
 }
 
+// function newsaction(id) {
+//   if (isAndroid) {
+//     window.android.newsaction(id)
+//   }
+//   if (isiOS) {
+//     window.location.href = `/ios://newsaction@?${id}`
+
+//   }
+// }
 /**
  * 唤端
  * @param {string} openUrl 外链地址
@@ -118,7 +132,6 @@ function tryOpenApp(openUrl, shareAction, isNeedUserId = 1, isNeedShare = 1) {
     _creatA(SCHEMA_PATH)
   }
 }
-
 /**
  * 换端
  * 随意唤醒客户端到随便的地方，如果打开过客户端则到打开过的页面 ，如果没有打开过到首页
