@@ -3,6 +3,7 @@ import { reactive, ref, onMounted } from "vue";
 import request from "../../api/heating/index";
 import getShare from "../../common/wx-share";
 import router from "../../router";
+import { creatConversation } from "../../common/appRoute";
 // import { newsaction } from "../../common/appRoute";
 
 const loading = ref(false);
@@ -69,6 +70,11 @@ function navigetNews(e: any) {
   window.location.href = e.linkUrl;
   // newsaction(4, e.linkUrl + `?newsId=${e.newsId}`, e.newsId);
 }
+//跳转身边
+function naviget() {
+  creatConversation("0", "大河问暖", "", "");
+}
+
 onMounted(() => {
   getShare({ type: 22, share_url: window.location.href });
 });
@@ -76,7 +82,9 @@ onMounted(() => {
 <template>
   <div class="content">
     <header>
-      <img src="../../assets/heatingBg.png" />
+      <img
+        src="https://res-1306441264.cos.ap-beijing.myqcloud.com/img/dahewn20221117.jpg"
+      />
     </header>
     <main>
       <button class="open button" @click="data.reply = true"></button>
@@ -138,9 +146,10 @@ onMounted(() => {
                   <div class="news_text">
                     <div class="zhengzhou">大河报郑州新闻</div>
                     <div class="news_title">{{ item.news_title }}</div>
-                    <text class="from"> 来自: </text>
-                    <text class="fromName"
-                      >{{ item.news_editor }}{{ item.news_edit_date }}</text
+                    <span class="from"> 来自: </span>
+                    <span class="fromName"
+                      >{{ item.community_name }}
+                      {{ item.news_edit_date.substring(0, 10) }}</span
                     >
                   </div>
                   <div class="news_img">
@@ -157,6 +166,12 @@ onMounted(() => {
         </div>
       </div>
     </main>
+    <div class="naviget" @click="naviget">
+      <img
+        src="https://imgcdn.dahebao.cn/20221115/20221115160243512004.png"
+        alt=""
+      />
+    </div>
   </div>
 </template>
 <style lang="less" scoped>
@@ -166,10 +181,13 @@ onMounted(() => {
   min-height: 100vh;
   header {
     width: 750px;
-    height: 399px;
+    height: 369px;
+
     img {
-      height: 100%;
-      width: 100%;
+      width: 750px;
+      height: 313px;
+      // height: 100%;
+      // width: 100%;
     }
   }
   main {
@@ -221,6 +239,18 @@ onMounted(() => {
       display: block;
       width: 730px;
       height: 145px;
+    }
+  }
+  .naviget {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    right: 40px;
+    bottom: 100px;
+    z-index: 100;
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
   .foot {

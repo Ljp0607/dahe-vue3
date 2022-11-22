@@ -1,25 +1,24 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     // //首页
     {
       path: '/',
-      name: 'news',
-      component: () => import('@/views/news/index.vue'),
+      name: 'heating',
+      component: () => import('@/views/heating/index.vue'),
       meta: {
-        title: '大河新闻'
+        title: '大河问暖'
       }
     },
-    // //测试
-    // {
-    //   path: '/ceshi',
-    //   name: 'ceshi',
-    //   component: () => import('../views/ceshi/index.vue'),
-    //   meta: {
-    //     title: '测试'
-    //   }
-    // },
+    {
+      //   // 找不到路由重定向到404页面
+      path: "/:pathMatch(.*)",
+      redirect: { name: "heating" }
+    },
+
+    //#region
+
     // //enter 产品入驻页
     // {
     //   path: '/enter',
@@ -44,7 +43,7 @@ const router = createRouter({
     //       name: 'HomeGover',
     //       component: () => import('../views/enter/HomeGover.vue')
     //     },
-    //     //达人 
+    //     //达人
     //     {
     //       path: '/enter/HomeExpert',
     //       name: 'HomeExpert',
@@ -70,7 +69,7 @@ const router = createRouter({
     //     title: '豫视频兴趣小组组长招募'
     //   }
     // },
-    // // 达人 
+    // // 达人
     // {
     //   path: '/Info',
     //   name: 'Info',
@@ -80,7 +79,7 @@ const router = createRouter({
     //   }
     // }
     // ,
-    // // 抽奖 
+    // // 抽奖
     // {
     //   path: '/Lottery',
     //   name: 'Lottery',
@@ -123,19 +122,25 @@ const router = createRouter({
     //     title: '大河新闻'
     //   }
     // },
-    {
-      //   // 找不到路由重定向到404页面
-      path: "/:pathMatch(.*)",
-      redirect: { name: "news" }
-    }
+    //测试
     // {
-    //   path: '/heating',
-    //   name: 'heating',
-    //   component: () => import('@/views/heating/index.vue'),
+    //   path: '/ceshi',
+    //   name: 'ceshi',
+    //   component: () => import('../views/ceshi/index.vue'),
     //   meta: {
-    //     title: '大河问暖'
+    //     title: '测试'
     //   }
     // },
+
+    {
+      path: '/heating',
+      name: 'heating',
+      component: () => import('@/views/heating/index.vue'),
+      meta: {
+        title: '大河问暖'
+      }
+    },
+    //#endregion
   ]
 })
 
