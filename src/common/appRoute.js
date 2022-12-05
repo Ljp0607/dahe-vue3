@@ -249,7 +249,6 @@ function goLogin() {
       window.android.userLogin()
     }
   }
-
   if (isiOS) {
     _creatA('/ios://userLogin@?data=')
   }

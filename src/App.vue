@@ -3,28 +3,45 @@
     <RouterView />
   </header>
 </template>
-<script setup>
-import { onMounted } from "@vue/runtime-core";
+<script setup lang="ts">
 import { useCounterStore } from "./stores/counter";
+import getShare from "@/common/wx-share";
 const store = useCounterStore();
-
 // 获取userId
-function getUserId() {
-  if (window.location.href.indexOf("userId") == -1) {
-    store.$state.userId = "empty";
-  } else if (window.location.href.indexOf("&") == -1) {
-    store.$state.userId = window.location.href.match(/userId=(\S*)/)[1];
+if (location.href.indexOf("userId") != -1) {
+  if (location.href.indexOf("&", location.href.indexOf("userId=") + 7) != -1) {
+    store.changeUserId(
+      location.href.slice(
+        location.href.indexOf("userId=") + 7,
+        location.href.indexOf("&", location.href.indexOf("userId="))
+      )
+    );
   } else {
-    let url = window.location.href.match(/userId=(\S*)/)[1];
-    while (url.indexOf("&") != -1) {
-      url = url.match(/(\S*)&/)[1];
-    }
-    store.$state.userId = url;
+    store.changeUserId(
+      location.href.slice(location.href.indexOf("userId=") + 7, 1000)
+    );
   }
 }
-onMounted(() => {
-  getUserId();
-});
+
+//获取 activity
+if (location.href.indexOf("activityNo=") != -1) {
+  if (
+    location.href.indexOf("&", location.href.indexOf("activityNo=") + 11) != -1
+  ) {
+    store.changeActive(
+      location.href.slice(
+        location.href.indexOf("activityNo") + 11,
+        location.href.indexOf("&", location.href.indexOf("activityNo="))
+      )
+    );
+  } else {
+    store.changeActive(
+      location.href.slice(location.href.indexOf("activityNo") + 11, 1000)
+    );
+  }
+}
+
+getShare({ type: 22, share_url: window.location.href });
 </script>
 
 <style lang="less" scoped>

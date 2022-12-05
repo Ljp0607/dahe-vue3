@@ -75,7 +75,6 @@ const data = reactive({
 function clickCoronak() {
   props.clickLottery();
 }
-//开始抽奖
 //封装抽奖
 function rotateAngle(i) {
   data.rotateAngle = data.rotateAngle - data.time;

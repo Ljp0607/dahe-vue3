@@ -395,7 +395,6 @@ function drawRecordList() {
     .then((res) => {
       data.recordList = res.recordList;
     })
-    .catch((err) => {});
 }
 //更改isTurnOver状态
 function changeIsTurnOver() {

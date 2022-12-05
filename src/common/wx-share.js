@@ -63,9 +63,9 @@ function getShare(datas) {
     },
   }).then((res) => {
     let dataShare = res.data
-    // dataShare.img = "https://imgcdn.dahebao.cn/20221114/20221114182701109823.jpeg";
-    // dataShare.title = "大河问暖";
-    // dataShare.description = "在郑州，家里暖气有问题？上豫视频APP找邻妹妹！";
+    dataShare.img = "https://imgcdn.dahebao.cn/20221201/20221201161822355246.png";
+    dataShare.title = "河南新地标";
+    dataShare.description = "2022河南新地标,给你心里的地方投票!";
     wxShareInit(dataShare)
   });
 }

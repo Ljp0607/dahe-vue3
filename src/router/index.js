@@ -5,18 +5,41 @@ const router = createRouter({
     // //首页
     {
       path: '/',
-      name: 'heating',
-      component: () => import('@/views/heating/index.vue'),
+      name: 'vote',
+      component: () => import('@/views/vote/index.vue'),
       meta: {
         title: '大河问暖'
       }
     },
+    // {
+    //   //   // 找不到路由重定向到404页面
+    //   path: "/:pathMatch(.*)",
+    //   redirect: { name: "vote" }
+    // },
     {
-      //   // 找不到路由重定向到404页面
-      path: "/:pathMatch(.*)",
-      redirect: { name: "heating" }
+      path: '/vote',
+      name: 'vote',
+      component: () => import('@/views/vote/index.vue'),
+      meta: {
+        title: '河南新地标'
+      }
     },
-
+    {
+      path: '/uploading',
+      name: 'uploading',
+      component: () => import('@/views/vote/uploading.vue'),
+      meta: {
+        title: '河南新地标'
+      }
+    },
+    {
+      path: '/detail',
+      name: 'detail',
+      component: () => import('@/views/vote/detail.vue'),
+      meta: {
+        title: '河南新地标'
+      }
+    },
     //#region
 
     // //enter 产品入驻页
@@ -132,14 +155,14 @@ const router = createRouter({
     //   }
     // },
 
-    {
-      path: '/heating',
-      name: 'heating',
-      component: () => import('@/views/heating/index.vue'),
-      meta: {
-        title: '大河问暖'
-      }
-    },
+    // {
+    //   path: '/heating',
+    //   name: 'heating',
+    //   component: () => import('@/views/heating/index.vue'),
+    //   meta: {
+    //     title: '大河问暖'
+    //   }
+    // },
     //#endregion
   ]
 })
