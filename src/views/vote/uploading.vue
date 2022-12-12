@@ -74,7 +74,6 @@ import { Toast } from "vant";
 import { saveCity } from "@/api/vote";
 import { useCounterStore } from "@/stores/counter";
 import TcVod from "vod-js-sdk-v6";
-
 const store = useCounterStore();
 //获取info和图片视频保存地址
 const data: any = reactive({
@@ -105,6 +104,7 @@ interface infoType {
   location_address: string;
   tecent_video_id: string;
   posts_video: string;
+  posts_video_img: string;
   source: string;
   activityNo: string;
   creatorType: string; //地市编码 必传
@@ -116,18 +116,19 @@ const Info = reactive<infoType>({
   posts_title: "", //标题 必传
   posts_img: "", //图片
   posts_video: "", //视频
-  posts_content: "", //详细介绍
+  posts_video_img: "",
+  posts_content: "#2022河南新地标# ", //详细介绍
   user_id: store.$state.userId, //用户
   tecent_video_id: "", //视频id
   source: "0",
   activityNo: store.$state.activityNo, //评选活动编码 必传
-  location_address: "", //打卡位置
-  creatorType: "", //地市编码 必传
-  creator_type: "", //地市编码 必传
+  location_address: store.$state.city.city_name, //打卡位置
+  creatorType: store.$state.city.city_id, //地市编码 必传
+  creator_type: store.$state.city.city_id, //地市编码 必传
 });
 //获取表单数据并提交
 const onFailed = (res: any) => {
-  if (data.max == 9) {
+  if (data.max == 9 && data.file[0].url) {
     let array: any = [];
     data.file.map((item: any) => {
       array.push({
@@ -153,17 +154,19 @@ const afterRead = (file: any) => {
   } else {
     data.max = 1;
     postVideo(file.file);
-    Toast.loading({
-      duration: 0,
-      message: "正在上传",
-      forbidClick: true,
-    });
   }
+  Toast.loading({
+    duration: 0,
+    message: "正在上传",
+    forbidClick: true,
+  });
 };
 //封装图片上传
 function postImg(file: any) {
   let imgFile = new FormData();
   imgFile.append("file", file.file);
+  // http://cms.daheapp.com/dahe/
+  // https://news.dahebao.cn/dahe/
   axios
     .post("https://news.dahebao.cn/dahe/app/announce/uploadImg", imgFile, {
       headers: {
@@ -171,8 +174,15 @@ function postImg(file: any) {
       },
     })
     .then((res) => {
-      file.url = res.data.fileUrl; //赋值
-      file.id = res.data.fileId;
+      if (res.state == 1) {
+        file.url = res.data.fileUrl; //赋值
+        file.id = res.data.fileId;
+        delete Info.posts_video_img;
+        Toast.clear();
+      } else {
+        Toast("上传失败");
+        data.file = [];
+      }
     });
 }
 //获取上传签名
@@ -182,6 +192,7 @@ async function getSignature() {
   );
   return response;
 }
+// delete Info.posts_img;
 //封装视频上传
 function postVideo(file: any) {
   //获取视频签名
@@ -196,10 +207,10 @@ function postVideo(file: any) {
     .then((doneResult: any) => {
       Info.tecent_video_id = doneResult.fileId;
       Info.posts_video = doneResult.video.url;
+      delete Info.posts_img;
+      Info.posts_video_img = "";
       getVideoBase64(doneResult.video.url);
-      setTimeout(() => {
-        Toast.clear();
-      }, 800);
+      Toast.clear();
     })
     .catch(function () {
       Toast("上传失败,请重新上传视频");
@@ -209,7 +220,7 @@ function postVideo(file: any) {
 function saveInfo() {
   saveCity(Info).then((res: any) => {
     if (res.state == 1) {
-      Toast("提交成功");
+      Toast(res.data);
       data.info.map((item: any) => {
         item.value = "";
       });
@@ -218,7 +229,8 @@ function saveInfo() {
       data.accept = "image/*,video/*";
       data.max = 9;
       Info.location_address = "";
-      Info.posts_img = "";
+      Info.posts_img = ""; //图片
+      Info.posts_video_img = ""; //视频
       Info.posts_video = ""; //视频
       Info.tecent_video_id = ""; //视频id
     } else {
@@ -265,12 +277,7 @@ function getVideoBase64(url: string) {
     });
   });
 }
-
-onMounted(() => {
-  Info.location_address = store.$state.city.city;
-  Info.creatorType = store.$state.city.adcode;
-  Info.creator_type = store.$state.city.adcode;
-});
+onMounted(() => {});
 </script>
 <style lang="less" scoped>
 .container {

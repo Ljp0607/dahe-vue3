@@ -7,6 +7,7 @@ import request from "@/api/Lottery/index";
 import { useCounterStore } from "@/stores/counter";
 const props = defineProps({
   RecordList: Function,
+  activityRule: Function,
 });
 //抽奖链接
 const data: any = reactive({
@@ -36,6 +37,7 @@ request
     activityNo: store.$state.activityNo,
   })
   .then((res: any) => {
+    props.activityRule(res.drawActivityConfig.activityRule);
     data.activity = res.drawActivityConfig;
   });
 //存入人员地址
@@ -65,11 +67,7 @@ function findCount() {
       activityNo: store.$state.activityNo,
     })
     .then((res: any) => {
-      if (res.state == 1) {
-        data.number = res.drawCount;
-      } else {
-        Toast("请登录后参与投票抽奖");
-      }
+      if (res.drawCount >= 0) data.number = res.drawCount;
     });
 }
 //抽奖
@@ -249,7 +247,6 @@ findCount();
   box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.5),
     0 6px 20px 0 rgba(255, 255, 255, 0.5);
 }
-
 .sector {
   position: absolute;
   width: 220px;
@@ -287,7 +284,7 @@ findCount();
   box-sizing: border-box;
 }
 .sector-inner span {
-  font-size: 28px;
+  font-size: 24px;
   display: block;
   width: 168px;
   position: fixed;
@@ -301,11 +298,11 @@ findCount();
   overflow: hidden;
 }
 .sector-inner img {
-  height: 60px;
-  width: 60px;
+  height: 80px;
+  width: 80px;
   display: block;
   position: fixed;
-  bottom: 32px;
+  bottom: 2px;
   left: 42px;
   transform-origin: center top;
   transform: rotate(150deg);

@@ -8,8 +8,8 @@ export const useCounterStore = defineStore({
     activityNo: "81ff463cb6374dbf9b37303cb742adc8",
     citys: [],
     city: {
-      adcode: "",
-      city: ""
+      city_id: "",
+      city_name: ""
     },
     detail: {
       postsVideo: '',
@@ -24,7 +24,7 @@ export const useCounterStore = defineStore({
     increment() {
       this.counter++
     },
-    changeCity(e: { adcode: string; city: string; }) {
+    changeCity(e: { city_id: string; city_name: string; }) {
       this.city = e
     },
     changeUserId(e: string) {

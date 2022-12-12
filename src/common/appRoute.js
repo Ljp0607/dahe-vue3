@@ -228,7 +228,6 @@ function goPosts(postId) {
       window.android.postDetails(JSON.stringify(postId))
     }
   }
-
   if (isiOS) {
     _creatA('/ios://postDetails@?data=' + JSON.stringify(postId))
   }
