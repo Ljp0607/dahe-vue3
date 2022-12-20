@@ -1,6 +1,7 @@
 import jWeixin from "weixin-js-sdk";
 import axios from "axios";
 function wxShareInit(shareData) {
+  console.log(shareData);
   if (!shareData) return;
   let debug = false;
   let wx = jWeixin;
@@ -50,7 +51,7 @@ function wxShareInit(shareData) {
     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
   });
 }
-function getShare(datas) {
+function getShare(datas, title, description) {
   axios({
     method: "post",
     url: "https://news.dahebao.cn/dahe/appshare/getshareinfo",
@@ -62,10 +63,10 @@ function getShare(datas) {
       data: datas,
     },
   }).then((res) => {
-    let dataShare = res.data
+    let dataShare = res.data.data
     dataShare.img = "https://imgcdn.dahebao.cn/20221201/20221201161822355246.png";
-    dataShare.title = "河南新地标";
-    dataShare.description = "2022河南新地标,给你心里的地方投票!";
+    dataShare.title = title;
+    dataShare.description = description;
     wxShareInit(dataShare)
   });
 }

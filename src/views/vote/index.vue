@@ -10,6 +10,8 @@ import { Toast } from "vant";
 import { useCounterStore } from "@/stores/counter";
 import { goPosts, goLogin } from "@/common/appRoute";
 import setting from "@/common/setting";
+import getShare from "@/common/wx-share";
+
 const router = useRouter();
 const active = ref(0);
 const data: any = reactive({
@@ -45,19 +47,23 @@ function getCityList() {
               if (res.adcode == item.city_id) {
                 active.value = index;
                 store.changeCity(item);
-                return;
+                // return;
               }
             });
           } else {
             store.changeCity(data.city[0]);
           }
         })
+        .then(() => {
+          selectCitys(false);
+          if (active.value == 0) {
+            store.changeCity(data.city[0]);
+          }
+        })
         .catch(() => {
           store.changeCity(data.city[0]);
+          selectCitys(false);
         });
-    })
-    .then(() => {
-      selectCitys(false);
     });
 }
 //封装获取数据方法
@@ -96,7 +102,6 @@ function RecordList() {
     })
     .then((res: any) => {
       data.recordList = res.recordList;
-      // console.log(res.recordList);
     });
 }
 //获取周中奖人员名单
@@ -111,7 +116,6 @@ function RecordListweek() {
     })
     .then((res: any) => {
       data.recordListWeek = res.recordList;
-      // console.log(data.recordListWeek);
     });
 }
 //下一页新数据
@@ -144,7 +148,8 @@ function navUpload() {
   if (store.$state.userId == "" && setting()) {
     Toast("请在豫视频App上传新地标");
     setTimeout(() => {
-      location.href = "https://news.dahebao.cn/appdownload/index.html?Type=102";
+      location.href =
+        "https://news.dahebao.cn/appdownload/index.html?Type=102&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
     }, 500);
   }
   //如果在其他浏览器,跳转下载页
@@ -161,7 +166,8 @@ function navigetDetail(e: any) {
   if (store.$state.userId == "" && setting()) {
     Toast("请在豫视频App查看详情");
     setTimeout(() => {
-      location.href = "https://news.dahebao.cn/appdownload/index.html?Type=102";
+      location.href =
+        "https://news.dahebao.cn/appdownload/index.html?Type=102&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
     }, 500);
   }
   //如果在其他浏览器,跳转下载页
@@ -180,7 +186,8 @@ function postThum(item: any, index: number) {
   if (store.$state.userId == "" && setting()) {
     Toast("请在豫视频App投票");
     setTimeout(() => {
-      location.href = "https://news.dahebao.cn/appdownload/index.html?Type=102";
+      location.href =
+        "https://news.dahebao.cn/appdownload/index.html?Type=102&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
     }, 500);
   }
   //如果在其他浏览器,跳转下载页
@@ -193,7 +200,6 @@ function postThum(item: any, index: number) {
 }
 //投票接口
 function postst(item: any, index: number) {
-  // console.log(index);
   if (data.item[index].ifThumb == 0) {
     axios({
       method: "get",
@@ -210,7 +216,6 @@ function postst(item: any, index: number) {
       },
     }).then((res) => {
       if (res.state == 1) {
-        // console.log(data.item[index]);
         data.item[index].hotData += 10;
         data.item[index].ifThumb = 1;
         Toast("投票成功");
@@ -234,6 +239,12 @@ let start = setInterval(() => {
     scrollRef.value.scrollTop += 0.5;
   }
 }, 100);
+//二次分享
+getShare(
+  { type: 22, share_url: window.location.href },
+  "河南新地标",
+  "2022河南新地标,给你心里的地方投票!"
+);
 
 onMounted(() => {
   getCityList();
@@ -273,13 +284,14 @@ onUnmounted(() => {
           v-for="(item, index) in data.city"
           :title="item.city_name"
           :key="index"
-          ><div class="tab_content">
+        >
+          <div class="tab_content">
             <div class="item_content">
               <!--遍历数组,生成视频或图片 -->
               <div
                 class="item"
                 v-for="(items, indexs) in data.item"
-                :key="items"
+                :key="indexs"
               >
                 <!-- 如果有视频,展示视频和播放键 -->
                 <div
@@ -696,15 +708,9 @@ onUnmounted(() => {
   font-size: 30px;
   font-weight: 400;
 }
-
 ::v-deep .van-tabs__nav {
   height: 80px;
   //   height: 120px;
   background: linear-gradient(#feefc1, #fcd14a);
 }
 </style>
-<!--
-https://imgcdn.dahebao.cn/20221212/20221212152602139458.png 
-https://imgcdn.dahebao.cn/20221212/20221212152615228304.png
-https://imgcdn.dahebao.cn/20221212/20221212152625255040.png
--->

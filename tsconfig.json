@@ -1,6 +1,12 @@
 { 
   "compilerOptions": {
     "baseUrl": ".",
+    "lib": [
+      "dom",
+      "es2015",
+      "scripthost",
+      "es2015.promise"
+  ],
     "paths": {
       "@/*": ["./src/*"],
       "@com/*": ["./src/components/*"],          

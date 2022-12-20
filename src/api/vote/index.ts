@@ -1,5 +1,6 @@
 import request from "../index/request";
 import { useCounterStore } from "@/stores/counter";
+import { cityType } from "./resType";
 const store = useCounterStore();
 
 //获取城市接口

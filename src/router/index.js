@@ -3,18 +3,26 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     // //首页
+    // {
+    //   path: '/',
+    //   name: 'vote',
+    //   component: () => import('@/views/vote/index.vue'),
+    //   meta: {
+    //     title: '大河问暖'
+    //   }
+    // },
     {
-      path: '/',
-      name: 'vote',
-      component: () => import('@/views/vote/index.vue'),
+      path: '/autoShow',
+      name: 'autoShow',
+      component: () => import('@/views/autoShow/index.vue'),
       meta: {
-        title: '大河问暖'
+        title: '年度汽车'
       }
     },
     // {
     //   //   // 找不到路由重定向到404页面
     //   path: "/:pathMatch(.*)",
-    //   redirect: { name: "vote" }
+    //   redirect: { name: "404" }
     // },
     {
       path: '/vote',
@@ -32,14 +40,14 @@ const router = createRouter({
         title: '河南新地标'
       }
     },
-    {
-      path: '/detail',
-      name: 'detail',
-      component: () => import('@/views/vote/detail.vue'),
-      meta: {
-        title: '河南新地标'
-      }
-    },
+    // {
+    //   path: '/detail',
+    //   name: 'detail',
+    //   component: () => import('@/views/vote/detail.vue'),
+    //   meta: {
+    //     title: '河南新地标'
+    //   }
+    // },
     //#region
 
     // //enter 产品入驻页

@@ -7,7 +7,6 @@ import router from './router'
 import 'viewerjs/dist/viewer.css'
 import VueViewer from 'v-viewer'
 import { useCounterStore } from "./stores/counter";
-import getShare from "@/common/wx-share";
 import { Uploader, Icon, ConfigProvider, Toast, Cascader, Dialog, Overlay, Swipe, SwipeItem, List, Cell, CellGroup } from 'vant';
 const app = createApp(App)
 app.config.globalProperties.$axios = axios;
@@ -71,4 +70,3 @@ if (location.href.indexOf("activityNo=") != -1) {
         );
     }
 }
-getShare({ type: 22, share_url: window.location.href });

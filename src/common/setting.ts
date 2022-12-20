@@ -1,5 +1,3 @@
-
-
 function setting() {
     const ua: any = window.navigator.userAgent.toLowerCase();
     if (ua.match(/MicroMessenger/i) == "micromessenger") {
