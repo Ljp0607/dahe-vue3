@@ -6,24 +6,13 @@ import App from './App.vue'
 import router from './router'
 import 'viewerjs/dist/viewer.css'
 import VueViewer from 'v-viewer'
+import { Toast } from 'vant';
 import { useCounterStore } from "./stores/counter";
-import { Uploader, Icon, ConfigProvider, Toast, Cascader, Dialog, Overlay, Swipe, SwipeItem, List, Cell, CellGroup } from 'vant';
 const app = createApp(App)
+app.use(Toast);
 app.config.globalProperties.$axios = axios;
-app.use(Cascader);
 app.use(createPinia());
 app.use(router);
-app.use(Uploader);
-app.use(Toast);
-app.use(Dialog);
-app.use(ConfigProvider);
-app.use(Overlay);
-app.use(Swipe);
-app.use(Icon);
-app.use(List);
-app.use(SwipeItem);
-app.use(Cell);
-app.use(CellGroup);
 app.use(VueViewer, {
     defaultOptions: {
         // 自定义默认配置

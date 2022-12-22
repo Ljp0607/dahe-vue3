@@ -2,7 +2,7 @@
   "name": "dahe-enter",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173"
   },
@@ -15,7 +15,7 @@
     "qs": "^6.11.0",
     "swiper": "^8.4.3",
     "v-viewer": "^3.0.11",
-    "vant": "^3.5.2",
+    "vant": "^4.0.3",
     "viewerjs": "^1.10.5",
     "vod-js-sdk-v6": "^1.5.0",
     "vue": "^3.2.37",

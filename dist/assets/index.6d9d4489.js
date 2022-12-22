@@ -1,0 +1,1 @@
+import{r as e}from"./request.e54a2d6e.js";import{z as o}from"./index.4a3d8a83.js";const c=o(),p=()=>e.post("app/selectionActivity/cityList",{},""),y=(t,s,i)=>e.post("app/selectionActivity/video/list",{userId:t,currentPage:i,pageSize:"4",activityNo:c.$state.activityNo,creatorType:s},""),n=t=>e.post("app/selectionActivity/video/save",t,"");export{n as a,p as c,y as s};

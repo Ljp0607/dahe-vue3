@@ -1,7 +1,6 @@
 import jWeixin from "weixin-js-sdk";
 import axios from "axios";
 function wxShareInit(shareData) {
-  console.log(shareData);
   if (!shareData) return;
   let debug = false;
   let wx = jWeixin;
@@ -63,8 +62,8 @@ function getShare(datas, title, description) {
       data: datas,
     },
   }).then((res) => {
-    let dataShare = res.data.data
-    dataShare.img = "https://imgcdn.dahebao.cn/20221201/20221201161822355246.png";
+    let dataShare = res.data
+    dataShare.img = "https://imgcdn.dahebao.cn/20221222/20221222155940316831.jpeg";
     dataShare.title = title;
     dataShare.description = description;
     wxShareInit(dataShare)

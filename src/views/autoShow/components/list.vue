@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import axios from "axios";
 import { useCounterStore } from "@/stores/counter";
-import { Toast } from "vant";
+import { showToast } from "vant";
 import setting from "@/common/setting";
 import { poststhumbup } from "@/api/autoShow/index";
 import { goLogin, goPosts } from "@/common/appRoute";
@@ -47,7 +47,7 @@ function postst(index: number) {
   //如果无userId,判断环境,如果在微信,跳下载,如果浏览器环境,跳登录
   if (store.$state.userId == "") {
     if (setting()) {
-      Toast("请在豫视频App查看详情");
+      showToast("请在豫视频App查看详情");
       setTimeout(() => {
         location.href =
           "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
@@ -68,13 +68,13 @@ function postst(index: number) {
         if (res == "操作成功") {
           props.info[index].hotData += 10;
           props.info[index].ifThumb = 1;
-          Toast("投票成功");
+          showToast("投票成功");
         } else {
-          Toast(res);
+          showToast(res);
         }
       });
     } else {
-      Toast("每个作品只能投一票");
+      showToast("每个作品只能投一票");
     }
   }
 }
@@ -82,7 +82,7 @@ function postst(index: number) {
 function navigetDetail(e: number) {
   //如果在微信浏览器,跳转下载页
   if (store.$state.userId == "" && setting()) {
-    Toast("请在豫视频App查看详情");
+    showToast("请在豫视频App查看详情");
     setTimeout(() => {
       location.href = "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
     }, 500);
