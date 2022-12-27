@@ -47,7 +47,7 @@ function navigetUp(id: number) {
 </script>
 <style lang="less" scoped>
 .header {
-  width: 100vw;
+  width: 750px;
   height: 853px;
   background: #fff;
   background: url("https://imgcdn.dahebao.cn/20221221/20221221185922291319.png");
@@ -84,8 +84,4 @@ function navigetUp(id: number) {
   bottom: 380px;
   right: 35px;
 }
-// .share {
-//   bottom: 200px;
-//   right: 35px;
-// }
 </style>

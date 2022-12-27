@@ -1,0 +1,142 @@
+<template>
+  <div ref="contentRef" class="content">
+    <img
+      class="first"
+      src="https://imgcdn.dahebao.cn/20221227/20221227200316221346.png"
+    />
+    <img
+      class="second"
+      src="https://imgcdn.dahebao.cn/20221227/20221227200336196323.png"
+    />
+    <img
+      class="third"
+      src="https://imgcdn.dahebao.cn/20221227/20221227200351125074.png"
+    />
+    <img
+      @click="navigetFirst"
+      class="fourth"
+      src="https://imgcdn.dahebao.cn/20221227/20221227200425294218.png"
+    />
+    <img
+      src="https://imgcdn.dahebao.cn/20221227/20221227200912268990.png"
+      class="fifth"
+    />
+    <img
+      src="https://imgcdn.dahebao.cn/20221227/20221227200929510429.png"
+      class="sixth"
+    />
+    <img
+      src="https://imgcdn.dahebao.cn/20221227/20221227200404460068.png"
+      class="footer"
+    />
+    <img
+      class="text"
+      src="https://imgcdn.dahebao.cn/20221227/20221227202421170385.png"
+    />
+  </div>
+</template>
+<script setup lang="ts">
+import { reactive, ref } from "vue";
+interface Props {
+  changeActive: Function;
+}
+const props = defineProps<Props>();
+const contentRef = ref();
+interface dataType {}
+const data = reactive<dataType>({});
+//切换第一帧图画
+const navigetFirst = () => {
+  props.changeActive();
+  console.log(13);
+};
+</script>
+<style lang="less" scoped>
+.content {
+  width: 750px;
+  height: 100vh;
+  background: linear-gradient(#8cd9e7, #87ebca);
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 74px;
+  position: relative;
+  .first {
+    width: 552px;
+    z-index: 100;
+  }
+  .second {
+    position: absolute;
+    width: 593px;
+    top: 309px;
+    left: 75px;
+    z-index: 100;
+    animation: footer 3s;
+  }
+  .third {
+    width: 394px;
+    z-index: 100;
+    position: absolute;
+    top: 507px;
+    animation: footer 3s;
+
+    left: 167px;
+  }
+  .fourth {
+    position: absolute;
+    left: 30px;
+    bottom: 69px;
+    width: 639px;
+    z-index: 2;
+    animation: footer 6s;
+  }
+  .fifth {
+    width: 144px;
+    position: absolute;
+    left: 96px;
+    bottom: 535px;
+    animation: footer 12s;
+  }
+  .sixth {
+    z-index: 1;
+    width: 166px;
+    position: absolute;
+    right: 63px;
+    bottom: 381px;
+    animation: footer 10s;
+  }
+  .footer {
+    z-index: 10;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 750px;
+    height: 440px;
+    animation: footer 5s;
+  }
+  .text {
+    position: absolute;
+    width: 378px;
+    left: 178px;
+    bottom: 105px;
+    z-index: 100;
+    animation: footer 10s;
+  }
+  @keyframes footer {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 0.2;
+    }
+    80% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+// #unload {
+//   animation: unloads 3s;
+//   animation-fill-mode: both;
+// }
+</style>

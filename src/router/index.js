@@ -161,6 +161,32 @@ const router = createRouter({
         title: '你需药,这里有'
       }
     },
+    {
+      path: '/HongqiCanal',
+      name: 'HongqiCanal',
+      component: () => import('@/views/HongqiCanal/index.vue'),
+      children: [
+        {
+          path: '/HongqiCanal/cover',
+          name: 'cover',
+          component: () => import('../views/HongqiCanal/cover.vue')
+        },
+        {
+          path: '/HongqiCanal/first',
+          name: 'first',
+          component: () => import('../views/HongqiCanal/first.vue')
+        },
+        {
+          path: '/HongqiCanal/second',
+          name: 'second',
+          component: () => import('../views/HongqiCanal/second.vue')
+        },
+      ],
+      meta: {
+        title: '建设红旗渠'
+      }
+    },
+
     // {
     //   //   // 找不到路由重定向到404页面
     //   path: "/:pathMatch(.*)",
