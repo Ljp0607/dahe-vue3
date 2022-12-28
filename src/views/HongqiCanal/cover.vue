@@ -43,11 +43,9 @@ interface Props {
 const props = defineProps<Props>();
 const contentRef = ref();
 interface dataType {}
-const data = reactive<dataType>({});
 //切换第一帧图画
 const navigetFirst = () => {
   props.changeActive();
-  console.log(13);
 };
 </script>
 <style lang="less" scoped>

@@ -15,9 +15,20 @@
 </template>
 <script lang="ts" setup>
 import { reactive } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 const router = useRouter();
 const icon = reactive([
+  "bag-o",
+  "video-o",
+  "more-o",
+  "wap-home-o",
+  "cashier-o",
+  "apps-o",
+  "logistics",
+  "contact",
+  "apps-o",
+  "logistics",
+  "other-pay",
   "bag-o",
   "video-o",
   "more-o",
@@ -33,6 +44,20 @@ const icon = reactive([
   "description",
   "logistics",
   "contact",
+  "logistics",
+  "other-pay",
+  "bag-o",
+  "video-o",
+  "more-o",
+  "wap-home-o",
+  "cashier-o",
+  "apps-o",
+  "logistics",
+  "contact",
+  "apps-o",
+  "logistics",
+  "other-pay",
+  "debit-pay",
   "apps-o",
   "logistics",
   "user-circle-o",

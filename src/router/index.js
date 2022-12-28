@@ -165,21 +165,36 @@ const router = createRouter({
       path: '/HongqiCanal',
       name: 'HongqiCanal',
       component: () => import('@/views/HongqiCanal/index.vue'),
+      meta: {
+        title: '建设红旗渠'
+      }
+    },
+    {
+      path: '/action',
+      name: 'action',
+      component: () => import('../views/HongqiCanal/action.vue'),
+      meta: {
+        title: '建设红旗渠'
+      }
+    }, {
+      path: '/share',
+      name: 'share',
+      component: () => import('../views/HongqiCanal/share/index.vue'),
       children: [
         {
-          path: '/HongqiCanal/cover',
-          name: 'cover',
-          component: () => import('../views/HongqiCanal/cover.vue')
+          path: '/share/index',
+          name: 'shareHome',
+          component: () => import('../views/HongqiCanal/share/home.vue'),
         },
         {
-          path: '/HongqiCanal/first',
-          name: 'first',
-          component: () => import('../views/HongqiCanal/first.vue')
+          path: '/share/credential',
+          name: 'credential',
+          component: () => import('../views/HongqiCanal/share/book.vue'),
         },
         {
-          path: '/HongqiCanal/second',
-          name: 'second',
-          component: () => import('../views/HongqiCanal/second.vue')
+          path: '/share/profile',
+          name: 'profile',
+          component: () => import('../views/HongqiCanal/share/picker.vue')
         },
       ],
       meta: {

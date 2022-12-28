@@ -30,6 +30,11 @@ const data = reactive<dataType>({
   content: "1960年代 河南林州地区十年九旱。 人民生活、生产受到严重威胁。",
   text: "",
 });
+interface Props {
+  changeActives: Function;
+}
+const props = defineProps<Props>();
+
 const firstRef = ref();
 const secondRef = ref();
 const thirdRef = ref();
@@ -42,9 +47,9 @@ const addText = () => {
       data.time++;
     } else {
       clearInterval(addTime);
-      textRef.value.id = "upload";
       setTimeout(() => {
         addStyle();
+        textRef.value.id = "upload";
       }, 2000);
     }
   }, 300);
@@ -54,6 +59,9 @@ const addStyle = () => {
   firstRef.value.id = "first_btn";
   secondRef.value.id = "second_btn";
   thirdRef.value.id = "third_btn";
+  setTimeout(() => {
+    props.changeActives();
+  }, 10000);
 };
 
 defineExpose({
