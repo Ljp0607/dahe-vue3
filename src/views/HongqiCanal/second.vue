@@ -11,7 +11,7 @@
     />
     <img
       class="three bg"
-      src="https://imgcdn.dahebao.cn/20221227/20221227225226408453.png"
+      src="https://imgcdn.dahebao.cn/20221229/20221229184218914558.png"
       alt=""
     />
     <img
@@ -51,7 +51,7 @@ const data = reactive<dataType>({
 
 interface Props {
   changeNavite: Function;
-  navigetClick:Function
+  navigetClick: Function;
 }
 const props = defineProps<Props>();
 
@@ -72,8 +72,8 @@ const addText = () => {
         textRef.value.id = "upload";
         props.changeNavite();
         setTimeout(() => {
-          props.navigetClick()
-        })
+          props.navigetClick();
+        });
       }, 5000);
     }
   }, 300);
@@ -106,14 +106,15 @@ defineExpose({
     left: 50%;
     transform: translate(-50%);
     width: 4rem;
-    height: 25rem;
+    height: 27rem;
     font-size: 45px;
     letter-spacing: 3px;
     writing-mode: vertical-rl;
     color: #95141d;
     font-weight: 900;
     white-space: pre-wrap;
-    -webkit-text-stroke: 2px #fff;
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff;
     z-index: 10;
   }
   .bg {

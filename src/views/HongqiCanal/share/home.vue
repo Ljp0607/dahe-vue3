@@ -6,8 +6,6 @@
     />
     <div class="photo" @click="navigetPicker">点击生成红旗渠专属头像</div>
     <div class="book" @click="navigetBook">点击生成荣誉证书</div>
-    <!-- <img src="https://imgcdn.dahebao.cn/20221228/20221228184820496462.png" />
-    <img src="https://imgcdn.dahebao.cn/20221228/20221228184820496462.png" /> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -17,10 +15,10 @@ interface dataType {}
 const router = useRouter();
 const data = reactive<dataType>({});
 const navigetPicker = () => {
-  router.push("profile");
+  router.push("credential");
 };
 const navigetBook = () => {
-  router.push("credential");
+  router.push("profile");
 };
 </script>
 <style lang="less" scoped>

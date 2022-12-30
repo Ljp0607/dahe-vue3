@@ -9,7 +9,7 @@
       /><img
         class="second"
         ref="secondRef"
-        src="https://imgcdn.dahebao.cn/20221227/20221227220033219255.png"
+        src="https://imgcdn.dahebao.cn/20221229/20221229184501309066.png"
       /><img
         class="third"
         ref="thirdRef"
@@ -27,7 +27,7 @@ interface dataType {
 }
 const data = reactive<dataType>({
   time: 0,
-  content: "1960年代 河南林州地区十年九旱。 人民生活、生产受到严重威胁。",
+  content: "1960年代 河南林州地区十年九旱。人民生活、生产受到严重威胁。",
   text: "",
 });
 interface Props {
@@ -42,7 +42,7 @@ const textRef = ref();
 //初始定时器增加文字
 const addText = () => {
   const addTime = setInterval(() => {
-    if (data.text.length < 33) {
+    if (data.text.length < 32) {
       data.text = data.text + data.content.substring(data.time, data.time + 1);
       data.time++;
     } else {
@@ -72,7 +72,7 @@ defineExpose({
 .content {
   width: 750px;
   min-height: 100vh;
-  background: url("https://imgcdn.dahebao.cn/20221227/20221227204954817695.png");
+  background: url("https://imgcdn.dahebao.cn/20221229/20221229183642805385.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   box-sizing: border-box;
@@ -83,14 +83,16 @@ defineExpose({
     left: 50%;
     transform: translate(-50%);
     width: 4rem;
-    height: 25rem;
+    height: 26rem;
     font-size: 45px;
     letter-spacing: 3px;
     writing-mode: vertical-rl;
     color: #95141d;
     font-weight: 900;
     white-space: pre-wrap;
-    -webkit-text-stroke: 2px #fff;
+    // -webkit-text-stroke: 2px #fff;
+    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+      2px 2px 0 #fff;
     z-index: 10;
   }
   .picker {

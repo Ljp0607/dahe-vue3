@@ -81,24 +81,25 @@
     </div>
     <div class="over">
       <img
+        @click="naviget"
         src="https://imgcdn.dahebao.cn/20221228/20221228171454347603.jpeg"
-        alt=""
       />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 interface dataType {
   distance: number;
 }
+const router = useRouter();
 const data = reactive<dataType>({
   distance: 560,
 });
 const active = ref(true);
 const bgRef = ref();
 const scenerRef = ref();
-const loading = ref(true);
 const contentRef = ref();
 const fillRef = ref();
 const actionRef = ref();
@@ -125,8 +126,9 @@ const getMouseXY = (e: any) => {
         } else {
           clearInterval(timer);
           scenerRef.value.id = "upload";
-          // setTimeout(() => {
-          // }, 500);
+          setTimeout(() => {
+            router.push("share/index");
+          }, 15000);
         }
       }, 2000);
     }, 2000);
@@ -135,6 +137,10 @@ const getMouseXY = (e: any) => {
     contentRef.value.style.opacity = 0;
   }, 1200);
 };
+const naviget = () => {
+  router.push("share/index");
+};
+
 //开始
 const startClick = () => {
   bgRef.value.id = "upload";

@@ -177,7 +177,7 @@ const router = createRouter({
         title: '建设红旗渠'
       }
     }, {
-      path: '/share',
+      path: '/share/index',
       name: 'share',
       component: () => import('../views/HongqiCanal/share/index.vue'),
       children: [
