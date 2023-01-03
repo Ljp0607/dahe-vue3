@@ -8,7 +8,6 @@
 import Title from "./components/title.vue";
 import Tabs from "./components/tabs.vue";
 import getShare from "@/common/wx-share";
-
 components: {
   Title;
   Tabs;
@@ -16,8 +15,8 @@ components: {
 //二次分享
 getShare(
   { type: 22, share_url: window.location.href },
-  "年度汽车榜",
-  "2022年度河南汽车中榜,给你心里的汽车投票!"
+  "中原家居超凡品牌榜",
+  "2022中原家居超凡品牌榜由大河报·豫视频及河南广播电视台·都市频道主办，消费者认可，更值得信赖！"
 );
 </script>
 <style lang="less" scoped>

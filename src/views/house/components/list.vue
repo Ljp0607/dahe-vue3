@@ -7,10 +7,10 @@
         @click="navigetDetail(item.postsId)"
       />
       <div class="hotdata">
-        <span>人气值:</span>
-        <span>{{ item.hotData }}</span>
+        <span class="btn">人气值:</span>
+        <span class="btn">{{ item.hotData }}</span>
       </div>
-      <div style="color: #fff">{{ item.postsTitle }}</div>
+      <div style="color: #fff; padding-left: 5px">{{ item.postsTitle }}</div>
 
       <button v-if="item.ifThumb != 1" @click="postst(index)">为TA投票</button>
       <button v-else @click="postst(index)">已投票</button>
@@ -21,7 +21,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import axios from "axios";
 import { useCounterStore } from "@/stores/counter";
 import { showToast } from "vant";
 import setting from "@/common/setting";
@@ -52,7 +51,7 @@ function postst(index: number) {
       showToast("请在豫视频App查看详情");
       setTimeout(() => {
         location.href =
-          "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
+          "https://news.dahebao.cn/appdownload/index.html?Type=104&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
       }, 600);
     } else {
       goLogin();
@@ -87,7 +86,7 @@ function navigetDetail(e: number) {
     showToast("请在豫视频App查看详情");
     setTimeout(() => {
       location.href =
-        "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
+        "https://news.dahebao.cn/appdownload/index.html?Type=104&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
     }, 500);
   }
   //如果在其他浏览器,跳转下载页
@@ -110,6 +109,7 @@ function navigetDetail(e: number) {
   justify-content: space-between;
   .item {
     margin-top: 50px;
+    margin-bottom: 30px;
     width: 315px;
     height: 350px;
     span {
@@ -126,16 +126,21 @@ function navigetDetail(e: number) {
       padding: 0 10px;
       display: flex;
       justify-content: space-between;
+      .btn {
+        font-size: 25px;
+      }
     }
+
     button {
       margin-top: 26px;
       border: none;
       border-radius: 50px;
       width: 316px;
-      height: 68px;
+      height: 58px;
       background: #ff9156;
       color: #a50102;
       font-weight: 800;
+      // margin-bottom: 30px;
     }
   }
 }

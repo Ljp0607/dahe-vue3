@@ -112,7 +112,6 @@ const getParentTypeNo = () => {
         type_no: string;
       }>
     ) => {
-      console.log(res);
       data.option = res;
       getCars(data.option[active.value].type_no);
     }
@@ -125,10 +124,16 @@ function refresh() {
     return;
   } else {
     let scrollht =
-      document.body.scrollHeight -
-      (document.body.clientHeight && document.documentElement.clientHeight) -
-      (document.documentElement && document.documentElement.scrollTop);
-    if (scrollht <= 5) {
+      (document.documentElement.scrollTop == 0
+        ? document.body.scrollHeight
+        : document.documentElement.scrollHeight) -
+      (document.documentElement.scrollTop == 0
+        ? document.body.scrollTop
+        : document.documentElement.scrollTop) -
+      (document.documentElement.scrollTop == 0
+        ? document.body.clientHeight
+        : document.documentElement.clientHeight);
+    if (scrollht <= 105) {
       data.resh = "loading";
       ++data.current;
       moreCars(data.option[active.value].type_no);
@@ -145,5 +150,10 @@ onMounted(() => {
 .tabs {
   background: #7c0201;
   min-height: 1021px;
+}
+.lll {
+  position: fixed;
+  bottom: 303px;
+  left: 200px;
 }
 </style>

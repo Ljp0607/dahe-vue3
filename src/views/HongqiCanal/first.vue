@@ -1,11 +1,11 @@
 <template>
-  <div class="content">
+  <div class="content" >
     <div ref="textRef" class="text">{{ data.text }}</div>
     <div class="picker">
       <img
         class="first"
         ref="firstRef"
-        src="https://imgcdn.dahebao.cn/20221227/20221227220018576791.png"
+        src="https://imgcdn.dahebao.cn/20230103/20230103151922446602.png"
       /><img
         class="second"
         ref="secondRef"
@@ -13,7 +13,7 @@
       /><img
         class="third"
         ref="thirdRef"
-        src="https://imgcdn.dahebao.cn/20221227/20221227220051557397.png"
+        src="https://imgcdn.dahebao.cn/20230103/20230103151746522408.png"
       />
     </div>
   </div>
@@ -34,7 +34,6 @@ interface Props {
   changeActives: Function;
 }
 const props = defineProps<Props>();
-
 const firstRef = ref();
 const secondRef = ref();
 const thirdRef = ref();
@@ -47,12 +46,12 @@ const addText = () => {
       data.time++;
     } else {
       clearInterval(addTime);
+      textRef.value.id = "upload";
       setTimeout(() => {
         addStyle();
-        textRef.value.id = "upload";
       }, 2000);
     }
-  }, 300);
+  }, 150);
 };
 // 三张图片增加样式
 const addStyle = () => {

@@ -63,7 +63,7 @@ function getShare(datas, title, description) {
     },
   }).then((res) => {
     let dataShare = res.data
-    dataShare.img = "https://imgcdn.dahebao.cn/20221222/20221222155940316831.jpeg";
+    dataShare.img = "https://imgcdn.dahebao.cn/20230103/20230103200140982752.jpeg";
     dataShare.title = title;
     dataShare.description = description;
     wxShareInit(dataShare)

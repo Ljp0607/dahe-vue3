@@ -70,7 +70,7 @@
 <script lang="ts" setup>
 import { reactive, onMounted, ref } from "vue";
 import axios from "axios";
-import { Toast } from "vant";
+import { showToast } from "vant";
 import { saveCity } from "@/api/vote";
 import { useCounterStore } from "@/stores/counter";
 import TcVod from "vod-js-sdk-v6";
@@ -155,7 +155,7 @@ const afterRead = (file: any) => {
     data.max = 1;
     postVideo(file.file);
   }
-  Toast.loading({
+  showToast.loading({
     duration: 0,
     message: "正在上传",
     forbidClick: true,
@@ -178,9 +178,9 @@ function postImg(file: any) {
         file.url = res.data.fileUrl; //赋值
         file.id = res.data.fileId;
         delete Info.posts_video_img;
-        Toast.clear();
+        showToast.clear();
       } else {
-        Toast("上传失败");
+        showToast("上传失败");
         data.file = [];
       }
     });
@@ -210,17 +210,17 @@ function postVideo(file: any) {
       delete Info.posts_img;
       Info.posts_video_img = "";
       getVideoBase64(doneResult.video.url);
-      Toast.clear();
+      showToast.clear();
     })
     .catch(function () {
-      Toast("上传失败,请重新上传视频");
+      showToast("上传失败,请重新上传视频");
     });
 }
 //发送表单数据
 function saveInfo() {
   saveCity(Info).then((res: any) => {
     if (res.state == 1) {
-      Toast(res.data);
+      showToast(res.data);
       data.info.map((item: any) => {
         item.value = "";
       });
@@ -234,7 +234,7 @@ function saveInfo() {
       Info.posts_video = ""; //视频
       Info.tecent_video_id = ""; //视频id
     } else {
-      Toast(res.message);
+      showToast(res.message);
     }
   });
 }

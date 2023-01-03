@@ -3,11 +3,11 @@
     <div ref="textRef" class="text">{{ data.text }}</div>
     <img
       class="one bg"
-      src="https://imgcdn.dahebao.cn/20221227/20221227224916285625.png"
+      src="https://imgcdn.dahebao.cn/20230103/20230103151644234757.png"
     />
     <img
       class="one bg"
-      src="https://imgcdn.dahebao.cn/20221227/20221227224930496318.png"
+      src="https://imgcdn.dahebao.cn/20230103/20230103152155571743.png"
     />
     <img
       class="three bg"
@@ -68,15 +68,15 @@ const addText = () => {
       data.time++;
     } else {
       clearInterval(addTime);
+      textRef.value.id = "upload";
       setTimeout(() => {
-        textRef.value.id = "upload";
         props.changeNavite();
         setTimeout(() => {
           props.navigetClick();
         });
-      }, 5000);
+      }, 4000);
     }
-  }, 300);
+  }, 150);
 };
 
 // 三张图片增加样式
@@ -95,7 +95,7 @@ defineExpose({
 .content {
   width: 100vw;
   height: 100vh;
-  background-image: url("https://imgcdn.dahebao.cn/20221227/20221227224626164549.png");
+  background-image: url("https://imgcdn.dahebao.cn/20230103/20230103151523980620.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: relative;

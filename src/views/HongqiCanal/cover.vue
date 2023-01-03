@@ -15,7 +15,7 @@
     <img
       @click="navigetFirst"
       class="fourth"
-      src="https://imgcdn.dahebao.cn/20221227/20221227200425294218.png"
+      src="https://imgcdn.dahebao.cn/20230103/20230103151203133242.png"
     />
     <img
       src="https://imgcdn.dahebao.cn/20221227/20221227200912268990.png"
@@ -26,7 +26,8 @@
       class="sixth"
     />
     <img
-      src="https://imgcdn.dahebao.cn/20221227/20221227200404460068.png"
+      @click="navigetFirst"
+      src="https://imgcdn.dahebao.cn/20230103/20230103151333811061.png"
       class="footer"
     />
     <img

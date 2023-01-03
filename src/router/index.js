@@ -12,6 +12,14 @@ const router = createRouter({
       }
     },
     {
+      path: '/tool',
+      name: 'tool',
+      component: () => import('@/views/tool.vue'),
+      meta: {
+        title: '工具'
+      }
+    },
+    {
       path: '/autoShow',
       name: 'autoShow',
       component: () => import('@/views/autoShow/index.vue'),
@@ -206,7 +214,7 @@ const router = createRouter({
       name: 'house',
       component: () => import('@/views/house/index.vue'),
       meta: {
-        title: '中原家居'
+        title: '中原家居超凡品牌榜'
       }
     },
 
