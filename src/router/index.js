@@ -201,6 +201,14 @@ const router = createRouter({
         title: '建设红旗渠'
       }
     },
+    {
+      path: '/house',
+      name: 'house',
+      component: () => import('@/views/house/index.vue'),
+      meta: {
+        title: '中原家居'
+      }
+    },
 
     // {
     //   //   // 找不到路由重定向到404页面

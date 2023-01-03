@@ -20,6 +20,15 @@ export const selectCity =
 export const saveCity = (data: any) => request.post("app/selectionActivity/video/save", data, '')
 //投票
 export const poststhumbup = (data: any) => request.get("appposts/poststhumbup", { data: data }, '')
-
 //获取tabs
 export const getTypeNo = (TypeNo: string) => request.get('app/dict/listByParentTypeNo', { parentTypeNo: TypeNo }, '')
+export const selectHouse =
+    (creatorType: string, current: number) => request.post
+        ("app/selectionActivity/video/list",
+            {
+                "userId": store.$state.userId,
+                "pageSize": "10",
+                "activityNo": "3b4642431dfc43fcb581069037ee73be",
+                "creatorType": creatorType,
+                "currentPage": current,
+            }, '')
