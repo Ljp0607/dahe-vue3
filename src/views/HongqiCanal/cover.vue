@@ -1,15 +1,15 @@
 <template>
-  <div ref="contentRef" class="content">
+  <div class="content">
     <img
-      class="first"
+      class="first start1"
       src="https://imgcdn.dahebao.cn/20221227/20221227200316221346.png"
     />
     <img
-      class="second"
+      class="second start2"
       src="https://imgcdn.dahebao.cn/20221227/20221227200336196323.png"
     />
     <img
-      class="third"
+      class="third start3"
       src="https://imgcdn.dahebao.cn/20221227/20221227200351125074.png"
     />
     <img
@@ -31,19 +31,17 @@
       class="footer"
     />
     <img
+      @click="navigetFirst"
       class="text"
       src="https://imgcdn.dahebao.cn/20221227/20221227202421170385.png"
     />
   </div>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from "vue";
 interface Props {
   changeActive: Function;
 }
 const props = defineProps<Props>();
-const contentRef = ref();
-interface dataType {}
 //切换第一帧图画
 const navigetFirst = () => {
   props.changeActive();
@@ -61,6 +59,7 @@ const navigetFirst = () => {
   .first {
     width: 552px;
     z-index: 100;
+    animation: footer 6s;
   }
   .second {
     position: absolute;
@@ -68,15 +67,14 @@ const navigetFirst = () => {
     top: 309px;
     left: 75px;
     z-index: 100;
-    animation: footer 3s;
+    animation: footer 6s;
   }
   .third {
     width: 394px;
     z-index: 100;
     position: absolute;
     top: 507px;
-    animation: footer 3s;
-
+    animation: footer 8s;
     left: 167px;
   }
   .fourth {
@@ -85,7 +83,7 @@ const navigetFirst = () => {
     bottom: 69px;
     width: 639px;
     z-index: 2;
-    animation: footer 6s;
+    animation: footer 3s;
   }
   .fifth {
     width: 144px;
@@ -109,7 +107,7 @@ const navigetFirst = () => {
     left: 0;
     width: 750px;
     height: 440px;
-    animation: footer 5s;
+    animation: footer 3s;
   }
   .text {
     position: absolute;
@@ -117,7 +115,7 @@ const navigetFirst = () => {
     left: 178px;
     bottom: 105px;
     z-index: 100;
-    animation: footer 10s;
+    animation: start 4s;
   }
   @keyframes footer {
     0% {
@@ -134,8 +132,19 @@ const navigetFirst = () => {
     }
   }
 }
-// #unload {
-//   animation: unloads 3s;
-//   animation-fill-mode: both;
-// }
+@keyframes start {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0;
+  }
+  60%,
+  100% {
+    opacity: 1;
+  }
+}
 </style>

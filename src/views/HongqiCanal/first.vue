@@ -1,5 +1,5 @@
 <template>
-  <div class="content" >
+  <div class="content">
     <div ref="textRef" class="text">{{ data.text }}</div>
     <div class="picker">
       <img
@@ -24,11 +24,13 @@ interface dataType {
   content: string;
   text: string;
   time: number;
+  state: boolean;
 }
 const data = reactive<dataType>({
   time: 0,
-  content: "1960年代 河南林州地区十年九旱。人民生活、生产受到严重威胁。",
+  content: "1960年代 河南林州地区长年干旱。人民生活、生产受到严重威胁。",
   text: "",
+  state: false,
 });
 interface Props {
   changeActives: Function;
@@ -45,13 +47,14 @@ const addText = () => {
       data.text = data.text + data.content.substring(data.time, data.time + 1);
       data.time++;
     } else {
+      data.state = true;
       clearInterval(addTime);
       textRef.value.id = "upload";
       setTimeout(() => {
         addStyle();
-      }, 2000);
+      }, 5000);
     }
-  }, 150);
+  }, 250);
 };
 // 三张图片增加样式
 const addStyle = () => {
@@ -64,6 +67,7 @@ const addStyle = () => {
 };
 
 defineExpose({
+  data,
   addText,
 });
 </script>
@@ -82,7 +86,7 @@ defineExpose({
     left: 50%;
     transform: translate(-50%);
     width: 4rem;
-    height: 26rem;
+    height: 800px;
     font-size: 45px;
     letter-spacing: 3px;
     writing-mode: vertical-rl;

@@ -1,6 +1,7 @@
 <template>
   <!--  -->
   <div class="content">
+    <div ref="textRef" class="textValue">{{ data.text }}</div>
     <div v-if="active" class="bg" ref="bgRef">
       <img
         class="contion"
@@ -39,6 +40,22 @@
         class="dot aaaaa"
         src="https://imgcdn.dahebao.cn/20221228/20221228152500157410.png"
       />
+      <img
+        @click="getMouseXY"
+        class="dot aaaaaa"
+        src="https://imgcdn.dahebao.cn/20221228/20221228152500157410.png"
+      />
+      <img
+        @click="getMouseXY"
+        class="dot aaaaaaa"
+        src="https://imgcdn.dahebao.cn/20221228/20221228152500157410.png"
+      />
+      <img
+        @click="getMouseXY"
+        class="dot aaaaaaaa"
+        src="https://imgcdn.dahebao.cn/20221228/20221228152500157410.png"
+      />
+
       <div ref="mainRef" class="main">
         <div v-if="data.distance != 0">距开凿成功还有</div>
         <div v-else>开凿成功!!</div>
@@ -79,10 +96,14 @@
         src="https://imgcdn.dahebao.cn/20221228/20221228142257263533.jpeg"
       />
     </div>
-    <div class="over">
+    <div class="over" @click="naviget">
       <img
-        @click="naviget"
-        src="https://imgcdn.dahebao.cn/20221228/20221228171454347603.jpeg"
+        class="bg1"
+        src="https://imgcdn.dahebao.cn/20230109/20230109105353561561.png"
+      />
+      <img
+        class="bg2"
+        src="https://imgcdn.dahebao.cn/20230109/20230109105405244624.png"
       />
     </div>
   </div>
@@ -92,10 +113,17 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 interface dataType {
   distance: number;
+  content: string;
+  text: string;
+  time: number;
 }
 const router = useRouter();
+//加一个文案
 const data = reactive<dataType>({
-  distance: 560,
+  distance: 896,
+  time: 0,
+  content: "红旗渠建设中，这样的难题还有很多很多。",
+  text: "",
 });
 const active = ref(true);
 const bgRef = ref();
@@ -104,12 +132,13 @@ const contentRef = ref();
 const fillRef = ref();
 const actionRef = ref();
 const time = ref(0);
+const textRef = ref();
 const getMouseXY = (e: any) => {
   e.target.style.opacity = 0;
   //下方变化
   if (data.distance > 0) {
     data.distance = data.distance - 112;
-    fillRef.value.style.width = `${560 - data.distance}px`;
+    fillRef.value.style.width = `${896 - data.distance}px`;
     //锤子动画
     contentRef.value.style.opacity = 1;
     contentRef.value.style.position = "absolute";
@@ -120,11 +149,13 @@ const getMouseXY = (e: any) => {
   if (data.distance == 112) {
     setTimeout(() => {
       actionRef.value.id = "upload";
+      addText();
       const timer = setInterval(() => {
         if (time.value != 5) {
           time.value++;
         } else {
           clearInterval(timer);
+          textRef.value.id = "upload";
           scenerRef.value.id = "upload";
           setTimeout(() => {
             router.push("share/index");
@@ -140,7 +171,22 @@ const getMouseXY = (e: any) => {
 const naviget = () => {
   router.push("share/index");
 };
-
+//初始定时器增加文字
+const addText = () => {
+  const addTime = setInterval(() => {
+    if (data.text.length < 32) {
+      data.text = data.text + data.content.substring(data.time, data.time + 1);
+      data.time++;
+    } else {
+      clearInterval(addTime);
+      // clearInterval(addTime);
+      // textRef.value.id = "upload";
+      // setTimeout(() => {
+      //   addStyle();
+      // }, 5000);
+    }
+  }, 250);
+};
 //开始
 const startClick = () => {
   bgRef.value.id = "upload";
@@ -156,6 +202,7 @@ const startClick = () => {
   height: 100vh;
   position: relative;
   text-align: center;
+  // position: relative;
   .bg {
     background: #31c5f0;
     background-image: url("https://imgcdn.dahebao.cn/20221228/20221228131604418778.png");
@@ -205,6 +252,18 @@ const startClick = () => {
       top: 750px;
       left: 550px;
     }
+    .aaaaaa {
+      top: 950px;
+      left: 600px;
+    }
+    .aaaaaaa {
+      top: 350px;
+      left: 360px;
+    }
+    .aaaaaaaa {
+      top: 650px;
+      left: 150px;
+    }
   }
   .scener {
     z-index: 5;
@@ -239,13 +298,25 @@ const startClick = () => {
   .over {
     width: 100vw;
     height: 100vh;
+    background-image: url("https://imgcdn.dahebao.cn/20230109/20230109105226828363.png");
     z-index: 2;
-    position: absolute;
-    left: 0;
-    top: 0;
-    img {
-      width: 750px;
-      height: 100vh;
+    background-size: 100% 100%;
+    position: relative;
+    // position: absolute;
+    // left: 0;
+    // top: 0;
+    .bg1 {
+      display: inline-block;
+      margin: 125px auto;
+      width: 569px;
+      height: 553px;
+    }
+    .bg2 {
+      position: absolute;
+      bottom: 88px;
+      right: 70px;
+      width: 373px;
+      height: 466px;
     }
   }
 
@@ -330,7 +401,7 @@ const startClick = () => {
     color: #fff;
     text-align: center;
     position: absolute;
-    top: 76vh;
+    top: 86vh;
     left: 50%;
     transform: translate(-50%);
     .line {
@@ -351,5 +422,24 @@ const startClick = () => {
       }
     }
   }
+}
+.textValue {
+  text-align: left;
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 4rem;
+  height: 26rem;
+  font-size: 45px;
+  letter-spacing: 3px;
+  writing-mode: vertical-rl;
+  color: #95141d;
+  font-weight: 900;
+  white-space: pre-wrap;
+  // -webkit-text-stroke: 2px #fff;
+  text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
+    2px 2px 0 #fff;
+  z-index: 9;
 }
 </style>

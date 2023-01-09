@@ -42,19 +42,18 @@ interface dataType {
   content: string;
   text: string;
   time: number;
+  state: boolean;
 }
 const data = reactive<dataType>({
   time: 0,
   content: "英勇的林县人民决定开凿一条干渠， 彻底改变缺水状况。",
   text: "",
-}); //初始定时器增加文字
-
+  state: false,
+});
 interface Props {
-  changeNavite: Function;
-  navigetClick: Function;
+  playVideo: Function;
 }
 const props = defineProps<Props>();
-
 const firstRef = ref();
 const secondRef = ref();
 const thirdRef = ref();
@@ -67,18 +66,14 @@ const addText = () => {
       data.text = data.text + data.content.substring(data.time, data.time + 1);
       data.time++;
     } else {
+      data.state = true;
       clearInterval(addTime);
-      textRef.value.id = "upload";
       setTimeout(() => {
-        props.changeNavite();
-        setTimeout(() => {
-          props.navigetClick();
-        });
-      }, 4000);
+        props.playVideo();
+      }, 10000);
     }
-  }, 150);
+  }, 250);
 };
-
 // 三张图片增加样式
 const addStyle = () => {
   firstRef.value.id = "first_btn";
@@ -89,6 +84,7 @@ const addStyle = () => {
 //暴露属性
 defineExpose({
   addText,
+  data,
 });
 </script>
 <style lang="less" scoped>
@@ -106,7 +102,7 @@ defineExpose({
     left: 50%;
     transform: translate(-50%);
     width: 4rem;
-    height: 27rem;
+    height: 800px;
     font-size: 45px;
     letter-spacing: 3px;
     writing-mode: vertical-rl;
