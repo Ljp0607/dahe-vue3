@@ -6,12 +6,11 @@ import { cityList } from "@/api/vote";
 import { selectCity } from "@/api/vote";
 import { useRouter } from "vue-router";
 import axios from "axios";
-import { Toast } from "vant";
+import { showToast } from "vant";
 import { useCounterStore } from "@/stores/counter";
 import { goPosts, goLogin } from "@/common/appRoute";
 import setting from "@/common/setting";
 import getShare from "@/common/wx-share";
-
 const router = useRouter();
 const active = ref(0);
 const data: any = reactive({
@@ -47,7 +46,6 @@ function getCityList() {
               if (res.adcode == item.city_id) {
                 active.value = index;
                 store.changeCity(item);
-                // return;
               }
             });
           } else {
@@ -75,7 +73,7 @@ function selectCitys(refresh: boolean) {
   ).then((res: any) => {
     if (res.state == 1) {
       if (res.data.length == 0 && refresh) {
-        Toast("没有更多数据了");
+        showToast("没有更多数据了");
         --data.currentPage;
       } else {
         data.item = res.data;
@@ -86,7 +84,7 @@ function selectCitys(refresh: boolean) {
         data.city[active.value].more = "more";
       }
     } else {
-      Toast(res.message);
+      showToast(res.message);
     }
   });
 }
@@ -121,7 +119,7 @@ function RecordListweek() {
 //下一页新数据
 function nextPage() {
   if (data.city[active.value].more == "no-more") {
-    Toast("没有更多数据了");
+    showToast("没有更多数据了");
   } else {
     ++data.currentPage;
     selectCitys(true);
@@ -130,7 +128,7 @@ function nextPage() {
 //上一页数据
 function lastPage() {
   if (data.currentPage <= 1) {
-    Toast("没有更多数据了");
+    showToast("没有更多数据了");
     return;
   } else {
     --data.currentPage;
@@ -146,7 +144,7 @@ function changeActive() {
 function navUpload() {
   //如果在微信浏览器,跳转下载页
   if (store.$state.userId == "" && setting()) {
-    Toast("请在豫视频App上传新地标");
+    showToast("请在豫视频App上传新地标");
     setTimeout(() => {
       location.href =
         "https://news.dahebao.cn/appdownload/index.html?Type=102&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
@@ -164,7 +162,7 @@ function navUpload() {
 function navigetDetail(e: any) {
   //如果在微信浏览器,跳转下载页
   if (store.$state.userId == "" && setting()) {
-    Toast("请在豫视频App查看详情");
+    showToast("请在豫视频App查看详情");
     setTimeout(() => {
       location.href =
         "https://news.dahebao.cn/appdownload/index.html?Type=102&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
@@ -184,7 +182,7 @@ function postThum(item: any, index: number) {
   // console.log(e);
   //如果在微信浏览器,跳转下载页
   if (store.$state.userId == "" && setting()) {
-    Toast("请在豫视频App投票");
+    showToast("请在豫视频App投票");
     setTimeout(() => {
       location.href =
         "https://news.dahebao.cn/appdownload/index.html?Type=102&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
@@ -218,11 +216,11 @@ function postst(item: any, index: number) {
       if (res.state == 1) {
         data.item[index].hotData += 10;
         data.item[index].ifThumb = 1;
-        Toast("投票成功");
+        showToast("投票成功");
       }
     });
   } else {
-    Toast("每个作品只能投一票哦");
+    showToast("每个作品只能投一票哦");
   }
 }
 //获取活动规则

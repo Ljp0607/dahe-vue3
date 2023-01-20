@@ -22,6 +22,7 @@ export const saveCity = (data: any) => request.post("app/selectionActivity/video
 export const poststhumbup = (data: any) => request.get("appposts/poststhumbup", { data: data }, '')
 //获取tabs
 export const getTypeNo = (TypeNo: string) => request.get('app/dict/listByParentTypeNo', { parentTypeNo: TypeNo }, '')
+
 export const selectHouse =
     (creatorType: string, current: number) => request.post
         ("app/selectionActivity/video/list",

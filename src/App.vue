@@ -1,48 +1,46 @@
 <template>
-  <div class="audio">
+  <!-- <div class="audio">
     <audio
       ref="myAudio"
       id="myAudio"
-      src="https://imgcdn.dahebao.cn/audio/WANZG-audio.mp3"
+      src="https://imgcdn.dahebao.cn/audio/3.mp3"
       loop
     ></audio>
-  </div>
-  <div class="img" @click="clickAudio">
+  </div> -->
+  <!-- <div class="img" @click="clickAudio">
     <img
       ref="imgRef"
       id="noRotate"
       src="https://imgcdn.dahebao.cn/20230109/20230109153125248308.png"
     />
-  </div>
-  <RouterView @click="clickView" />
+  </div> -->
+  <RouterView  />
 </template>
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-const myAudio = ref();
-const play = ref(false);
-const state = ref(true);
-const imgRef = ref();
+// import { onMounted, ref } from "vue";
+// const myAudio = ref();
+// const play = ref(false);
+// const state = ref(true);
+// const imgRef = ref();
 
 //播放或暂停音乐
-const clickAudio = () => {
-  if (play.value == false) {
-    myAudio.value.play();
-    play.value = true;
-    imgRef.value.id = "rotate";
-  } else {
-    myAudio.value.pause();
-    imgRef.value.id = "noRotate";
-    play.value = false;
-  }
-};
-const clickView = () => {
-  // console.log(123);
-  if (state.value) {
-    state.value = false;
-    clickAudio();
-  }
-};
-onMounted(() => {});
+// const clickAudio = () => {
+//   if (play.value == false) {
+//     myAudio.value.play();
+//     play.value = true;
+//     imgRef.value.id = "rotate";
+//   } else {
+//     myAudio.value.pause();
+//     imgRef.value.id = "noRotate";
+//     play.value = false;
+//   }
+// };
+// const clickView = () => {
+//   if (state.value) {
+//     state.value = false;
+//     clickAudio();
+//   }
+// };
 </script>
 
 <style lang="less" scoped>

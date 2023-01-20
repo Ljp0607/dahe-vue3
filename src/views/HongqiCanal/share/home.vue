@@ -1,10 +1,13 @@
 <template>
   <div>
     <img
-      class="help"
-      src="https://imgcdn.dahebao.cn/20221228/20221228184753845023.png"
+      class="help1"
+      src="https://imgcdn.dahebao.cn/20230110/20230110161735489917.png"
     />
-    <div class="photo" @click="navigetPicker">点击生成红旗渠专属头像</div>
+    <img
+      class="help2"
+      src="https://imgcdn.dahebao.cn/20230110/20230110161751879613.png"
+    />
     <div class="book" @click="navigetBook">点击生成荣誉证书</div>
   </div>
 </template>
@@ -22,13 +25,16 @@ const navigetBook = () => {
 };
 </script>
 <style lang="less" scoped>
-.help {
-  margin-top: 125px;
-  width: 477px;
+.help1 {
+  margin-top: 138px;
+  width: 488px;
+}
+.help2 {
+  margin-top: 56px;
+  width: 486px;
 }
 div {
   margin: 0 auto;
-  width: 437px;
   font-weight: 600;
   font-size: 32px;
   height: 81px;
@@ -36,12 +42,9 @@ div {
   background-size: 100% 100%;
   color: #c2181a;
 }
-.photo {
-  margin-top: 176px;
-  background-image: url("https://imgcdn.dahebao.cn/20221228/20221228184820496462.png");
-}
 .book {
-  margin-top: 37px;
+  width: 437px;
+  margin-top: 176px;
   background-image: url("https://imgcdn.dahebao.cn/20221228/20221228184820496462.png");
 }
 </style>

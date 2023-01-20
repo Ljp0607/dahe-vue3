@@ -6,14 +6,14 @@
     <div v-if="state < 2" ref="firstRef" class="first" @click="clickFirst">
       <First :changeActives="changeActives" ref="firsts" />
     </div>
-    <div v-if="state < 3" ref="secondRef" class="second" @click="clickSecond">
-      <Second ref="seconds" :playVideo="playVideo" />
+    <div v-if="state < 3" ref="secondRef" class="second">
+      <Second ref="seconds" :clickSecond="clickSecond" />
     </div>
     <video
       id="videoPlay"
       ref="video"
       class="video"
-      src="https://videofiles.dahebao.cn/5b199581vodcq1306441264/303a9558243791578346430287/sHjjrchlHTYA.m4v"
+      src="https://videofiles.dahebao.cn/5b199581vodcq1306441264/3783c350243791578431427323/caU6ktakGBYA.m4v"
       type="video/mp4"
     ></video>
   </div>
@@ -24,6 +24,8 @@ import First from "./first.vue";
 import Second from "./second.vue";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
+import getShare from "@/common/wx-share";
+
 components: {
   Cover;
   First;
@@ -45,7 +47,7 @@ const changeActive = () => {
     if (state.value == 0) {
       state.value++;
     }
-  }, 2000);
+  }, 500);
 };
 //修改第二帧到第三帧
 const changeActives = () => {
@@ -55,7 +57,7 @@ const changeActives = () => {
     if (state.value == 1) {
       state.value++;
     }
-  }, 2000);
+  }, 500);
 };
 //加速跳转
 const clickFirst = () => {
@@ -68,7 +70,9 @@ const clickSecond = () => {
 const playVideo = () => {
   //第二个页面消失,播放视频
   secondRef.value.id = "unloads";
-  video.value.play();
+  setTimeout(() => {
+    video.value.play();
+  }, 100);
 };
 onMounted(() => {
   const elevideo = document.getElementById("videoPlay");
@@ -81,6 +85,11 @@ onMounted(() => {
     false
   );
 });
+getShare(
+  { type: 22, share_url: window.location.href },
+  "你愿意成为那1/100000的修渠人吗？",
+  "争做新时代红旗渠建设者!"
+);
 </script>
 <style lang="less" scoped>
 .container {
@@ -108,7 +117,7 @@ onMounted(() => {
   height: 100vh;
 }
 #unloads {
-  animation: unloads 3s;
+  animation: unloads 2s;
   animation-fill-mode: both;
 }
 // 隐藏
@@ -116,6 +125,7 @@ onMounted(() => {
   0% {
     opacity: 1;
   }
+  80%,
   100% {
     opacity: 0;
   }

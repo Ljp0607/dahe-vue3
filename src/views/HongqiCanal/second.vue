@@ -1,6 +1,10 @@
 <template>
-  <div class="content">
-    <div ref="textRef" class="text">{{ data.text }}</div>
+  <div class="content" @click="navigetMp4">
+    <img
+      src="https://imgcdn.dahebao.cn/20230110/20230110151659275127.png"
+      class="textIn"
+      ref="textRef"
+    />
     <img
       class="one bg"
       src="https://imgcdn.dahebao.cn/20230103/20230103151644234757.png"
@@ -34,24 +38,19 @@
       ref="foreRef"
       src="https://imgcdn.dahebao.cn/20221227/20221227225801159933.png"
     />
+    <div class="btnvi" ref="clickRef">点击跳转</div>
   </div>
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 interface dataType {
-  content: string;
-  text: string;
-  time: number;
   state: boolean;
 }
 const data = reactive<dataType>({
-  time: 0,
-  content: "英勇的林县人民决定开凿一条干渠， 彻底改变缺水状况。",
-  text: "",
   state: false,
 });
 interface Props {
-  playVideo: Function;
+  clickSecond: Function;
 }
 const props = defineProps<Props>();
 const firstRef = ref();
@@ -59,27 +58,28 @@ const secondRef = ref();
 const thirdRef = ref();
 const textRef = ref();
 const foreRef = ref();
+const clickRef = ref();
+const navigetMp4 = () => {
+  props.clickSecond();
+};
 const addText = () => {
+  textRef.value.id = "img_btn";
   addStyle();
-  const addTime = setInterval(() => {
-    if (data.text.length < 26) {
-      data.text = data.text + data.content.substring(data.time, data.time + 1);
-      data.time++;
-    } else {
-      data.state = true;
-      clearInterval(addTime);
-      setTimeout(() => {
-        props.playVideo();
-      }, 10000);
-    }
-  }, 250);
 };
 // 三张图片增加样式
 const addStyle = () => {
   firstRef.value.id = "first_btn";
-  secondRef.value.id = "second_btn";
-  thirdRef.value.id = "third_btn";
-  foreRef.value.id = "fore";
+  setTimeout(() => {
+    secondRef.value.id = "second_btn";
+  }, 500);
+  setTimeout(() => {
+    thirdRef.value.id = "third_btn";
+  }, 1000);
+  setTimeout(() => {
+    foreRef.value.id = "fore";
+    clickRef.value.id = "first_btn";
+    data.state = true;
+  }, 2000);
 };
 //暴露属性
 defineExpose({
@@ -97,21 +97,14 @@ defineExpose({
   position: relative;
   padding-top: 100px;
   box-sizing: border-box;
-  .text {
+  .textIn {
     position: absolute;
     left: 50%;
-    transform: translate(-50%);
-    width: 4rem;
-    height: 800px;
-    font-size: 45px;
-    letter-spacing: 3px;
-    writing-mode: vertical-rl;
-    color: #95141d;
-    font-weight: 900;
-    white-space: pre-wrap;
-    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
-      2px 2px 0 #fff;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 142px;
     z-index: 10;
+    opacity: 0;
   }
   .bg {
     position: absolute;
@@ -134,43 +127,65 @@ defineExpose({
   }
   .second {
     opacity: 0;
-
     width: 342px;
     bottom: 452px;
     left: 54px;
   }
   .third {
     opacity: 0;
-
     left: 0;
     bottom: 0;
     width: 750px;
   }
   .fore {
     opacity: 0;
-
     width: 575px;
     bottom: 416px;
     left: 166px;
   }
 }
+.btnvi {
+  opacity: 0;
+  position: fixed;
+  bottom: 60px;
+  font-size: 35px;
+  left: 50%;
+  transform: translate(-50%);
+  color: #fff;
+}
+
 #first_btn {
-  animation: start 6s;
+  animation: start 3s;
   animation-fill-mode: both;
 }
 #second_btn {
-  animation: start 18s;
+  animation: start 3s;
   animation-fill-mode: both;
 }
 #third_btn {
-  animation: start 30s;
+  animation: start 3s;
   animation-fill-mode: both;
 }
 #fore {
-  animation: start 52s;
+  animation: start 3s;
+  animation-fill-mode: both;
+}
+#img_btn {
+  animation: startupload 10s;
   animation-fill-mode: both;
 }
 
+@keyframes startupload {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 @keyframes start {
   0% {
     opacity: 0;

@@ -32,11 +32,11 @@ const props = defineProps<Props>();
 .input {
   color: #e9c1c1;
   border-radius: 26px;
-  width: 231px;
+  width: 331px;
   height: 53px;
   line-height: 53px;
   position: absolute;
-  left: 50%;
+  left: 420px;
   box-sizing: border-box;
   padding: 0 20px;
   border: 2px solid #ffd297;

@@ -27,7 +27,7 @@
 import { reactive, ref, onMounted } from "vue";
 import List from "./list.vue";
 import { selectCity, getTypeNo } from "@/api/autoShow/index";
-import { Toast } from "vant";
+import { showToast } from "vant";
 components: {
   List;
 }
@@ -80,7 +80,7 @@ const getCars = (id: string) => {
         window.addEventListener("scroll", refresh, true);
       }
     } else {
-      Toast(res.message);
+      showToast(res.message);
     }
   });
 };
@@ -96,7 +96,7 @@ const moreCars = (id: string) => {
         window.removeEventListener("scroll", refresh, true);
       }
     } else {
-      Toast(res.message);
+      showToast(res.message);
     }
   });
 };

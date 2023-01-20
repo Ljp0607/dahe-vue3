@@ -2,16 +2,18 @@
   <div class="content">
     <Title />
     <Tabs />
+    <Lottery />
   </div>
 </template>
 <script setup lang="ts">
 import Title from "./components/title.vue";
 import Tabs from "./components/tabs.vue";
 import getShare from "@/common/wx-share";
-
+import Lottery from "@/api/Lottery";
 components: {
   Title;
   Tabs;
+  Lottery;
 }
 //二次分享
 getShare(
@@ -22,8 +24,6 @@ getShare(
 </script>
 <style lang="less" scoped>
 .content {
-  // background: #203ab2;
-  // background: #1989fa;
   width: 100vw;
   min-height: 100vh;
 }

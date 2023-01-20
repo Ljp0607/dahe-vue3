@@ -95,15 +95,6 @@ function newsaction(action, url, id) {
   }
 }
 
-// function newsaction(id) {
-//   if (isAndroid) {
-//     window.android.newsaction(id)
-//   }
-//   if (isiOS) {
-//     window.location.href = `/ios://newsaction@?${id}`
-
-//   }
-// }
 /**
  * 唤端
  * @param {string} openUrl 外链地址
@@ -115,7 +106,6 @@ function newsaction(action, url, id) {
  * action 最终在客户端会拼接成带userid的链接，而shareAction  在客户端不做任何操作，只是在分享时取这个地址赋值到分享link上去。
  * shareAction： https://news.dahebao.cn/appdownload/index.html?type=41&openUrl=' + openUrl + '#/'
  */
-
 function tryOpenApp(openUrl, shareAction, isNeedUserId = 1, isNeedShare = 1) {
   const openOptions = {
     isNeedUserId: isNeedUserId,

@@ -192,7 +192,6 @@ async function getSignature() {
   );
   return response;
 }
-// delete Info.posts_img;
 //封装视频上传
 function postVideo(file: any) {
   //获取视频签名
@@ -270,10 +269,7 @@ function getVideoBase64(url: string) {
       canvas.getContext("2d")?.drawImage(video, 0, 0, width, height); //绘制canvas
       dataURL = canvas.toDataURL("image/jpeg"); //转换为base64
       // console.log(data.file);
-      data.file[0].content = dataURL;
-      data.file[0].file = "";
-      // console.log(data.file);
-      // resolve(dataURL);
+      console.log(dataURL);
     });
   });
 }

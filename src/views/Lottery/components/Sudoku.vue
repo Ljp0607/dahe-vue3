@@ -97,15 +97,15 @@ const data = reactive({
   // isTurnOver: true,
   //初步样式
   item: [
-    { state: 0, color: 1 },
-    { state: 0, color: 0 },
-    { state: 0, color: 1 },
-    { state: 0, color: 0 },
-    { state: 0, color: 0 },
-    { state: 0, color: 0 },
-    { state: 0, color: 1 },
-    { state: 0, color: 0 },
-    { state: 0, color: 1 },
+    { state: 0, color: 1 }, //飞龙
+    { state: 0, color: 0 }, //观音菩萨
+    { state: 0, color: 1 }, //魔鬼
+    { state: 0, color: 0 }, //剑齿虎
+    { state: 0, color: 0 }, //应帅
+    { state: 0, color: 0 }, //戴沐白
+    { state: 0, color: 1 }, //吗红晕
+    { state: 0, color: 0 }, //白虎
+    { state: 0, color: 1 }, //无敌怪兽
   ],
 });
 
@@ -150,7 +150,6 @@ function getLottery(delay, index, sum, id) {
     }, delay * i);
   }
 }
-
 //点击抽奖
 function click() {
   props.clickLottery();

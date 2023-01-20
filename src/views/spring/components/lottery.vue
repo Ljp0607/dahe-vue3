@@ -2,12 +2,11 @@
 import { reactive } from "vue";
 import "vant/es/dialog/style";
 import { showToast, Dialog } from "vant";
-import "vant/es/showToast/style";
 import request from "@/api/Lottery/index";
 import { useCounterStore } from "@/stores/counter";
 const props = defineProps({
-  RecordList: Function,
-  activityRule: Function,
+  // RecordList: Function,
+  active: String,
 });
 //抽奖链接
 const data: any = reactive({
@@ -34,29 +33,27 @@ const pattern =
 request
   .findDraw({
     userId: store.$state.userId,
-    activityNo: store.$state.activityNo,
+    activityNo: "2e21e3218dee479b9b51094eaec7877c",
   })
   .then((res: any) => {
-    props.activityRule(res.drawActivityConfig.activityRule);
     data.activity = res.drawActivityConfig;
   });
 //存入人员地址
 function saveAddress() {
   request
     .saveAddress(
-      `?userId=${store.$state.userId}&activityNo=${store.$state.activityNo}`,
+      `?userId=${store.$state.userId}&activityNo=2e21e3218dee479b9b51094eaec7877c`,
       JSON.stringify({
         realName: data.message.realName,
         recordNo: data.message.recordNo,
         phone: data.message.phone,
-        activityNo: store.$state.activityNo,
+        activityNo: "2e21e3218dee479b9b51094eaec7877c",
         address: data.message.address,
       })
     )
     .then((res: any) => {
       showToast(res.message);
       data.show = false;
-      props.RecordList();
     });
 }
 //获取抽奖次数
@@ -64,7 +61,7 @@ function findCount() {
   request
     .findDrawCount({
       userId: store.$state.userId,
-      activityNo: store.$state.activityNo,
+      activityNo: "2e21e3218dee479b9b51094eaec7877c",
     })
     .then((res: any) => {
       if (res.drawCount >= 0) data.number = res.drawCount;
@@ -82,7 +79,7 @@ function clickCoronak() {
     request
       .toDraw({
         userId: store.$state.userId,
-        activityNo: store.$state.activityNo,
+        activityNo: "2e21e3218dee479b9b51094eaec7877c",
       })
       .then((res: any) => {
         findCount();
@@ -148,67 +145,71 @@ findCount();
 </script>
 <template>
   <!-- 抽奖区域 -->
-  <div class="wrapper">
-    <div
-      class="panel"
-      :style="{
-        transform: data.rotate_angle,
-        transition: '5s',
-      }"
-    >
+  <div class="lottery">
+    <div class="wrapper">
       <div
-        class="sector"
-        v-for="(item, index) in data.activity.poolList"
-        :key="index"
+        class="panel"
+        :style="{
+          transform: data.rotate_angle,
+          transition: '5s',
+        }"
       >
-        <div class="sector-inner">
-          <span>{{ item.awardName }}</span>
-          <img v-show="item.awardImage" :src="item.awardImage" />
-        </div>
-      </div>
-    </div>
-    <div class="pointer" @click="clickCoronak">
-      <div class="start">立即抽奖</div>
-    </div>
-    <!-- 遮罩层领奖 -->
-    <van-overlay :show="data.show">
-      <div class="van-overlay">
-        <div class="block">
-          <div>请填写领奖信息</div>
-          <van-form @submit="onSubmit">
-            <van-cell-group inset>
-              <!-- 通过 pattern 进行正则校验 -->
-              <van-field
-                v-model="data.message.realName"
-                placeholder="请输入姓名"
-                name="realName"
-                :rules="[{ required: true, message: '请填写用户名' }]"
-              />
-              <!-- 通过 validator 进行函数校验 -->
-              <van-field
-                v-model="data.message.phone"
-                placeholder="请输入电话号码"
-                name="phone"
-                :rules="[{ pattern, message: '请输入正确手机号' }]"
-              />
-              <!-- 通过 validator 返回错误提示 -->
-              <van-field
-                v-model="data.message.address"
-                placeholder="请输入地址"
-                name="address"
-                :rules="[{ required: true, message: '请填写地址' }]"
-              />
-              <!-- 通过 validator 进行异步函数校验 -->
-            </van-cell-group>
-            <div style="margin: 16px">
-              <van-button round block type="primary" native-type="submit">
-                提交
-              </van-button>
+        <div v-if="data.activity.poolList.length > 1">
+          <div
+            class="sector"
+            v-for="(item, index) in data.activity.poolList"
+            :key="index"
+          >
+            <div class="sector-inner">
+              <span>{{ item.awardName }}</span>
+              <img v-show="item.awardImage" :src="item.awardImage" />
             </div>
-          </van-form>
+          </div>
         </div>
       </div>
-    </van-overlay>
+      <div class="pointer" @click="clickCoronak">
+        <div class="start">立即抽奖</div>
+      </div>
+      <!-- 遮罩层领奖 -->
+      <van-overlay :show="data.show">
+        <div class="van-overlay">
+          <div class="block">
+            <div>请填写领奖信息</div>
+            <van-form @submit="onSubmit">
+              <van-cell-group inset>
+                <!-- 通过 pattern 进行正则校验 -->
+                <van-field
+                  v-model="data.message.realName"
+                  placeholder="请输入姓名"
+                  name="realName"
+                  :rules="[{ required: true, message: '请填写用户名' }]"
+                />
+                <!-- 通过 validator 进行函数校验 -->
+                <van-field
+                  v-model="data.message.phone"
+                  placeholder="请输入电话号码"
+                  name="phone"
+                  :rules="[{ pattern, message: '请输入正确手机号' }]"
+                />
+                <!-- 通过 validator 返回错误提示 -->
+                <van-field
+                  v-model="data.message.address"
+                  placeholder="请输入地址"
+                  name="address"
+                  :rules="[{ required: true, message: '请填写地址' }]"
+                />
+                <!-- 通过 validator 进行异步函数校验 -->
+              </van-cell-group>
+              <div style="margin: 16px">
+                <van-button round block type="primary" native-type="submit">
+                  提交
+                </van-button>
+              </div>
+            </van-form>
+          </div>
+        </div>
+      </van-overlay>
+    </div>
   </div>
   <div class="number">
     <div class="residue">
@@ -221,6 +222,17 @@ findCount();
 </template>
 
 <style lang="less" scoped>
+.lottery {
+  background-image: url("https://imgcdn.dahebao.cn/20230119/20230119144538707868.png");
+  width: 668px;
+  height: 761px;
+  margin: 0 auto;
+  background-size: 100% 100%;
+  text-align: center;
+  box-sizing: border-box;
+  padding-top: 160px;
+  // background-size: 100%;
+}
 .wrapper {
   position: relative;
   height: 563px;
@@ -339,9 +351,10 @@ findCount();
   }
 }
 .number {
-  width: 570px;
-  height: 293px;
-  background-image: url("https://imgcdn.dahebao.cn/20221130/20221130163129461239.png");
+  text-align: center;
+  width: 667px;
+  height: 305px;
+  background-image: url("https://imgcdn.dahebao.cn/20230119/20230119152829591316.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   margin: 50px auto 0;
@@ -356,7 +369,7 @@ findCount();
     width: 471px;
     height: 86px;
     line-height: 75px;
-    background-image: url("https://imgcdn.dahebao.cn/20221130/20221130163152193201.png");
+    background-image: url("https://imgcdn.dahebao.cn/20230119/20230119152919814703.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     margin: 0 auto;

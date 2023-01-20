@@ -1,17 +1,23 @@
 <template>
-  <div class="content">
-    <img
-      class="first start1"
-      src="https://imgcdn.dahebao.cn/20221227/20221227200316221346.png"
-    />
+  <div class="content" @click="navigetFirst">
+    <div class="first_img">
+      <img
+        class="first"
+        src="https://imgcdn.dahebao.cn/20230112/20230112105134744667.png"
+      />
+      <img
+        class="first"
+        src="https://imgcdn.dahebao.cn/20230112/20230112105151165580.png"
+      />
+    </div>
     <img
       class="second start2"
-      src="https://imgcdn.dahebao.cn/20221227/20221227200336196323.png"
+      src="https://imgcdn.dahebao.cn/20230112/20230112104824433023.png"
     />
-    <img
+    <!-- <img
       class="third start3"
       src="https://imgcdn.dahebao.cn/20221227/20221227200351125074.png"
-    />
+    /> -->
     <img
       @click="navigetFirst"
       class="fourth"
@@ -26,14 +32,16 @@
       class="sixth"
     />
     <img
-      @click="navigetFirst"
       src="https://imgcdn.dahebao.cn/20230103/20230103151333811061.png"
       class="footer"
     />
     <img
-      @click="navigetFirst"
       class="text"
       src="https://imgcdn.dahebao.cn/20221227/20221227202421170385.png"
+    />
+    <img
+      class="icon"
+      src="https://imgcdn.dahebao.cn/20230112/20230112105744954599.png"
     />
   </div>
 </template>
@@ -56,11 +64,18 @@ const navigetFirst = () => {
   box-sizing: border-box;
   padding-top: 74px;
   position: relative;
-  .first {
-    width: 552px;
-    z-index: 100;
-    animation: footer 6s;
+  .first_img {
+    box-sizing: border-box;
+    padding: 0 50px;
+    display: flex;
+    justify-content: space-around;
+    .first {
+      width: 200px;
+      z-index: 100;
+      animation: footer 6s;
+    }
   }
+
   .second {
     position: absolute;
     width: 593px;
@@ -113,10 +128,19 @@ const navigetFirst = () => {
     position: absolute;
     width: 378px;
     left: 178px;
-    bottom: 105px;
+    bottom: 205px;
     z-index: 100;
     animation: start 4s;
   }
+  .icon {
+    position: absolute;
+    width: 378px;
+    left: 178px;
+    bottom: 85px;
+    z-index: 100;
+    // animation: start 4s;
+  }
+
   @keyframes footer {
     0% {
       opacity: 0;

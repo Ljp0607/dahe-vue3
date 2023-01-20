@@ -174,7 +174,7 @@ const router = createRouter({
       name: 'HongqiCanal',
       component: () => import('@/views/HongqiCanal/index.vue'),
       meta: {
-        title: '建设红旗渠'
+        title: '争做新时代红旗渠建设者'
       }
     },
     {
@@ -182,7 +182,7 @@ const router = createRouter({
       name: 'action',
       component: () => import('../views/HongqiCanal/action.vue'),
       meta: {
-        title: '建设红旗渠'
+        title: '争做新时代红旗渠建设者'
       }
     }, {
       path: '/share/index',
@@ -194,11 +194,11 @@ const router = createRouter({
           name: 'shareHome',
           component: () => import('../views/HongqiCanal/share/home.vue'),
         },
-        {
-          path: '/share/credential',
-          name: 'credential',
-          component: () => import('../views/HongqiCanal/share/book.vue'),
-        },
+        // {
+        //   path: '/share/credential',
+        //   name: 'credential',
+        //   component: () => import('../views/HongqiCanal/share/book.vue'),
+        // },
         {
           path: '/share/profile',
           name: 'profile',
@@ -206,7 +206,7 @@ const router = createRouter({
         },
       ],
       meta: {
-        title: '建设红旗渠'
+        title: '争做新时代红旗渠建设者'
       }
     },
     {
@@ -217,7 +217,14 @@ const router = createRouter({
         title: '中原家居超凡品牌榜'
       }
     },
-
+    {
+      path: '/spring',
+      name: 'spring',
+      component: () => import('@/views/spring/index.vue'),
+      meta: {
+        title: '新春活动'
+      }
+    },
     // {
     //   //   // 找不到路由重定向到404页面
     //   path: "/:pathMatch(.*)",

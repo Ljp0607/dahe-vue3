@@ -1,6 +1,15 @@
 <template>
   <div class="content">
-    <div ref="textRef" class="text">{{ data.text }}</div>
+    <img
+      ref="imgRef"
+      class="textIntrod"
+      src="https://imgcdn.dahebao.cn/20230110/20230110150939181902.png"
+    />
+    <img
+      ref="imgRef2"
+      class="textIntrod2"
+      src="https://imgcdn.dahebao.cn/20230110/20230110145127373217.png"
+    />
     <div class="picker">
       <img
         class="first"
@@ -21,15 +30,9 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 interface dataType {
-  content: string;
-  text: string;
-  time: number;
   state: boolean;
 }
 const data = reactive<dataType>({
-  time: 0,
-  content: "1960年代 河南林州地区长年干旱。人民生活、生产受到严重威胁。",
-  text: "",
   state: false,
 });
 interface Props {
@@ -39,31 +42,28 @@ const props = defineProps<Props>();
 const firstRef = ref();
 const secondRef = ref();
 const thirdRef = ref();
-const textRef = ref();
-//初始定时器增加文字
+const imgRef = ref();
+const imgRef2 = ref();
+//添加字体
 const addText = () => {
-  const addTime = setInterval(() => {
-    if (data.text.length < 32) {
-      data.text = data.text + data.content.substring(data.time, data.time + 1);
-      data.time++;
-    } else {
-      data.state = true;
-      clearInterval(addTime);
-      textRef.value.id = "upload";
-      setTimeout(() => {
-        addStyle();
-      }, 5000);
-    }
-  }, 250);
+  imgRef.value.id = "img_btn";
+  setTimeout(() => {
+    addStyle();
+  }, 2000);
 };
 // 三张图片增加样式
 const addStyle = () => {
   firstRef.value.id = "first_btn";
-  secondRef.value.id = "second_btn";
-  thirdRef.value.id = "third_btn";
+  imgRef2.value.id = "imgRef2_btn";
+  setTimeout(() => {
+    secondRef.value.id = "second_btn";
+  }, 500);
+  setTimeout(() => {
+    thirdRef.value.id = "third_btn";
+  }, 1000);
   setTimeout(() => {
     props.changeActives();
-  }, 10000);
+  }, 3000);
 };
 
 defineExpose({
@@ -81,22 +81,23 @@ defineExpose({
   box-sizing: border-box;
   padding-top: 130px;
   position: relative;
-  .text {
+  .textIntrod {
     position: absolute;
     left: 50%;
-    transform: translate(-50%);
-    width: 4rem;
-    height: 800px;
-    font-size: 45px;
-    letter-spacing: 3px;
-    writing-mode: vertical-rl;
-    color: #95141d;
-    font-weight: 900;
-    white-space: pre-wrap;
-    // -webkit-text-stroke: 2px #fff;
-    text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff,
-      2px 2px 0 #fff;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    width: 55px;
     z-index: 10;
+    opacity: 0;
+  }
+  .textIntrod2 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 55px;
+    z-index: 10;
+    opacity: 0;
   }
   .picker {
     position: absolute;
@@ -118,24 +119,41 @@ defineExpose({
     margin-top: -35px;
   }
   #first_btn {
-    animation: start 6s;
+    animation: start 3s;
     animation-fill-mode: both;
   }
   #second_btn {
-    animation: start 36s;
+    animation: start 3s;
     animation-fill-mode: both;
   }
   #third_btn {
-    animation: start 96s;
+    animation: start 3s;
+    animation-fill-mode: both;
+  }
+  #img_btn {
+    animation: startupload 4s;
+    animation-fill-mode: both;
+  }
+  #imgRef2_btn {
+    animation: start 6s;
     animation-fill-mode: both;
   }
 }
-
+@keyframes startupload {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 @keyframes start {
   0% {
     opacity: 0;
   }
-  20%,
   100% {
     opacity: 1;
   }
