@@ -2,21 +2,25 @@ import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import Components from 'unplugin-vue-components/vite';
-import { VantResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite'
+import { VantResolver } from 'unplugin-vue-components/resolvers'
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
     Components({
       resolvers: [VantResolver()],
-    }),],
+    }),
+    // styleImport({
+    //   resolves: [VantResolve()],
+    // }),
+  ],
   base: './',
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   // server: {
   //   host: "0.0.0.0", //打开显示本地地址
   //   open: true,// 是否自动启动浏览器
@@ -30,4 +34,3 @@ export default defineConfig({
   //   }
   // }
 })
-

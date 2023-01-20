@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { reactive } from "vue";
-import "vant/es/dialog/style";
-import { showToast, Dialog } from "vant";
-import "vant/es/showToast/style";
-import request from "@/api/Lottery/index";
-import { useCounterStore } from "@/stores/counter";
+import { reactive } from 'vue'
+import 'vant/es/dialog/style'
+import { showToast, Dialog } from 'vant'
+// import "vant/es/showToast/style";
+import request from '@/api/Lottery/index'
+import { useCounterStore } from '@/stores/counter'
 const props = defineProps({
   RecordList: Function,
   activityRule: Function,
-});
+})
 //抽奖链接
 const data: any = reactive({
   number: 0,
   message: {
-    realName: "",
-    phone: "",
-    address: "",
+    realName: '',
+    phone: '',
+    address: '',
   },
   show: false,
   rotateAngle: 0,
   time: 0,
   IsTurnOver: true,
-  rotate_angle: "",
+  rotate_angle: '',
   activity: {
     poolList: [],
   },
-});
-const store = useCounterStore();
+})
+const store = useCounterStore()
 const pattern =
-  /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1589]))\d{8}$/;
+  /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1589]))\d{8}$/
 
 //获取抽奖信息
 request
@@ -37,9 +37,9 @@ request
     activityNo: store.$state.activityNo,
   })
   .then((res: any) => {
-    props.activityRule(res.drawActivityConfig.activityRule);
-    data.activity = res.drawActivityConfig;
-  });
+    props.activityRule(res.drawActivityConfig.activityRule)
+    data.activity = res.drawActivityConfig
+  })
 //存入人员地址
 function saveAddress() {
   request
@@ -54,10 +54,10 @@ function saveAddress() {
       })
     )
     .then((res: any) => {
-      showToast(res.message);
-      data.show = false;
-      props.RecordList();
-    });
+      showToast(res.message)
+      data.show = false
+      props.RecordList()
+    })
 }
 //获取抽奖次数
 function findCount() {
@@ -67,84 +67,84 @@ function findCount() {
       activityNo: store.$state.activityNo,
     })
     .then((res: any) => {
-      if (res.drawCount >= 0) data.number = res.drawCount;
-    });
+      if (res.drawCount >= 0) data.number = res.drawCount
+    })
 }
 //抽奖
 function clickCoronak() {
   // findCount();
   if (!data.IsTurnOver) {
-    showToast("请勿重复抽奖");
+    showToast('请勿重复抽奖')
   } else if (data.number == 0) {
-    showToast("暂无抽奖次数");
+    showToast('暂无抽奖次数')
   } else {
-    data.IsTurnOver = false;
+    data.IsTurnOver = false
     request
       .toDraw({
         userId: store.$state.userId,
         activityNo: store.$state.activityNo,
       })
       .then((res: any) => {
-        findCount();
+        findCount()
         data.activity.poolList.map((item: any, index: number) => {
           if (item.awardNo == res.awardNo) {
-            data.message.recordNo = res.recordNo;
-            rotateAngle(index + 1);
+            data.message.recordNo = res.recordNo
+            rotateAngle(index + 1)
             setTimeout(function () {
-              if (item.awardFlag == "1") {
+              if (item.awardFlag == '1') {
                 Dialog.alert({
-                  message: "恭喜获得" + item.awardName,
+                  message: '恭喜获得' + item.awardName,
                 }).then(() => {
-                  data.show = true;
-                });
+                  data.show = true
+                })
               } else {
-                showToast(item.awardName);
+                showToast(item.awardName)
               }
-              data.IsTurnOver = true;
-            }, 5200);
-            return;
+              data.IsTurnOver = true
+            }, 5200)
+            return
           }
-        });
-      });
+        })
+      })
   }
 }
 //封装抽奖
 function rotateAngle(i: number) {
-  data.rotateAngle = data.rotateAngle - data.time;
+  data.rotateAngle = data.rotateAngle - data.time
   //初试转的圈数
   switch (i) {
     //第一个奖品角度
     case 1:
-      data.time = Math.random() * (30 - 0) + 0;
-      break;
+      data.time = Math.random() * (30 - 0) + 0
+      break
     //第二个奖品角度
     case 6:
-      data.time = Math.random() * (85 - 35) + 35;
-      break;
+      data.time = Math.random() * (85 - 35) + 35
+      break
     //第三个奖品角度
     case 5:
-      data.time = Math.random() * (145 - 95) + 95;
-      break;
+      data.time = Math.random() * (145 - 95) + 95
+      break
     //第四个奖品角度
     case 4:
-      data.time = Math.random() * (205 - 155) + 155;
-      break;
+      data.time = Math.random() * (205 - 155) + 155
+      break
     //第五个奖品角度
     case 3:
-      data.time = Math.random() * (265 - 215) + 215;
-      break;
+      data.time = Math.random() * (265 - 215) + 215
+      break
     //第六个奖品角度
     case 2:
-      data.time = Math.random() * (325 - 275) + 275;
-      break;
+      data.time = Math.random() * (325 - 275) + 275
+      break
   }
-  data.rotateAngle = data.rotateAngle + 3600 + data.time;
-  data.rotate_angle = `rotate(${data.rotateAngle}deg)`;
+  data.rotateAngle = data.rotateAngle + 3600 + data.time
+  data.rotate_angle = `rotate(${data.rotateAngle}deg)`
 }
 function onSubmit(e: any) {
-  saveAddress();
+  saveAddress()
 }
-findCount();
+findCount()
 </script>
 <template>
   <!-- 抽奖区域 -->
@@ -156,11 +156,7 @@ findCount();
         transition: '5s',
       }"
     >
-      <div
-        class="sector"
-        v-for="(item, index) in data.activity.poolList"
-        :key="index"
-      >
+      <div class="sector" v-for="(item, index) in data.activity.poolList" :key="index">
         <div class="sector-inner">
           <span>{{ item.awardName }}</span>
           <img v-show="item.awardImage" :src="item.awardImage" />
@@ -201,9 +197,7 @@ findCount();
               <!-- 通过 validator 进行异步函数校验 -->
             </van-cell-group>
             <div style="margin: 16px">
-              <van-button round block type="primary" native-type="submit">
-                提交
-              </van-button>
+              <van-button round block type="primary" native-type="submit"> 提交 </van-button>
             </div>
           </van-form>
         </div>
@@ -225,7 +219,7 @@ findCount();
   position: relative;
   height: 563px;
   width: 560px;
-  background-image: url("https://imgcdn.dahebao.cn/20221123/20221123143246575179.png");
+  background-image: url('https://imgcdn.dahebao.cn/20221123/20221123143246575179.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
@@ -235,7 +229,7 @@ findCount();
 .panel {
   position: relative;
   background: #b80100;
-  background-image: url("https://imgcdn.dahebao.cn/20221123/20221123145330470324.png");
+  background-image: url('https://imgcdn.dahebao.cn/20221123/20221123145330470324.png');
   background-size: 450px 450px;
   background-position: center;
   background-repeat: no-repeat;
@@ -244,8 +238,7 @@ findCount();
   border-radius: 231px;
   box-sizing: border-box;
   margin-top: 52px;
-  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.5),
-    0 6px 20px 0 rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.5), 0 6px 20px 0 rgba(255, 255, 255, 0.5);
 }
 .sector {
   position: absolute;
@@ -310,7 +303,7 @@ findCount();
 .pointer {
   width: 211px;
   height: 223px;
-  background-image: url("https://imgcdn.dahebao.cn/20221123/20221123145731728123.png");
+  background-image: url('https://imgcdn.dahebao.cn/20221123/20221123145731728123.png');
   background-size: 100% 100%;
   position: absolute;
   margin-top: 165px;
@@ -341,7 +334,7 @@ findCount();
 .number {
   width: 570px;
   height: 293px;
-  background-image: url("https://imgcdn.dahebao.cn/20221130/20221130163129461239.png");
+  background-image: url('https://imgcdn.dahebao.cn/20221130/20221130163129461239.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   margin: 50px auto 0;
@@ -356,7 +349,7 @@ findCount();
     width: 471px;
     height: 86px;
     line-height: 75px;
-    background-image: url("https://imgcdn.dahebao.cn/20221130/20221130163152193201.png");
+    background-image: url('https://imgcdn.dahebao.cn/20221130/20221130163152193201.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     margin: 0 auto;
@@ -365,8 +358,7 @@ findCount();
     font-weight: bold;
     color: #ffffff;
     // -webkit-text-stroke: 2px #441709;
-    text-shadow: -1px -1px 0 #451701, 1px -1px 0 #451701, -1px 1px 0 #451701,
-      1px 1px 0 #451701;
+    text-shadow: -1px -1px 0 #451701, 1px -1px 0 #451701, -1px 1px 0 #451701, 1px 1px 0 #451701;
   }
 }
 </style>
