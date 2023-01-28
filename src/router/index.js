@@ -35,14 +35,14 @@ const router = createRouter({
         title: '河南新地标'
       }
     },
-    {
-      path: '/uploading',
-      name: 'uploading',
-      component: () => import('@/views/vote/uploading.vue'),
-      meta: {
-        title: '河南新地标'
-      }
-    },
+    // {
+    //   path: '/uploading',
+    //   name: 'uploading',
+    //   component: () => import('@/views/vote/uploading.vue'),
+    //   meta: {
+    //     title: '河南新地标'
+    //   }
+    // },
     //enter 产品入驻页
     {
       path: '/enter',
@@ -225,7 +225,17 @@ const router = createRouter({
         title: '新春活动'
       }
     },
-    // {
+    {
+      path: '/uploadingSpring',
+      name: 'uploadingSpring',
+      component: () => import('@/views/spring/uploading.vue'),
+      meta: {
+        title: '新春活动'
+      }
+    },
+
+
+    // {uploading
     //   //   // 找不到路由重定向到404页面
     //   path: "/:pathMatch(.*)",
     //   redirect: { name: "404" }

@@ -6,7 +6,7 @@
       v-model:show="data.show"
       @click="data.show = false"
     >
-        {{ props.rule }}
+      {{ props.rule }}
     </van-popup>
     <img
       @click="navUpload"
@@ -28,6 +28,7 @@ const data = reactive({
 });
 interface Props {
   rule: string;
+  drawRule: string;
 }
 const props = defineProps<Props>();
 const navUpload = () => {
@@ -44,7 +45,10 @@ const navUpload = () => {
     //跳转登录
     goLogin();
   } else {
-    router.push({ name: "uploading" });
+    router.push({
+      name: "uploadingSpring",
+      query: { drawRule: props.drawRule },
+    });
   }
 };
 </script>

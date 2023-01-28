@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <Title :rule="data.rule" />
+    <Title :rule="data.rule" :drawRule="data.drawRule" />
     <Tabs :drawRule="data.drawRule" />
     <Lottery :active="data.active" />
     <!-- v-if="data.recordListWeek.length > 0" -->
@@ -13,7 +13,7 @@
           :key="index"
           v-show="item.realName && item.awardName && item.phone"
         >
-          <div>{{ index < 3 ? '' : index + 1 }}</div>
+          <div>{{ index < 3 ? "" : index + 1 }}</div>
           <div>{{ item.realName }}</div>
           <div>{{ item.awardName }}</div>
           <div>{{ item.phone }}</div>
@@ -38,55 +38,57 @@
   </div>
 </template>
 <script setup lang="ts">
-import Title from './components/title.vue'
-import Tabs from './components/tabs.vue'
-import Lottery from './components/lottery.vue'
-import getShare from '@/common/wx-share'
-import { findDraw, weekList, drawRecordList } from '@/api/spring'
-import { reactive, onBeforeMount, onMounted } from 'vue'
+import Title from "./components/title.vue";
+import Tabs from "./components/tabs.vue";
+import Lottery from "./components/lottery.vue";
+import getShare from "@/common/wx-share";
+import { findDraw, weekList, drawRecordList } from "@/api/spring";
+import { reactive, onBeforeMount, onMounted } from "vue";
 
 components: {
-  Title
-  Lottery
-  Tabs
+  Title;
+  Lottery;
+  Tabs;
 }
 const data = reactive({
-  rule: '',
-  drawRule: '',
-  active: '',
+  rule: "",
+  drawRule: "",
+  active: "",
   recordList: [],
   recordListWeek: [],
-})
+});
 //获取活动规则 list和抽奖设置
 const getList = () => {
   findDraw().then((res: any) => {
-    data.active = res.drawActivityConfig.drawCountCallBack
-    data.rule = res.drawActivityConfig.activityRule
-    data.drawRule = res.drawActivityConfig.drawRule
-  })
-}
-
+    data.active = res.drawActivityConfig.drawCountCallBack;
+    data.rule = res.drawActivityConfig.activityRule;
+    data.drawRule = res.drawActivityConfig.drawRule;
+  });
+};
 //获取中奖人员名单
 function RecordList() {
   drawRecordList().then((res: any) => {
-    data.recordList = res.recordList
-  })
+    data.recordList = res.recordList;
+  });
 }
 //获取周中奖人员名单
 function RecordListweek() {
   weekList().then((res: any) => {
-    data.recordListWeek = res.recordList
-  })
+    data.recordListWeek = res.recordList;
+  });
 }
 //二次分享
-getShare('兔逢新春，记录团圆！', '分享你的相聚时刻、家乡美食、年夜饭、春节年俗')
+getShare(
+  "兔逢新春，记录团圆！",
+  "分享你的相聚时刻、家乡美食、年夜饭、春节年俗"
+);
 onBeforeMount(() => {
-  getList()
-})
+  getList();
+});
 onMounted(() => {
-  RecordListweek()
-  RecordList()
-})
+  RecordListweek();
+  RecordList();
+});
 </script>
 <style lang="less" scoped>
 .content {
@@ -99,7 +101,7 @@ onMounted(() => {
     height: 451px;
     margin: 0 auto;
     margin-top: 45px;
-    background-image: url('https://imgcdn.dahebao.cn/20230119/20230119154839537800.png');
+    background-image: url("https://imgcdn.dahebao.cn/20230119/20230119154839537800.png");
     background-size: 100% 100%;
     // background: #fff;
     box-sizing: border-box;
@@ -151,19 +153,19 @@ onMounted(() => {
         }
       }
       .cell:nth-child(1) {
-        background-image: url('https://imgcdn.dahebao.cn/20221212/20221212152602139458.png');
+        background-image: url("https://imgcdn.dahebao.cn/20221212/20221212152602139458.png");
         background-repeat: no-repeat;
         background-position: 20px 15px;
         background-size: 8%;
       }
       .cell:nth-child(2) {
-        background-image: url('https://imgcdn.dahebao.cn/20221212/20221212152615228304.png');
+        background-image: url("https://imgcdn.dahebao.cn/20221212/20221212152615228304.png");
         background-repeat: no-repeat;
         background-position: 20px 15px;
         background-size: 8%;
       }
       .cell:nth-child(3) {
-        background-image: url('https://imgcdn.dahebao.cn/20221212/20221212152625255040.png');
+        background-image: url("https://imgcdn.dahebao.cn/20221212/20221212152625255040.png");
         background-repeat: no-repeat;
         background-position: 20px 15px;
         background-size: 8%;
@@ -175,7 +177,7 @@ onMounted(() => {
     height: 301px;
     margin: 0 auto;
     margin-top: 45px;
-    background-image: url('https://imgcdn.dahebao.cn/20221128/20221128100556735042.png');
+    background-image: url("https://imgcdn.dahebao.cn/20221128/20221128100556735042.png");
     background-size: 100%;
     box-sizing: border-box;
     padding-top: 40px;

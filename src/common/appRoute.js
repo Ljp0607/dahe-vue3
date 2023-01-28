@@ -47,7 +47,6 @@ function cailingaction(data) {
       window.android.claction(data)
     } else {
       window.cailingaction.claction(data)
-
     }
   }
   if (isiOS) {

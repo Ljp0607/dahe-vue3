@@ -16,7 +16,7 @@ export const selectHouse =
         ("app/selectionActivity/video/list",
             {
                 "userId": store.$state.userId,
-                "pageSize": "10",
+                "pageSize": "4",
                 "activityNo": "9cccccfc547b43bd8595a39b3c0b3797",
                 "creatorType": creatorType,
                 "currentPage": current,
