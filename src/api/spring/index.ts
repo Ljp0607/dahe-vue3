@@ -21,10 +21,10 @@ export const selectHouse =
                 "creatorType": creatorType,
                 "currentPage": current,
             }, '')
-
-// 6a80562a1e79447683ba6af00c00fa7d
+   
 export const drawRecordList = () => request.get("app/daheDrawActivityConfig/drawRecordList", {
     userId: store.$state.userId,
+    // activityNo: '2e21e3218dee479b9b51094eaec7877c',
     activityNo: '2e21e3218dee479b9b51094eaec7877c',
     awardFlag: "1",
     page_index: 0,

@@ -1,95 +1,30 @@
 <template>
   <!-- 盒子模型 -->
-  <!--  :style="{
-      background: data.activity.background
-        ? `url(${data.activity.background})`
-        : '',
-    }" -->
-  <div class="content">
+  <div
+    class="content"
+    :style="{
+      background: data.activity.dateStyle ? data.activity.dateStyle : '',
+    }"
+    v-if="store.activityNo && data.show"
+  >
+    <!--   -->
     <header>
-      <div
-        class="header_title"
-        :style="{
-          background: data.activity.activityName
-            ? `url(${data.activity.activityName})`
-            : '',
-        }"
-        style="background-size: 100% 100%; background-repeat: no-repeat"
-      ></div>
-      <!-- <img class="header_rule" :src="data.activity.activityRuleImage" /> -->
-      <!-- 活动规则颜色 -->
-      <div
-        class="activityRule"
-        :style="{
-          background: data.activity.activityRuleImage
-            ? `url(${data.activity.activityRuleImage})`
-            : '',
-        }"
-        style="background-size: 100% 100%; background-repeat: no-repeat"
-      >
-        <div
-          class="activityRule"
-          :style="{
-            color: data.activity.activityRuleStyle
-              ? data.activity.activityRuleStyle
-              : '#727272',
-          }"
-        >
-          {{ data.activity.activityRule }}
-        </div>
-      </div>
+      <!-- 活动规则 -->
+      <img
+        v-show="data.activity.activityName"
+        class="one"
+        :src="data.activity.activityName"
+      />
+      <img
+        v-show="data.activity.activityRuleImage"
+        class="two"
+        :src="data.activity.activityRuleImage"
+      />
     </header>
-
-    <div
+    <main
       class="main"
-      :style="{
-        background: data.activity.background
-          ? `url(${data.activity.background})`
-          : '',
-      }"
       style="background-size: 100% 100%; background-repeat: no-repeat"
     >
-      <!-- 标题文字 -->
-      <div
-        class="title"
-        v-if="data.activity.drawType == 1 || data.activity.drawType == 2"
-      >
-        <!-- 时间颜色 -->
-        <div
-          :style="{
-            color: data.activity.dateStyle
-              ? data.activity.dateStyle
-              : '#727272',
-          }"
-        >
-          时间：{{ data.startDate }}-{{ data.endDate }}
-        </div>
-        <!-- 抽奖次数颜色 -->
-        <div
-          class="text"
-          :style="{
-            color: data.activity.drawCountFontStyle
-              ? data.activity.drawCountFontStyle
-              : '#414141',
-          }"
-        >
-          抽奖次数
-        </div>
-        <div
-          class="time"
-          :style="{
-            color: data.activity.drawCountStyle
-              ? data.activity.drawCountStyle
-              : '#EB2800',
-          }"
-        >
-          {{ data.time }}次
-        </div>
-      </div>
-
-      <div class="title" v-else>
-        <div class="text">暂无抽奖</div>
-      </div>
       <!-- 抽奖区域 -->
       <!-- 九宫格抽奖 -->
       <div v-if="data.activity.drawType == 2">
@@ -100,12 +35,15 @@
           :changeIsTurnOver="changeIsTurnOver"
           :start="data.start"
           :changeShow="changeShow"
+          :qrImage="data.activity.qrImage"
+          :background="data.activity.background"
         />
       </div>
       <!-- 轮盘抽奖 -->
-      <div v-else-if="data.activity.drawType == 1">
+      <div v-else-if="data.activity.drawType == 1" class="corona">
+        <div class="title">参与活动赢大奖</div>
         <Corona
-          :activity="data.activity.poolList"
+          :poolList="data.activity.poolList"
           :result="data.result"
           :clickLottery="clickLottery"
           :changeIsTurnOver="changeIsTurnOver"
@@ -113,12 +51,68 @@
           :changeShow="changeShow"
         />
       </div>
-      <!--    无抽奖 -->
-      <div class="empty_img" v-else>
-        <img src="../../assets/movie/bg1.png" alt="" />
-        <!-- <Sudoku /> -->
+    </main>
+    <footer class="accept">
+      <div class="a one"></div>
+      <div class="a two"></div>
+      <div class="a three"></div>
+      <div class="a fore"></div>
+      <div class="introduce">
+        <span> 您当前剩余 {{ data.time ? data.time : 0 }}次抽奖机会</span>
+        <div class="rule" @click="data.showRule = true">抽奖须知</div>
       </div>
-    </div>
+      <div class="list">
+        <div class="list_title">
+          <img
+            class="img1"
+            @click="data.state = false"
+            :src="
+              data.state == true
+                ? 'https://imgcdn.dahebao.cn/20230111/20230111171100784045.png'
+                : 'https://imgcdn.dahebao.cn/20230111/20230111171326612090.png'
+            "
+            alt="图片"
+          />
+          <img
+            class="img2"
+            @click="data.state = true"
+            :src="
+              data.state == false
+                ? 'https://imgcdn.dahebao.cn/20230111/20230111171438503540.png'
+                : 'https://imgcdn.dahebao.cn/20230111/20230111171503435848.png'
+            "
+            alt="中奖信息"
+          />
+        </div>
+        <div class="prize">
+          <div
+            v-for="(item, index) in data.state == false
+              ? data.recordList
+              : data.myRecordList"
+            :key="index"
+            class="list_prize"
+          >
+            <div>{{ item.realName }}</div>
+            <div>{{ item.awardName }}</div>
+            <div>{{ item.phone }}</div>
+          </div>
+        </div>
+
+        <img
+          v-if="data.state"
+          class="line1"
+          src="https://imgcdn.dahebao.cn/20230111/20230111192157509483.png"
+          alt="线条"
+        />
+        <img
+          v-else
+          class="line2"
+          src="https://imgcdn.dahebao.cn/20230111/20230111192157509483.png"
+          alt="线条"
+        />
+      </div>
+    </footer>
+    <!--    无抽奖 -->
     <!-- 遮罩层领奖 -->
     <van-overlay :show="show">
       <div class="wrapper">
@@ -156,63 +150,90 @@
         </div>
       </div>
     </van-overlay>
-
-    <!-- 下部电影票 -->
-    <footer
-      :style="{
-        background: data.activity.drawRecordImage
-          ? `url(${data.activity.drawRecordImage})`
-          : '',
-      }"
-      style="background-size: 100% 100%; background-repeat: no-repeat"
+    <!-- 遮罩层活动规则 -->
+    <van-overlay
+      class-name="overLayRule"
+      :show="data.showRule"
+      @click="data.showRule = false"
     >
-      <div class="groud">
-        <div
-          class="cell"
-          v-for="(item, index) in data.recordList"
-          :key="index"
-          v-show="item.realName && item.awardName && item.phone"
-        >
-          <div>{{ item.realName }}</div>
-          <div>{{ item.awardName }}</div>
-          <div>{{ item.phone }}</div>
-        </div>
-      </div>
-    </footer>
+      <div class="wrapperRule">{{ data.activity.activityRule }}</div>
+    </van-overlay>
+  </div>
+  <div class="empty_img" v-else>
+    <img
+      src="https://imgcdn.dahebao.cn/20221027/20221027113957273185.png"
+      alt="暂时没有数据"
+    />
   </div>
 </template>
-
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from "@vue/reactivity";
 import "vant/es/dialog/style";
-import { Toast, Dialog } from "vant";
-import "vant/es/toast/style";
-import { onMounted } from "@vue/runtime-core";
+import { showToast, Dialog } from "vant";
+import { onMounted } from "vue";
 import { useCounterStore } from "../../stores/counter";
 import request from "@/api/Lottery/index";
 import Sudoku from "./components/Sudoku.vue";
 import Corona from "./components/Corona.vue";
 components: {
-  Sudoku, Corona;
+  Sudoku;
+  Corona;
 }
 const store = useCounterStore();
-//抽奖链接
-const data = reactive({
+interface dataType {
+  showRule: boolean;
+  state: boolean;
+  show: boolean;
+  startDate: string;
+  endDate: string;
+  sum: string;
+  start: boolean;
+  result: number;
+  activity: {
+    qrImage?: string;
+    background?: string;
+    drawType: number;
+    poolList: Array<any>;
+    activityRuleImage?: string;
+    activityRule?: string;
+    activityName?: string;
+    activityRuleStyle?: string;
+    dateStyle?: string;
+  };
+  time: number;
+  // activityNo: "",
+  //转盘是否能转
+  isTurnOver: boolean;
+  //中奖人员名单
+  recordList: Array<any>;
+  myRecordList: Array<any>;
+}
+const data = reactive<dataType>({
+  showRule: false,
+  show: false,
   startDate: "",
+  state: false,
   endDate: "",
   sum: "",
   start: true,
   result: 0,
   activity: {
+    qrImage: "",
+    dateStyle: "",
+    background: "",
+    activityRuleStyle: "",
+    activityRuleImage: "", //活动规则图片
+    activityName: "", //顶部图片
+    activityRule: "", //活动规则文字
     drawType: 0,
     poolList: [],
   },
   time: 0,
-  activityNo: "",
   //转盘是否能转
   isTurnOver: true,
   //中奖人员名单
   recordList: [],
+  myRecordList: [],
 });
 const show = ref(false);
 const address = ref("");
@@ -230,21 +251,21 @@ function onSubmit() {
 function saveAddress() {
   request
     .saveAddress(
-      `?userId=${store.userId}&activityNo=${data.activityNo}`,
+      `?userId=${store.userId}&activityNo=${store.activityNo}`,
       JSON.stringify({
         realName: realName.value,
         recordNo: recordNo.value,
         phone: phone.value,
-        activityNo: data.activityNo,
+        activityNo: store.activityNo,
         address: address.value,
       })
     )
-    .then((res) => {
-      Toast("保存成功");
+    .then(() => {
+      showToast("保存成功");
       changeShow();
     })
     .catch((err) => {
-      Toast(err);
+      showToast(err);
       changeShow();
     });
 }
@@ -263,9 +284,9 @@ function clickLottery() {
       request
         .toDraw({
           userId: store.userId,
-          activityNo: data.activityNo,
+          activityNo: store.activityNo,
         })
-        .then((res) => {
+        .then((res: any) => {
           recordNo.value = res.recordNo;
           if (data.activity.drawType == 2) {
             for (let i in data.activity.poolList) {
@@ -284,13 +305,13 @@ function clickLottery() {
             for (let i in data.activity.poolList) {
               if (data.activity.poolList[i].awardNo == res.awardNo) {
                 data.sum = i;
-                data.result = i * 1 + 1;
+                data.result = Number(i) * 1 + 1;
                 data.start = !data.start;
                 return;
               }
             }
           } else {
-            Toast("出错了");
+            showToast("出错了");
           }
         })
         .catch(() => {
@@ -303,12 +324,13 @@ function clickLottery() {
           }
         });
     } else {
-      Dialog.alert({
-        message: "请勿重复抽奖",
-      }).then(() => {});
+      showToast("请勿重复抽奖");
+      // Dialog.alert({
+      //   message: "请勿重复抽奖",
+      // }).then(() => {});
     }
   } else {
-    Toast("抽奖次数不足");
+    showToast("抽奖次数不足");
   }
 }
 //获取抽奖次数
@@ -316,41 +338,26 @@ function findCount() {
   request
     .findDrawCount({
       userId: store.userId,
-      activityNo: data.activityNo,
+      activityNo: store.activityNo,
     })
-    .then((res) => {
+    .then((res: any) => {
       data.time = res.drawCount;
-    })
-    .catch((err) => {});
-}
-//获取用户的activityNo
-function getActivityNo() {
-  if (window.location.href.indexOf("activityNo") == -1) {
-    Toast("请添加活动编码");
-  } else if (window.location.href.indexOf("&") == -1) {
-    data.activityNo = window.location.href.match(/activityNo=(\S*)/)[1];
-  } else {
-    let url = window.location.href.match(/activityNo=(\S*)&/)[1];
-    while (url.indexOf("&") != -1) {
-      url = url.match(/(\S*)&/)[1];
-    }
-    data.activityNo = url;
-  }
+    });
 }
 //获取活动编码和配置
 function findDraw() {
-  request
-    .findDraw({
-      userId: store.userId,
-      activityNo: data.activityNo,
-    })
-    .then((res) => {
-      console.log(res);
-      if (store.userId != "empty") {
+  if (store.activityNo) {
+    request
+      .findDraw({
+        userId: store.userId,
+        activityNo: store.activityNo,
+      })
+      .then((res: any) => {
         if (
           res.drawActivityConfig.drawType == 2 &&
           res.drawActivityConfig.poolList.length == 8
         ) {
+          data.show = true;
           const temporaryData = res.drawActivityConfig;
           temporaryData.poolList.splice(4, 0, {
             awardImage: null,
@@ -361,100 +368,105 @@ function findDraw() {
           res.drawActivityConfig.drawType == 1 &&
           res.drawActivityConfig.poolList.length == 6
         ) {
+          data.show = true;
           data.activity = res.drawActivityConfig;
         } else {
-          Toast("抽奖配置有误，请重新配置");
+          showToast("抽奖配置有误，请重新配置");
         }
-      } else {
-        Toast("未登录，无法抽奖");
-      }
-    })
-    .then(() => {
-      if (data.activity.poolList.length > 0) {
-        data.startDate = data.activity.startDate.substring(0, 10);
-        data.endDate = data.activity.endDate.substring(0, 10);
-        data.startDate = data.startDate.replace(/-/g, "/");
-        data.endDate = data.endDate.replace(/-/g, "/");
-      }
-    })
-    .catch((err) => {
-      console.log(err, "err");
-      Toast("获取抽奖配置失败，请刷新重试");
-    });
+      });
+  } else {
+    showToast("暂无抽奖");
+  }
 }
 //抽奖人员名单
 function drawRecordList() {
   request
     .drawRecordList({
       userId: store.userId,
-      activityNo: data.activityNo,
+      activityNo: store.activityNo,
       awardFlag: "1",
       page_index: 0,
       page_count: 50,
     })
-    .then((res) => {
+    .then((res: any) => {
       data.recordList = res.recordList;
+    });
+}
+//我的中奖信息
+function myRecordList() {
+  request
+    .drawRecordList({
+      myUserId: store.userId,
+      activityNo: store.activityNo,
+      awardFlag: "1",
+      page_index: 0,
+      page_count: 50,
     })
+    .then((res: any) => {
+      data.myRecordList = res.recordList;
+    });
 }
 //更改isTurnOver状态
 function changeIsTurnOver() {
   data.isTurnOver = true;
 }
-
 onMounted(() => {
-  //获取编号
-  getActivityNo();
-  //初始化获取抽奖次数
-  findCount();
   //获取抽奖配置
   findDraw();
-  //中奖人员名单
-  drawRecordList();
+  if (store.activityNo) {
+    //初始化获取抽奖次数
+    findCount();
+    //中奖人员名单
+    drawRecordList();
+    myRecordList();
+  }
 });
 </script>
-
 <style lang="less" scoped>
 .content {
   width: 100vw;
-  min-height: 100%;
-  background: #e4e4e4;
+  min-height: 100vh;
+  padding-bottom: 50px;
   text-align: center;
   position: relative;
-
+  min-height: 450px;
   header {
-    min-height: 458px;
+    // min-height: 458px;
     width: 750px;
     position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    // font-size: 0px;
+    .activityRule {
+      color: #fff;
+      height: 50px;
+      line-height: 50px;
+      min-width: 180px;
+      box-sizing: border-box;
+      text-align: center;
+      position: absolute;
+      right: 0px;
+      top: 50px;
+      border-radius: 20px 0px 0px 20px;
+    }
     .header_title {
       width: 750px;
       height: 209px;
     }
-    .activityRule {
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      width: 750px;
-      height: 250px;
-      white-space: pre-wrap;
-      text-overflow: -o-ellipsis-lastline;
-      overflow-y: scroll;
-      line-height: 24px;
-      font-size: 24px;
-      font-weight: 400;
-      color: #6f6f6f;
-      text-align: left;
-      // box-sizing: border-box;
-      // padding: 106px 75px 50px 75px;
-      .activityRule {
-        width: 604px;
-        height: 92px;
-        line-height: 30px;
-        margin: 106px 71px 51px 75px;
-      }
+    .one {
+      display: block;
+      width: 100vw;
+    }
+    .two {
+      display: block;
+      width: 100vw;
     }
   }
   .main {
+    padding-top: 30px;
     width: 750px;
-    height: 759px;
+    // height: 759px;
     .title {
       width: 100vw;
       .text {
@@ -469,12 +481,158 @@ onMounted(() => {
         color: #eb2800;
       }
     }
+    .corona {
+      width: 691px;
+      height: 760px;
+      background: #fff;
+      margin: 0 auto;
+      .title {
+        width: 691px;
+        height: 100px;
+        color: #cf2013;
+        font-size: 50px;
+        font-weight: 600;
+        line-height: 100px;
+        margin-bottom: 40px;
+        background: linear-gradient(#feefc1, #fcd14a);
+      }
+    }
   }
+  .accept {
+    position: relative;
+    .a {
+      position: absolute;
+      width: 26px;
+      height: 23px;
+      background: #d90e26;
+    }
 
-  .empty_img {
-    img {
-      width: 628px;
-      height: 575px;
+    .one {
+      top: -22px;
+      left: 165px;
+    }
+
+    .two {
+      top: 305px;
+      left: 165px;
+    }
+
+    .three {
+      top: -22px;
+      left: 560px;
+    }
+
+    .fore {
+      top: 305px;
+      left: 560px;
+    }
+
+    .introduce {
+      margin: 22px auto;
+      box-sizing: border-box;
+      background: #ffd6a9;
+      width: 667px;
+      height: 305px;
+      border-radius: 10px;
+      border: 20px solid #d90e26;
+      text-align: center;
+
+      span {
+        display: inline-block;
+        margin-top: 40px;
+        font-size: 44px;
+        font-weight: bold;
+        color: #4e1a02;
+      }
+
+      .rule {
+        margin-top: 32px;
+        display: inline-block;
+        background-image: url("https://imgcdn.dahebao.cn/20230111/20230111145856628436.png");
+        background-size: 100% 100%;
+        width: 551px;
+        height: 101px;
+        line-height: 81px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 42px;
+      }
+    }
+
+    .list {
+      margin: 0 auto;
+      width: 667px;
+      background: #ffd6a9;
+      height: 597px;
+      border-radius: 10px;
+      border: 20px solid #d90e26;
+      position: relative;
+      box-sizing: border-box;
+      .line1 {
+        position: absolute;
+        top: 105px;
+        left: 300px;
+        width: 277px;
+        height: 20px;
+      }
+
+      .line2 {
+        position: absolute;
+        width: 277px;
+        height: 20px;
+        top: 105px;
+        left: 20px;
+      }
+
+      .list_title {
+        margin: 0 auto;
+        box-sizing: content-box;
+        padding-bottom: 20px;
+        margin-top: 50px;
+        width: 85%;
+        display: flex;
+        justify-content: space-around;
+        height: 42px;
+        border-bottom: 6px solid #4e1a02;
+
+        .img1 {
+          width: 138px;
+        }
+
+        .img2 {
+          width: 219px;
+        }
+      }
+
+      .prize {
+        padding-top: 30px;
+        height: 400px;
+        overflow-y: scroll;
+
+        .list_prize {
+          margin: 0 30px;
+          line-height: 75px;
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px dashed #fff;
+          font-size: 26px;
+          font-weight: 400;
+          color: #4e1a02;
+
+          div {
+            width: 30%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: left;
+          }
+
+          div:first-child {
+            text-align: center;
+            width: 20%;
+          }
+        }
+      }
     }
   }
   .wrapper {
@@ -490,38 +648,31 @@ onMounted(() => {
       padding-top: 40px;
     }
   }
-
-  footer {
-    // margin-top: 42px;
-    width: 750px;
-    height: 330px;
-    // position: relative;
-    text-align: left;
-    // background-color: #ffffff;
-    padding-top: 40px;
-    box-sizing: border-box;
-    .groud {
-      margin: 0 auto;
-      margin-bottom: 20px;
-      padding: 20px 35px;
-      width: 662px;
-      height: 266px;
-      // padding: 47px 35px;
+  .overLayRule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .wrapperRule {
+      text-align: left;
+      white-space: pre-wrap;
+      border-radius: 20px;
+      background: #fff;
       box-sizing: border-box;
+      padding: 30px;
+      max-height: 50vh;
+      width: 80vw;
       overflow-y: scroll;
-      .cell {
-        line-height: 75px;
-        display: flex;
-        justify-content: space-around;
-        border-bottom: 1px dashed #bdbdbd;
-        font-size: 26px;
-        font-weight: 400;
-        color: #6f6f6f;
-        div {
-          width: 30%;
-        }
-      }
     }
+  }
+}
+.empty_img {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  text-align: center;
+  padding-top: 300px;
+  img {
+    width: 750px;
   }
 }
 </style>

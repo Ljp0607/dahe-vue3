@@ -3,23 +3,6 @@
     <Title :rule="data.rule" :drawRule="data.drawRule" />
     <Tabs :drawRule="data.drawRule" />
     <Lottery :active="data.active" />
-    <!-- v-if="data.recordListWeek.length > 0" -->
-    <div class="recordWeek">
-      <!-- 下方轮播 周获奖 -->
-      <div class="groud">
-        <div
-          class="cell"
-          v-for="(item, index) in data.recordListWeek"
-          :key="index"
-          v-show="item.realName && item.awardName && item.phone"
-        >
-          <div>{{ index < 3 ? "" : index + 1 }}</div>
-          <div>{{ item.realName }}</div>
-          <div>{{ item.awardName }}</div>
-          <div>{{ item.phone }}</div>
-        </div>
-      </div>
-    </div>
     <!-- 下方中奖 -->
     <div class="record">
       <div class="groud" ref="scrollRef">
@@ -71,12 +54,6 @@ function RecordList() {
     data.recordList = res.recordList;
   });
 }
-//获取周中奖人员名单
-function RecordListweek() {
-  weekList().then((res: any) => {
-    data.recordListWeek = res.recordList;
-  });
-}
 //二次分享
 getShare(
   "兔逢新春，记录团圆！",
@@ -86,7 +63,6 @@ onBeforeMount(() => {
   getList();
 });
 onMounted(() => {
-  RecordListweek();
   RecordList();
 });
 </script>

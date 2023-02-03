@@ -5,7 +5,7 @@ export const useCounterStore = defineStore({
   state: () => ({
     counter: 0,
     userId: "",
-    activityNo: "81ff463cb6374dbf9b37303cb742adc8",
+    activityNo: "",
     citys: [],
     city: {
       city_id: "",

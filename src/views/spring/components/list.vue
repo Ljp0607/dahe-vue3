@@ -95,13 +95,13 @@ function postst(index: number) {
         if (res == "操作成功") {
           props.info[index].hotData += 10;
           props.info[index].ifThumb = 1;
-          showToast("投票成功");
+          showToast("点赞成功");
         } else {
           showToast(res);
         }
       });
     } else {
-      showToast("每个作品只能投一票");
+      showToast("每个作品只能点赞一次");
     }
   }
 }
@@ -110,7 +110,7 @@ function postThum(item: any, index: number) {
   // console.log(e);
   //如果在微信浏览器,跳转下载页
   if (store.$state.userId == "" && setting()) {
-    showToast("请在豫视频App投票");
+    showToast("请在豫视频App点赞");
     setTimeout(() => {
       location.href =
         "https://news.dahebao.cn/appdownload/index.html?Type=102&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";

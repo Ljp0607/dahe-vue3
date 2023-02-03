@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import "vant/es/dialog/style";
-import { showToast, Dialog } from "vant";
+import { showToast, showDialog } from "vant";
 import request from "@/api/Lottery/index";
 import { useCounterStore } from "@/stores/counter";
 const props = defineProps({
-  // RecordList: Function,
   active: String,
 });
 //抽奖链接
@@ -14,7 +13,6 @@ const data: any = reactive({
   message: {
     realName: "",
     phone: "",
-    address: "",
   },
   show: false,
   rotateAngle: 0,
@@ -28,7 +26,6 @@ const data: any = reactive({
 const store = useCounterStore();
 const pattern =
   /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1589]))\d{8}$/;
-
 //获取抽奖信息
 request
   .findDraw({
@@ -48,7 +45,6 @@ function saveAddress() {
         recordNo: data.message.recordNo,
         phone: data.message.phone,
         activityNo: "2e21e3218dee479b9b51094eaec7877c",
-        address: data.message.address,
       })
     )
     .then((res: any) => {
@@ -82,6 +78,7 @@ function clickCoronak() {
         activityNo: "2e21e3218dee479b9b51094eaec7877c",
       })
       .then((res: any) => {
+        console.log(res);
         findCount();
         data.activity.poolList.map((item: any, index: number) => {
           if (item.awardNo == res.awardNo) {
@@ -89,7 +86,7 @@ function clickCoronak() {
             rotateAngle(index + 1);
             setTimeout(function () {
               if (item.awardFlag == "1") {
-                Dialog.alert({
+                showDialog({
                   message: "恭喜获得" + item.awardName,
                 }).then(() => {
                   data.show = true;
@@ -192,12 +189,14 @@ findCount();
                   :rules="[{ pattern, message: '请输入正确手机号' }]"
                 />
                 <!-- 通过 validator 返回错误提示 -->
-                <van-field
+                <!-- <van-field
                   v-model="data.message.address"
                   placeholder="请输入地址"
                   name="address"
                   :rules="[{ required: true, message: '请填写地址' }]"
-                />
+                /> -->
+                <div style="margin: 30px">请致电13526582002领取奖品</div>
+
                 <!-- 通过 validator 进行异步函数校验 -->
               </van-cell-group>
               <div style="margin: 16px">
@@ -340,12 +339,12 @@ findCount();
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  min-height: 100%;
   .block {
     box-sizing: border-box;
     padding-top: 30px;
     width: 620px;
-    height: 500px;
+    min-height: 650px;
     border-radius: 30px;
     background-color: #fff;
   }

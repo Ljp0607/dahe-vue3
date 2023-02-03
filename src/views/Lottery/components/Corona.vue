@@ -11,31 +11,27 @@
       >
         <div
           class="sector"
-          v-for="(item, index) in data.activity.poolList"
+          v-for="(item, index) in props.poolList"
           :key="index"
         >
           <div class="sector-inner">
-            <span>{{ props.activity[index].awardName }}</span>
-            <img
-              v-show="props.activity[index].awardImage"
-              :src="props.activity[index].awardImage"
-            />
+            <span>{{ item.awardName }}</span>
+            <img v-show="item.awardImage" :src="item.awardImage" />
           </div>
         </div>
       </div>
       <div class="pointer" @click="clickCoronak">
-        <!-- <img src="../../../assets/Lottery/02.png" @click="clickCoronak" /> -->
         <div class="start">立即抽奖</div>
       </div>
     </div>
   </main>
 </template>
-<script setup>
+<script setup lang="ts">
 import { reactive, watch } from "vue";
 import "vant/es/dialog/style";
-import { Dialog } from "vant";
+import { showDialog } from "vant";
 const props = defineProps({
-  activity: Array,
+  poolList: Array<any>,
   clickLottery: Function,
   result: Number,
   changeIsTurnOver: Function,
@@ -48,28 +44,6 @@ const data = reactive({
   time: 0,
   rotate_angle: "",
   item: 24,
-  activity: {
-    poolList: [
-      {
-        name: "iphone",
-      },
-      {
-        name: "ipad",
-      },
-      {
-        name: "switch",
-      },
-      {
-        name: "玩具",
-      },
-      {
-        name: "好玩的",
-      },
-      {
-        name: "好吃的",
-      },
-    ],
-  },
 });
 //抽奖
 function clickCoronak() {
@@ -108,8 +82,8 @@ function rotateAngle(i) {
   data.rotateAngle = data.rotateAngle + 3600 + data.time;
   data.rotate_angle = `rotate(${data.rotateAngle}deg)`;
   setTimeout(function () {
-    Dialog.alert({
-      message: props.activity[i - 1].awardName,
+    showDialog({
+      message: props.poolList[i - 1].awardName,
     }).then(() => {
       props.changeShow();
       // refresh();
@@ -117,7 +91,6 @@ function rotateAngle(i) {
     props.changeIsTurnOver();
   }, 5200);
 }
-
 watch(
   () => props.start,
   (newValue, oldValue) => {
@@ -125,38 +98,43 @@ watch(
   }
 );
 </script>
-
 <style lang="less" scoped>
 .wrapper {
   position: relative;
-  height: 585px;
-  width: 585px;
-  background-image: url("../../../assets/Lottery/01.png");
+  height: 563px;
+  width: 560px;
+  background-image: url("https://imgcdn.dahebao.cn/20221123/20221123143246575179.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
-  align-items: center;
   margin: 0 auto;
 }
 .panel {
   position: relative;
-  height: 464px;
-  width: 464px;
-  border-radius: 232px;
-  // border: #3375ca 8px solid;
-  background: #3375ca;
+  background: #b80100;
+  background-image: url("https://imgcdn.dahebao.cn/20221123/20221123145330470324.png");
+  background-size: 450px 450px;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 447px;
+  width: 447px;
+  border-radius: 231px;
+  box-sizing: border-box;
+  margin-top: 52px;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.5),
+    0 6px 20px 0 rgba(255, 255, 255, 0.5);
 }
-
 .sector {
   position: absolute;
-  width: 224px;
-  height: 448px;
-  border-radius: 0px 224px 224px 0;
+  width: 220px;
+  height: 440px;
+  border-radius: 0px 220px 220px 0;
   overflow: hidden;
   left: 50%;
   top: 8px;
   transform-origin: left center;
+  box-sizing: border-box;
 }
 .sector:nth-child(1) {
   transform: rotate(-30deg);
@@ -176,58 +154,97 @@ watch(
 .sector:nth-child(6) {
   transform: rotate(270deg);
 }
-.sector:nth-child(2n + 1) .sector-inner {
-  background: #fff1ad;
-}
-.sector:nth-child(2n) .sector-inner {
-  background: #f3d4b3;
-}
 .sector-inner {
-  width: 224px;
-  height: 448px;
+  width: 220px;
+  height: 440px;
   transform: rotate(-120deg);
   transform-origin: left center;
   box-sizing: border-box;
 }
 .sector-inner span {
-  font-size: 28px;
+  font-size: 24px;
   display: block;
   width: 168px;
   position: fixed;
   white-space: nowrap;
-  // text-overflow: ellipsis;
   overflow: hidden;
-  // word-break: break-all;
-  bottom: 5px;
-  left: 18px;
+  bottom: 20px;
+  left: 12px;
   transform-origin: center top;
   transform: rotate(150deg);
   color: #d46854;
+  overflow: hidden;
 }
 .sector-inner img {
-  height: 42px;
-  width: 42px;
+  height: 80px;
+  width: 80px;
   display: block;
   position: fixed;
-  bottom: 46px;
-  left: 55px;
+  bottom: 2px;
+  left: 42px;
   transform-origin: center top;
   transform: rotate(150deg);
 }
 .pointer {
-  width: 186px;
-  height: 222px;
-  background-image: url("../../../assets/Lottery/02.png");
+  width: 211px;
+  height: 223px;
+  background-image: url("https://imgcdn.dahebao.cn/20221123/20221123145731728123.png");
   background-size: 100% 100%;
   position: absolute;
+  margin-top: 165px;
   .start {
     display: inline-block;
     margin: 0 auto;
-    margin-top: 80px;
+    margin-top: 60px;
     width: 75px;
     font-size: 30px;
     font-weight: bold;
-    color: #5997ec;
+    color: #fff;
+  }
+}
+.van-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  .block {
+    box-sizing: border-box;
+    padding-top: 30px;
+    width: 620px;
+    height: 500px;
+    border-radius: 30px;
+    background-color: #fff;
+  }
+}
+.number {
+  width: 570px;
+  height: 293px;
+  background-image: url("https://imgcdn.dahebao.cn/20221130/20221130163129461239.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin: 50px auto 0;
+  box-sizing: border-box;
+  padding-top: 80px;
+  .residue {
+    font-size: 38px;
+    font-weight: bold;
+    color: #4e1a02;
+  }
+  .assistance {
+    width: 471px;
+    height: 86px;
+    line-height: 75px;
+    background-image: url("https://imgcdn.dahebao.cn/20221130/20221130163152193201.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    margin-top: 28px;
+    font-size: 34px;
+    font-weight: bold;
+    color: #ffffff;
+    // -webkit-text-stroke: 2px #441709;
+    text-shadow: -1px -1px 0 #451701, 1px -1px 0 #451701, -1px 1px 0 #451701,
+      1px 1px 0 #451701;
   }
 }
 </style>

@@ -1,67 +1,19 @@
 <template>
   <div>
-    <main>
-      <div class="decorate_top">
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-      </div>
-      <div class="decorate_left">
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-      </div>
-      <div class="decorate_right">
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-      </div>
-      <div class="decorate_bottom">
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-        <div class="tip"></div>
-      </div>
+    <main
+      :style="{
+        background: props.background ? `url(${props.background})` : '',
+      }"
+      style="background-size: 100% 100%"
+    >
       <div
         v-for="(item, index) in data.item"
-        :style="{ background: item.state ? '#FFFFE0' : '' }"
+        :style="{
+          background: item.state ? '#FFFFE0' : `url(${props.qrImage})`,
+        }"
+        style="background-size: 100% 100%"
         :key="index"
-        :class="[item.color ? 'btn' : '', 'item']"
+        class="item"
       >
         <div v-if="props.activity">
           <!-- 奖品图片 -->
@@ -80,32 +32,34 @@
     </main>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { reactive, watch } from "vue";
 import "vant/es/dialog/style";
-import { Dialog } from "vant";
+import { showDialog } from "vant";
 const props = defineProps({
+  qrImage: String,
   start: Boolean,
-  activity: Array, //抽奖配置
+  activity: Array<any>, //抽奖配置
   result: Number, //抽中的结果
   clickLottery: Function,
   changeIsTurnOver: Function, //抽奖的状态
   changeShow: Function, //调领奖
+  background: String,
 });
 //抽奖链接
 const data = reactive({
   // isTurnOver: true,
   //初步样式
   item: [
-    { state: 0, color: 1 }, //飞龙
-    { state: 0, color: 0 }, //观音菩萨
-    { state: 0, color: 1 }, //魔鬼
-    { state: 0, color: 0 }, //剑齿虎
-    { state: 0, color: 0 }, //应帅
-    { state: 0, color: 0 }, //戴沐白
-    { state: 0, color: 1 }, //吗红晕
-    { state: 0, color: 0 }, //白虎
-    { state: 0, color: 1 }, //无敌怪兽
+    { state: false }, //飞龙
+    { state: false }, //观音菩萨
+    { state: false }, //魔鬼
+    { state: false }, //剑齿虎
+    { state: false }, //应帅
+    { state: false }, //戴沐白
+    { state: false }, //吗红晕
+    { state: false }, //白虎
+    { state: false }, //无敌怪兽
   ],
 });
 
@@ -133,21 +87,21 @@ function getLottery(delay, index, sum, id) {
   for (let i in order_arr) {
     setTimeout(() => {
       // 清理掉选中的状态
-      data.item.forEach((e) => {
+      data.item.forEach((e: any) => {
         e.state = false;
       });
       // 执行到第几个就改变它的选中状态
       data.item[order_arr[i]].state = true;
       // 如果转到最后一圈且转完了，把抽奖状态改为已经转完了
-      if (index == sum && i == order_arr.length - 1) {
-        Dialog.alert({
+      if (index == sum && Number(i) == order_arr.length - 1) {
+        showDialog({
           message: props.activity[order_arr[i]].awardName,
         }).then(() => {
           props.changeShow();
         });
         props.changeIsTurnOver();
       }
-    }, delay * i);
+    }, delay * Number(i));
   }
 }
 //点击抽奖
@@ -161,21 +115,19 @@ watch(
   }
 );
 </script>
-
 <style lang="less" scoped>
 main {
   margin: 0 auto;
-  background: #5e9aed;
-  width: 486px;
-  height: 486px;
   border-radius: 21px;
-  box-shadow: 0 0 5px 6px #9ddbfc;
-  padding: 31px 23px;
+  padding: 70px 74px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
+  box-sizing: border-box;
   position: relative;
+  width: 667px;
+  height: 675px;
   .decorate_top {
     width: 460px;
     height: 22px;
@@ -254,42 +206,32 @@ main {
   }
 
   img {
-    margin-top: 24px;
-    width: 50px;
-    height: 50px;
+    margin-top: 20px;
+    width: 80px;
+    height: 80px;
   }
   .giftName {
-    margin: 12px 8px;
+    margin: 5px 8px;
     font-size: 25px;
     // text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
   }
   .item {
-    width: 141px;
-    height: 136px;
-    border-radius: 10rpx;
-    background: #fdf3aa;
+    width: 151px;
+    height: 160px;
     text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 8px #dace4a;
-  }
-  .btn {
-    background: #f1d5b0;
-    box-shadow: 0 8px #fd8748;
   }
   .clickLott {
     background: linear-gradient(0deg, #fa5025 0%, #fe9c56 100%);
-    width: 142px;
-    height: 136px;
-    box-shadow: 0 8px #fa5025;
-    border-radius: 10px;
+    width: 160px;
+    height: 160px;
     box-sizing: border-box;
+    border-radius: 10px;
     position: absolute;
     padding: 20px 31px;
     font-size: 39px;
     color: white;
-    text-align: center;
   }
 }
 </style>
