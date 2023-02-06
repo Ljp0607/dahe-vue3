@@ -37,6 +37,7 @@ const props = defineProps({
   changeIsTurnOver: Function,
   changeShow: Function,
   start: Boolean,
+  myRecordList: Function,
 });
 //抽奖链接
 const data = reactive({

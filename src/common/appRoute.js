@@ -241,7 +241,6 @@ function goLogin() {
     _creatA('/ios://userLogin@?data=')
   }
 }
-
 /**
  * 去订阅号主页
  * @param {string} userId 订阅号的id

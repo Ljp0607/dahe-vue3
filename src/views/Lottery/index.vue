@@ -41,7 +41,13 @@
       </div>
       <!-- 轮盘抽奖 -->
       <div v-else-if="data.activity.drawType == 1" class="corona">
-        <div class="title">参与活动赢大奖</div>
+        <div class="title">
+          {{
+            data.activity.activityRuleStyle
+              ? data.activity.activityRuleStyle
+              : "参与活动赢大奖"
+          }}
+        </div>
         <Corona
           :poolList="data.activity.poolList"
           :result="data.result"
@@ -114,7 +120,7 @@
     </footer>
     <!--    无抽奖 -->
     <!-- 遮罩层领奖 -->
-    <van-overlay :show="show">
+    <van-overlay :show="show" :lock-scroll="false">
       <div class="wrapper">
         <div class="block">
           <div>请填写领奖信息</div>
@@ -152,8 +158,9 @@
     </van-overlay>
     <!-- 遮罩层活动规则 -->
     <van-overlay
-      class-name="overLayRule"
+      class="overLayRule"
       :show="data.showRule"
+      :lock-scroll="false"
       @click="data.showRule = false"
     >
       <div class="wrapperRule">{{ data.activity.activityRule }}</div>
@@ -175,6 +182,8 @@ import { useCounterStore } from "../../stores/counter";
 import request from "@/api/Lottery/index";
 import Sudoku from "./components/Sudoku.vue";
 import Corona from "./components/Corona.vue";
+import { goLogin } from "@/common/appRoute.js";
+import setting from "@/common/setting";
 components: {
   Sudoku;
   Corona;
@@ -262,6 +271,7 @@ function saveAddress() {
     )
     .then(() => {
       showToast("保存成功");
+      myRecordList();
       changeShow();
     })
     .catch((err) => {
@@ -277,60 +287,66 @@ function changeShow() {
 }
 //抽奖
 function clickLottery() {
-  if (data.time > 0) {
-    if (data.isTurnOver) {
-      data.isTurnOver = false;
-      data.time--;
-      request
-        .toDraw({
-          userId: store.userId,
-          activityNo: store.activityNo,
-        })
-        .then((res: any) => {
-          recordNo.value = res.recordNo;
-          if (data.activity.drawType == 2) {
-            for (let i in data.activity.poolList) {
-              if (
-                res.awardNo &&
-                data.activity.poolList[i].awardNo == res.awardNo
-              ) {
-                data.sum = i;
-                let order_arr = [1, 2, 3, 8, 5, 4, 7, 6, 5];
-                data.result = order_arr[i];
-                data.start = !data.start;
-                return;
+  if (store.userId) {
+    if (data.time > 0) {
+      if (data.isTurnOver) {
+        data.isTurnOver = false;
+        data.time--;
+        request
+          .toDraw({
+            userId: store.userId,
+            activityNo: store.activityNo,
+          })
+          .then((res: any) => {
+            recordNo.value = res.recordNo;
+            if (data.activity.drawType == 2) {
+              for (let i in data.activity.poolList) {
+                if (
+                  res.awardNo &&
+                  data.activity.poolList[i].awardNo == res.awardNo
+                ) {
+                  data.sum = i;
+                  let order_arr = [1, 2, 3, 8, 5, 4, 7, 6, 5];
+                  data.result = order_arr[i];
+                  data.start = !data.start;
+                  return;
+                }
               }
-            }
-          } else if (data.activity.drawType == 1) {
-            for (let i in data.activity.poolList) {
-              if (data.activity.poolList[i].awardNo == res.awardNo) {
-                data.sum = i;
-                data.result = Number(i) * 1 + 1;
-                data.start = !data.start;
-                return;
+            } else if (data.activity.drawType == 1) {
+              for (let i in data.activity.poolList) {
+                if (data.activity.poolList[i].awardNo == res.awardNo) {
+                  data.sum = i;
+                  data.result = Number(i) * 1 + 1;
+                  data.start = !data.start;
+                  return;
+                }
               }
+            } else {
+              showToast("出错了");
             }
-          } else {
-            showToast("出错了");
-          }
-        })
-        .catch(() => {
-          if (data.activity.drawType == 2) {
-            data.start = !data.start;
-            data.result = 5;
-          } else {
-            data.start = !data.start;
-            data.result = 6;
-          }
-        });
+          })
+          .catch(() => {
+            if (data.activity.drawType == 2) {
+              data.start = !data.start;
+              data.result = 5;
+            } else {
+              data.start = !data.start;
+              data.result = 6;
+            }
+          });
+      } else {
+        showToast("请勿重复抽奖");
+      }
     } else {
-      showToast("请勿重复抽奖");
-      // Dialog.alert({
-      //   message: "请勿重复抽奖",
-      // }).then(() => {});
+      showToast("抽奖次数不足");
     }
   } else {
-    showToast("抽奖次数不足");
+    if (setting()) {
+      location.href =
+        "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/Lottery/index.html#/Lottery";
+    } else {
+      goLogin();
+    }
   }
 }
 //获取抽奖次数
@@ -386,7 +402,7 @@ function drawRecordList() {
       activityNo: store.activityNo,
       awardFlag: "1",
       page_index: 0,
-      page_count: 50,
+      page_count: 200,
     })
     .then((res: any) => {
       data.recordList = res.recordList;
@@ -396,7 +412,7 @@ function drawRecordList() {
 function myRecordList() {
   request
     .drawRecordList({
-      myUserId: store.userId,
+      myUserId: store.userId ? store.userId : "empty",
       activityNo: store.activityNo,
       awardFlag: "1",
       page_index: 0,
@@ -649,19 +665,22 @@ onMounted(() => {
     }
   }
   .overLayRule {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
     .wrapperRule {
+      margin: 0 auto;
       text-align: left;
       white-space: pre-wrap;
       border-radius: 20px;
       background: #fff;
       box-sizing: border-box;
       padding: 30px;
-      max-height: 50vh;
+      max-height: 70vh;
       width: 80vw;
+      font-size: 30px;
       overflow-y: scroll;
+      margin-top: 100px;
     }
   }
 }
