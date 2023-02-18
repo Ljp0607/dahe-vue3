@@ -212,7 +212,7 @@ function postst(item: any, index: number) {
           "Content-Type": "application/json",
         },
       },
-    }).then((res) => {
+    }).then((res: any) => {
       if (res.state == 1) {
         data.item[index].hotData += 10;
         data.item[index].ifThumb = 1;
@@ -310,6 +310,7 @@ onUnmounted(() => {
                     :src="JSON.parse(items.postsImg)[0].imgUrl + '/pc_600'"
                   />
                 </div>
+                <!-- 人气值 -->
                 <div class="postsTitle">
                   <div class="hotData">
                     <span> 人气值:</span>

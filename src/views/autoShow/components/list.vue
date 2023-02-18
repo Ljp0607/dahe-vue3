@@ -1,25 +1,41 @@
 <template>
   <div class="main" v-if="props.info.length > 0">
-    <div v-for="(item, index) in props.info" :key="index" class="item">
-      <img
-        :src="JSON.parse(item.postsImg)[0].imgUrl + '/pc_600'"
-        :alt="item.postsTitle"
-        @click="navigetDetail(item.postsId)"
-      />
-      <div class="hotdata">
-        <span>人气值:</span>
-        <span>{{ item.hotData }}</span>
+    <!--遍历数组,生成视频或图片 -->
+    <div class="item" v-for="(items, indexs) in props.info" :key="indexs">
+      <!-- 如果有视频,展示视频和播放键 -->
+      <div @click="navigetDetail(indexs)" class="video" v-if="items.postsVideo">
+        <img :src="items.postsVideoImg" />
+        <img
+          class="item_start"
+          src="https://imgcdn.dahebao.cn/20221011/20221011094515515822.png"
+        />
       </div>
-      <button v-if="item.ifThumb != 1" @click="postst(index)">为TA投票</button>
-      <button v-else @click="postst(index)">已投票</button>
+      <!-- 如果有图片,显示图片 -->
+      <div @click="navigetDetail(indexs)" class="img" v-else>
+        <img
+          class="postsImg"
+          :src="JSON.parse(items.postsImg)[0].imgUrl + '/pc_600'"
+        />
+      </div>
+      <!-- 人气值 -->
+      <div class="hotData">
+        <span> 点赞量: </span>
+        <span> {{ items.hotData }}</span>
+      </div>
+      <div v-if="!items.ifThumb" class="text" @click="postst(indexs)">
+        为TA点赞
+      </div>
+      <div v-else class="text" @click="postst(indexs)">已投票</div>
     </div>
-  </div>
-  <div v-else class="empty">
-    <img src="https://imgcdn.dahebao.cn/20221027/20221027113957273185.png" />
+    <img
+      v-if="props.info.length == 0"
+      class="empty"
+      src="https://imgcdn.dahebao.cn/20221027/20221027113957273185.png"
+      alt=""
+    />
   </div>
 </template>
 <script setup lang="ts">
-import axios from "axios";
 import { useCounterStore } from "@/stores/counter";
 import { showToast } from "vant";
 import setting from "@/common/setting";
@@ -84,7 +100,8 @@ function navigetDetail(e: number) {
   if (store.$state.userId == "" && setting()) {
     showToast("请在豫视频App查看详情");
     setTimeout(() => {
-      location.href = "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
+      location.href =
+        "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
     }, 500);
   }
   //如果在其他浏览器,跳转下载页
@@ -103,36 +120,71 @@ function navigetDetail(e: number) {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
-  padding: 0px 43px 50px 43px;
+  padding: 0px 78px 50px 78px;
   justify-content: space-between;
   .item {
-    margin-top: 50px;
-    width: 315px;
-    height: 350px;
-    span {
-      color: #fff;
-    }
-    img {
-      box-sizing: border-box;
-      border: 4px solid #84b5ff;
-      width: 315px;
-      height: 209px;
-    }
-    .hotdata {
-      box-sizing: border-box;
-      padding: 0 10px;
+    width: 277px;
+    height: 413px;
+    margin-top: 55px;
+    position: relative;
+    .video {
+      background: #fff;
+      border: 0;
+      margin: 0 auto;
+      width: 252px;
+      height: 276px;
+      position: relative;
       display: flex;
-      justify-content: space-between;
+      align-items: center;
+      padding: 2px;
+      box-sizing: border-box;
+      img {
+        width: 100%;
+        height: auto;
+        max-height: 276px;
+      }
+      .item_start {
+        position: absolute;
+        width: 120px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
-    button {
-      margin-top: 26px;
-      border: none;
+    .img {
+      border-radius: 20px;
+      background: #fff;
+      // background: #ffdcdc;
+      margin: 0 auto;
+      box-sizing: border-box;
+      width: 253px;
+      height: 276px;
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+      .postsImg {
+        position: absolute;
+        width: 253px;
+        max-height: 276px;
+      }
+    }
+    .hotData {
+      text-align: center;
+      font-weight: 500;
+      margin-top: 33px;
+      font-size: 26px;
+    }
+    .text {
+      background: #b16d51;
+      margin: 23px auto 0px;
+      color: #fff;
+      line-height: 57px;
+      text-align: center;
+      width: 225px;
+      font-size: 28px;
+      font-weight: 500;
+      height: 57px;
       border-radius: 50px;
-      width: 316px;
-      height: 68px;
-      background: #84b5ff;
-      color: #203ab2;
-      font-weight: 800;
     }
   }
 }

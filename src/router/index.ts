@@ -3,30 +3,30 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     //首页
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: () => import('@/views/index.vue'),
-    //   meta: {
-    //     title: '豫视频'
-    //   }
-    // },
-    // {
-    //   path: '/tool',
-    //   name: 'tool',
-    //   component: () => import('@/views/tool.vue'),
-    //   meta: {
-    //     title: '工具'
-    //   }
-    // },
-    // {
-    //   path: '/autoShow',
-    //   name: 'autoShow',
-    //   component: () => import('@/views/autoShow/index.vue'),
-    //   meta: {
-    //     title: '年度汽车'
-    //   }
-    // },
+    {
+      path: '/',
+      name: 'home',
+      component: () => import('@/views/index.vue'),
+      meta: {
+        title: '豫视频'
+      }
+    },
+    {
+      path: '/tool',
+      name: 'tool',
+      component: () => import('@/views/tool.vue'),
+      meta: {
+        title: '工具'
+      }
+    },
+    {
+      path: '/autoShow',
+      name: 'autoShow',
+      component: () => import('@/views/autoShow/index.vue'),
+      meta: {
+        title: '大河收纳月'
+      }
+    },
     // {
     //   path: '/vote',
     //   name: 'vote',
@@ -102,13 +102,21 @@ const router = createRouter({
     //     title: '组长招募'
     //   }
     // }
-    // 抽奖
+    // 抽奖 
     {
       path: '/Lottery',
       name: 'Lottery',
       component: () => import('@/views/Lottery/index.vue'),
       meta: {
         title: '抽奖'
+      }
+    },
+    {
+      path: '/showUpload',
+      name: 'showUpload',
+      component: () => import('@/views/autoShow/showUpload.vue'),
+      meta: {
+        title: '上传作品'
       }
     },
     //电影
@@ -208,14 +216,14 @@ const router = createRouter({
     //     title: '争做新时代红旗渠建设者'
     //   }
     // },
-    // {
-    //   path: '/house',
-    //   name: 'house',
-    //   component: () => import('@/views/house/index.vue'),
-    //   meta: {
-    //     title: '中原家居超凡品牌榜'
-    //   }
-    // },
+    {
+      path: '/house',
+      name: 'house',
+      component: () => import('@/views/house/index.vue'),
+      meta: {
+        title: '中原家居超凡品牌榜'
+      }
+    },
     // {
     //   path: '/spring',
     //   name: 'spring',

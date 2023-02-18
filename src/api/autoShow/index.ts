@@ -10,8 +10,8 @@ export const selectCity =
         ("app/selectionActivity/video/list",
             {
                 "userId": store.$state.userId,
-                "pageSize": "10",
-                "activityNo": "carActivity001",
+                "pageSize": "6",
+                "activityNo": "cefd017dbbe9496e968f7059ddd6d616",
                 "creatorType": creatorType,
                 "currentPage": current,
             }, '')
@@ -33,3 +33,5 @@ export const selectHouse =
                 "creatorType": creatorType,
                 "currentPage": current,
             }, '')
+
+export const saveAddress = (datas: any, data: any) => request.post("app/daheDrawActivityConfig/saveAddress" + datas, data, '')

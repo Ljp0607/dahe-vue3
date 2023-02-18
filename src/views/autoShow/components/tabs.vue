@@ -6,11 +6,11 @@
       :animated="false"
       swipeable
       :ellipsis="false"
-      background="linear-gradient(#3050E2,#99C0FC)"
+      background="#B47459"
       color="#FFFFFF"
-      title-active-color="#ffffff"
+      title-active-color="#000000"
       title-inactive-color="#ffffff"
-      line-height="7px"
+      line-height="5px"
       line-width="65px"
     >
       <van-tab
@@ -18,7 +18,13 @@
         :title="item.type_name"
         :key="index"
       >
-        <List :info="data.info" />
+        <div class="tab_content">
+          <List :info="data.info" />
+          <div v-show="data.info.length != 0" class="button">
+            <button @click="lastPage">上一页</button>
+            <button @click="nextPage">下一页</button>
+          </div>
+        </div>
       </van-tab>
     </van-tabs>
   </div>
@@ -51,59 +57,47 @@ interface dataType {
     userName: string;
     ifThumb: number;
   }>;
-  resh?: string;
+  more?: string;
   current: number;
 }
 const data = reactive<dataType>({
   option: [],
   info: [],
-  resh: "more",
+  more: "more",
   current: 1,
 });
 const active = ref<number>(0);
 //切换tab栏
 const changeActive = (e: number) => {
-  getCars(data.option[e].type_no);
+  data.info = [];
   data.current = 1;
+  // data.
+  getCars(data.option[e].type_no);
 };
 //获取当前tab栏中的车型
 const getCars = (id: string) => {
-  selectCity(id, 1).then((res: any) => {
-    if (res.state == 1) {
-      data.info = res.data;
-      if (res.data.length < 10) {
-        data.resh = "no-more";
-        //清除滑动监控
-        window.removeEventListener("scroll", refresh, true);
-      } else {
-        data.resh = "more";
-        window.addEventListener("scroll", refresh, true);
-      }
-    } else {
-      showToast(res.message);
-    }
-  });
-};
-//获取更多车型
-const moreCars = (id: string) => {
   selectCity(id, data.current).then((res: any) => {
     if (res.state == 1) {
-      data.info = [...data.info, ...res.data];
-      if (res.data.length == 10) {
-        data.resh = "more";
+      if (res.data.length > 0) {
+        data.info = res.data;
+        if (res.data.length < 6) {
+          data.more = "no-more";
+        } else {
+          data.more = "more";
+        }
       } else {
-        data.resh = "no-more";
-        window.removeEventListener("scroll", refresh, true);
+        showToast("没有更多数据了");
+        data.more = "no-more";
+        data.current--;
       }
     } else {
       showToast(res.message);
     }
   });
 };
-
-//c初始化获取tab栏
+//初始化获取tab栏
 const getParentTypeNo = () => {
-  getTypeNo("car").then(
+  getTypeNo("oppein").then(
     (
       res: Array<{
         parent_type_no: string;
@@ -112,37 +106,53 @@ const getParentTypeNo = () => {
         type_no: string;
       }>
     ) => {
+      console.log(res);
       data.option = res;
       getCars(data.option[active.value].type_no);
     }
   );
 };
-//监控滑动是否到达底部
-function refresh() {
-  // console.log("监控");
-  if (data.resh == "loading" || data.resh == "no-more") {
+//下一页新数据
+function nextPage() {
+  if (data.more == "no-more") {
+    showToast("没有更多数据了");
+  } else {
+    ++data.current;
+    getCars(data.option[active.value].type_no);
+  }
+}
+//上一页数据
+function lastPage() {
+  if (data.current <= 1) {
+    showToast("没有更多数据了");
     return;
   } else {
-    let scrollht =
-      document.body.scrollHeight -
-      (document.body.clientHeight && document.documentElement.clientHeight) -
-      (document.documentElement && document.documentElement.scrollTop);
-    if (scrollht <= 5) {
-      data.resh = "loading";
-      ++data.current;
-      moreCars(data.option[active.value].type_no);
-    }
+    --data.current;
+    getCars(data.option[active.value].type_no);
   }
 }
 //监控滑动是否到达底部
-// window.addEventListener("scroll", refresh, true);
 onMounted(() => {
   getParentTypeNo();
 });
 </script>
 <style lang="less" scoped>
 .tabs {
-  background: #203ab2;
-  min-height: 1021px;
+  background: #e6ae8d;
+  min-height: 821px;
+  .button {
+    padding: 0 200px;
+    box-sizing: border-box;
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-around;
+    button {
+      color: #68290e;
+      background: #e6ae8d;
+      font-weight: 600;
+      border: #68290e 4px solid;
+      border-radius: 30px;
+    }
+  }
 }
 </style>
