@@ -50,7 +50,7 @@
         </van-cell-group>
         <div style="margin: 16px">
           <van-button round block color="#FF7700" native-type="submit">
-            提交报名
+            提交作品
           </van-button>
         </div>
       </van-form>
@@ -224,6 +224,8 @@ function saveInfo() {
       Info.posts_video = ""; //视频
       Info.tecent_video_id = ""; //视频id
       Info.creator_type = "";
+    } else if (res.message == "用户id为空") {
+      showToast("请登录豫视频客户端后上传作品");
     } else {
       showToast(res.message);
     }

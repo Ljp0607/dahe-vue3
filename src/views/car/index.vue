@@ -1,29 +1,22 @@
 <template>
-  <div class="content" v-show="!show">
-    <Title :changeShow="changeShow" />
+  <div class="content">
+    <Title />
     <Tabs />
-    <Footer />
-  </div>
-  <div class="popup" v-if="show" @click="show = false">
-    <img src="https://imgcdn.dahebao.cn/20230215/20230215112125327651.jpeg" />
+    <Lottery />
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import Footer from "../autoShow/components/footer.vue";
-import Title from "../autoShow/components/title.vue";
-import Tabs from "../autoShow/components/tabs.vue";
+import Title from "./components/title.vue";
+import Tabs from "./components/tabs.vue";
 import getShare from "@/common/wx-share";
-import Lottery from "@/api/Lottery";
+import Lottery from "./components/lottery.vue";
 components: {
   Title;
   Tabs;
   Lottery;
 }
 const show = ref<boolean>(false);
-const changeShow = (e: boolean) => {
-  show.value = e;
-};
 //二次分享
 getShare("大河收纳月", "晒家居图赢礼品！赶快参与吧!");
 </script>
@@ -31,9 +24,10 @@ getShare("大河收纳月", "晒家居图赢礼品！赶快参与吧!");
 .content {
   width: 100vw;
   min-height: 100vh;
-  background-color: #e6ae8d;
+  background: #274f8d;
   box-sizing: border-box;
   padding-bottom: 100px;
+  box-sizing: border-box;
 }
 .popup {
   left: 0;

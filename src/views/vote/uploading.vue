@@ -190,7 +190,7 @@ async function getSignature() {
   const response = await axios.post(
     "https://news.dahebao.cn/dahe/appshortvideocb/getsignature"
   );
-  return response;
+  return response as any;
 }
 //封装视频上传
 function postVideo(file: any) {

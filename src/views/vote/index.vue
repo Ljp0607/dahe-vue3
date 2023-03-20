@@ -28,6 +28,7 @@ const store = useCounterStore();
 function getCityList() {
   cityList()
     .then((res: any) => {
+      // console.log(res);
       res.map((item: any) => {
         delete item.children;
       });

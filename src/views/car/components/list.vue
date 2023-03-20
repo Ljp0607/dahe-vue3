@@ -1,21 +1,14 @@
 <template>
   <div class="main" v-if="props.info.length > 0">
-    <!--遍历数组,生成视频或图片 -->
-    <div class="item" v-for="(items, indexs) in props.info" :key="indexs">
-      <!-- 如果有视频,展示视频和播放键 -->
-      <div
-        @click="navigetDetail(items.postsId)"
-        class="video"
-        v-if="items.postsVideo"
-      >
-        <img :src="items.postsVideoImg" />
-        <img
-          class="item_start"
-          src="https://imgcdn.dahebao.cn/20221011/20221011094515515822.png"
-        />
-      </div>
+    <!--tepe==1时,图片 -->
+    <div
+      v-if="props.type == 1"
+      class="item"
+      v-for="(items, indexs) in props.info"
+      :key="indexs"
+    >
       <!-- 如果有图片,显示图片 -->
-      <div @click="navigetDetail(items.postsId)" class="img" v-else>
+      <div @click="navigetDetail(items.postsId)" class="img">
         <img
           class="postsImg"
           :src="JSON.parse(items.postsImg)[0].imgUrl + '/pc_600'"
@@ -23,19 +16,35 @@
       </div>
       <!-- 人气值 -->
       <div class="hotData">
-        <span> 点赞量: </span>
-        <span> {{ items.hotData }}</span>
+        {{ items.userName }}
       </div>
       <div v-if="!items.ifThumb" class="text" @click="postst(indexs)">
-        为TA点赞
+        投 票
       </div>
-      <div v-else class="text" @click="postst(indexs)">已投票</div>
+      <div v-else class="text" @click="postst(indexs)">已 投 票</div>
+    </div>
+    <!-- type==2时,视频 -->
+    <div
+      v-if="props.type == 2"
+      class="itemVideo"
+      v-for="(items, indexs) in props.info"
+      :key="indexs"
+    >
+      <!-- 如果有视频,展示视频和播放键 -->
+      <!-- <video src=""></video> -->
+      <img
+        class="item_start"
+        src="https://imgcdn.dahebao.cn/20230318/20230318173624165660.png"
+      />
+    </div>
+    <!-- type==3时,排行榜 -->
+    <div>
+      
     </div>
     <img
       v-if="props.info.length == 0"
       class="empty"
       src="https://imgcdn.dahebao.cn/20221027/20221027113957273185.png"
-      alt=""
     />
   </div>
 </template>
@@ -60,6 +69,7 @@ interface Props {
     userName: string;
     ifThumb: number;
   }>;
+  type?: number;
 }
 const props = defineProps<Props>();
 //投票
@@ -121,75 +131,71 @@ function navigetDetail(e: number) {
 </script>
 <style lang="less" scoped>
 .main {
-  width: 100vw;
+  background: #5d7baa;
+  width: 700px;
+  min-height: 1140px;
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
-  padding: 0px 78px 50px 78px;
+  padding: 0px 37px 50px 37px;
   justify-content: space-between;
+  margin: 0 auto;
   .item {
-    width: 277px;
-    height: 413px;
-    margin-top: 55px;
+    width: 300px;
+    height: 308px;
+    margin-top: 54px;
     position: relative;
-    .video {
-      background: #fff;
-      border: 0;
-      margin: 0 auto;
-      width: 252px;
-      height: 276px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      padding: 2px;
-      box-sizing: border-box;
-      img {
-        width: 100%;
-        height: auto;
-        max-height: 276px;
-      }
-      .item_start {
-        position: absolute;
-        width: 120px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-    }
     .img {
-      border-radius: 20px;
+      border-radius: 10px;
       background: #fff;
-      // background: #ffdcdc;
       margin: 0 auto;
-      box-sizing: border-box;
-      width: 253px;
-      height: 276px;
+      width: 300px;
+      height: 192px;
       display: flex;
+      box-sizing: border-box;
       align-items: center;
-      // justify-content: center;
       .postsImg {
         position: absolute;
-        width: 253px;
-        max-height: 276px;
+        width: 300px;
+        border-radius: 10px;
+        max-height: 192px;
       }
     }
     .hotData {
       text-align: center;
       font-weight: 500;
-      margin-top: 33px;
-      font-size: 26px;
+      margin-top: 16px;
+      font-size: 24px;
+      font-weight: 400;
+      color: #fff;
     }
     .text {
-      background: #b16d51;
-      margin: 23px auto 0px;
+      background: #f15918;
+      margin: 20px auto 0px;
       color: #fff;
-      line-height: 57px;
+      line-height: 39px;
       text-align: center;
-      width: 225px;
+      width: 221px;
       font-size: 28px;
-      font-weight: 500;
-      height: 57px;
-      border-radius: 50px;
+      font-weight: 600;
+      // box-sizing: border-box;
+      border: 1px solid #fff;
+      height: 39px;
+      border-radius: 20px;
+    }
+  }
+  .itemVideo {
+    margin-top: 27px;
+    border-radius: 8px;
+    width: 636px;
+    background: #fff;
+    height: 335px;
+    position: relative;
+    .item_start {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 }

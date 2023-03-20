@@ -12,7 +12,7 @@
     <RouterView />
   </header>
 </template>
-<script setup>
+<script setup> 
 import { onMounted } from "@vue/runtime-core";
 import { RouterLink, RouterView } from "vue-router";
 import HomeHeader from "./HomeHeader.vue";

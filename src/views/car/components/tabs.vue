@@ -4,14 +4,11 @@
       v-model:active="active"
       @change="changeActive"
       :animated="false"
-      swipeable
       :ellipsis="false"
-      background="#B47459"
-      color="#FFFFFF"
-      title-active-color="#000000"
-      title-inactive-color="#ffffff"
-      line-height="5px"
-      line-width="65px"
+      color="#F15918"
+      background="#F15918"
+      title-active-color="#ffffff"
+      title-inactive-color="#012153"
     >
       <van-tab
         v-for="(item, index) in data.option"
@@ -19,7 +16,7 @@
         :key="index"
       >
         <div class="tab_content">
-          <List :info="data.info" />
+          <List :info="data.info" :type="data.type" />
           <div v-show="data.info.length != 0" class="button">
             <button @click="lastPage">上一页</button>
             <button @click="nextPage">下一页</button>
@@ -59,19 +56,23 @@ interface dataType {
   }>;
   more?: string;
   current: number;
+  type?: number;
 }
 const data = reactive<dataType>({
   option: [],
   info: [],
   more: "more",
   current: 1,
+  type: 3,
 });
 const active = ref<number>(0);
 //切换tab栏
 const changeActive = (e: number) => {
+  // if()
+  console.log(e);
+
   data.info = [];
   data.current = 1;
-  // data.
   getCars(data.option[e].type_no);
 };
 //获取当前tab栏中的车型
@@ -137,20 +138,27 @@ onMounted(() => {
 </script>
 <style lang="less" scoped>
 .tabs {
-  background: #e6ae8d;
+  background: #274f8d;
   min-height: 821px;
   .button {
-    padding: 0 200px;
+    background: #5d7baa;
     box-sizing: border-box;
-    margin-top: 70px;
+    padding: 50px 100px;
+    width: 699px;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    border-radius: 0 0 10px 10px;
+
     button {
-      color: #68290e;
-      background: #e6ae8d;
-      font-weight: 600;
-      border: #68290e 4px solid;
-      border-radius: 30px;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 26px;
+      background: none;
+      border: #ffffff 4px solid;
+      border-radius: 25px;
+      width: 150px;
+      height: 50px;
     }
   }
 }

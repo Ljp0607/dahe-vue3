@@ -223,12 +223,16 @@ main {
     text-align: center;
   }
   .clickLott {
-    background: linear-gradient(0deg, #fa5025 0%, #fe9c56 100%);
-    width: 160px;
-    height: 160px;
+    width: 145px;
+    // #FC6804
+    background: #fc6804;
+    height: 140px;
+    top: 260px;
+    left: center;
     box-sizing: border-box;
     border-radius: 10px;
     position: absolute;
+    font-weight: 800;
     padding: 20px 31px;
     font-size: 39px;
     color: white;

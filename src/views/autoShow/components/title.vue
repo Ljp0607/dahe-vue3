@@ -3,7 +3,7 @@
     <img
       @click="props.changeShow(true)"
       class="active"
-      src="https://imgcdn.dahebao.cn/20230215/20230215111729842754.png"
+      src="https://imgcdn.dahebao.cn/20230220/20230220163446654299.png"
     />
     <router-link to="/showUpload">
       <img
@@ -23,17 +23,17 @@ const props = defineProps({
 .title {
   width: 100vw;
   min-height: 1700px;
-  background-image: url("https://imgcdn.dahebao.cn/20230215/20230215111302854789.png");
+  background-image: url("https://imgcdn.dahebao.cn/20230220/20230220165038731400.png");
   background-repeat: no-repeat;
   background-size: 100%;
   text-align: center;
   padding-top: 910px;
   box-sizing: border-box;
   .active {
-    margin-left: 568px;
+    margin-left: 545px;
     // margin-top: 910px;
-    width: 99px;
-    height: 77px;
+    width: 144px;
+    height: 112px;
     display: block;
   }
   .upload {
