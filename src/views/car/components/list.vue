@@ -2,44 +2,70 @@
   <div class="main" v-if="props.info.length > 0">
     <!--tepe==1时,图片 -->
     <div
-      v-if="props.type == 1"
+      v-if="props.type == 2"
       class="item"
       v-for="(items, indexs) in props.info"
       :key="indexs"
     >
       <!-- 如果有图片,显示图片 -->
-      <div @click="navigetDetail(items.postsId)" class="img">
+      <div class="img">
+        <!--       <div @click="navigetDetail(items.postsId)" class="img"> -->
         <img
+          v-if="items.postsImg"
           class="postsImg"
           :src="JSON.parse(items.postsImg)[0].imgUrl + '/pc_600'"
         />
+        <img class="postsImg" v-else src="" />
       </div>
-      <!-- 人气值 -->
       <div class="hotData">
-        {{ items.userName }}
+        {{ items.postsTitle }}
       </div>
-      <div v-if="!items.ifThumb" class="text" @click="postst(indexs)">
-        投 票
-      </div>
-      <div v-else class="text" @click="postst(indexs)">已 投 票</div>
     </div>
     <!-- type==2时,视频 -->
-    <div
-      v-if="props.type == 2"
-      class="itemVideo"
-      v-for="(items, indexs) in props.info"
-      :key="indexs"
-    >
-      <!-- 如果有视频,展示视频和播放键 -->
-      <!-- <video src=""></video> -->
-      <img
-        class="item_start"
-        src="https://imgcdn.dahebao.cn/20230318/20230318173624165660.png"
-      />
+    <div v-else-if="props.type == 1">
+      <div
+        class="itemVideo"
+        v-for="(items, indexs) in props.info"
+        :key="indexs"
+      >
+        <!-- 如果有视频,展示视频和播放键 -->
+        <video :src="items.postsVideo" controls></video>
+      </div>
     </div>
     <!-- type==3时,排行榜 -->
-    <div>
-      
+    <div v-else>
+      <div
+        class="itemRanking"
+        v-for="(items, indexs) in props.info"
+        :key="indexs"
+      >
+        <div class="start" :style="{ background: arr[indexs] }">
+          {{ indexs + 1 }}
+        </div>
+        <div class="title">
+          {{ items.postsTitle }}
+        </div>
+        <div class="hot">
+          <div
+            :style="{
+              width: (items.hotData / props.info[0].hotData) * 100 + '%',
+              height: '100%',
+              background: indexs < 6 ? arr[indexs] : '#fff',
+              display: 'flex',
+              paddingLeft: '5px',
+              boxSizing: 'border-box',
+              alignItems: 'center',
+              minWidth: '20%',
+            }"
+          >
+            {{ items.hotData }}票
+          </div>
+        </div>
+        <div class="text btn" v-if="!items.ifThumb" @click="postst(indexs)">
+          投票
+        </div>
+        <div class="text" v-else @click="postst(indexs)">已投票</div>
+      </div>
     </div>
     <img
       v-if="props.info.length == 0"
@@ -53,8 +79,9 @@ import { useCounterStore } from "@/stores/counter";
 import { showToast } from "vant";
 import setting from "@/common/setting";
 import { poststhumbup } from "@/api/autoShow/index";
-import { goLogin, goPosts } from "@/common/appRoute";
+import { goLogin } from "@/common/appRoute";
 const store = useCounterStore();
+const arr = ["#FF2D2D", "#F15918", "#F19818", "#FDC350", "#FDC350", "#FDC350"];
 interface Props {
   info?: Array<{
     activityNo: string;
@@ -72,6 +99,7 @@ interface Props {
   type?: number;
 }
 const props = defineProps<Props>();
+
 //投票
 function postst(index: number) {
   //如果无userId,判断环境,如果在微信,跳下载,如果浏览器环境,跳登录
@@ -108,26 +136,6 @@ function postst(index: number) {
     }
   }
 }
-//跳转详情页
-function navigetDetail(e: number) {
-  //
-  //如果在微信浏览器,跳转下载页
-  if (store.$state.userId == "" && setting()) {
-    showToast("请在豫视频App查看详情");
-    setTimeout(() => {
-      location.href =
-        "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/house/index.html#/autoShow";
-    }, 500);
-  }
-  //如果在其他浏览器,跳转下载页
-  else if (store.$state.userId == "" && !setting()) {
-    //跳转登录
-    goLogin();
-  } else {
-    //跳转帖子
-    goPosts(e);
-  }
-}
 </script>
 <style lang="less" scoped>
 .main {
@@ -137,7 +145,7 @@ function navigetDetail(e: number) {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
-  padding: 0px 37px 50px 37px;
+  padding: 30px 20px 50px 20px;
   justify-content: space-between;
   margin: 0 auto;
   .item {
@@ -163,39 +171,72 @@ function navigetDetail(e: number) {
     }
     .hotData {
       text-align: center;
-      font-weight: 500;
       margin-top: 16px;
       font-size: 24px;
       font-weight: 400;
       color: #fff;
     }
-    .text {
-      background: #f15918;
-      margin: 20px auto 0px;
-      color: #fff;
-      line-height: 39px;
-      text-align: center;
-      width: 221px;
-      font-size: 28px;
-      font-weight: 600;
-      // box-sizing: border-box;
-      border: 1px solid #fff;
-      height: 39px;
-      border-radius: 20px;
-    }
   }
   .itemVideo {
     margin-top: 27px;
-    border-radius: 8px;
-    width: 636px;
+    border-radius: 10px;
+    width: 660px;
     background: #fff;
     height: 335px;
     position: relative;
+    margin-bottom: 50px;
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
     .item_start {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+    }
+  }
+  .itemRanking {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    height: 80px;
+    .start {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 5px;
+      margin-right: 20px;
+    }
+    .title {
+      width: 180px;
+      margin-right: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hot {
+      height: 35px;
+      width: 305px;
+      font-size: 14px;
+      color: #000;
+      box-sizing: border-box;
+    }
+    .text {
+      background: #f15918;
+      height: 35px;
+      color: #fff;
+      text-align: center;
+      font-size: 22px;
+      box-sizing: border-box;
+      padding: 2px 8px;
+      font-weight: 400;
+      border-radius: 5px;
+      margin-left: 15px;
+    }
+    .btn {
+      background: #0cc160;
     }
   }
 }

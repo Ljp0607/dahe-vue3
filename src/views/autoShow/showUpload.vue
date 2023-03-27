@@ -111,7 +111,8 @@ const Info = reactive<infoType>({
   posts_img: "", //图片
   posts_video: "", //视频
   posts_video_img: "",
-  posts_content: "#大河收纳月# ", //详细介绍
+  posts_content: "#大河收纳月# ", //详细介绍 //去掉
+  //status:1
   user_id: store.$state.userId, //用户
   tecent_video_id: "", //视频id
   source: "0",

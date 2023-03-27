@@ -35,7 +35,7 @@ const props = defineProps({
   clickLottery: Function,
   result: Number,
   changeIsTurnOver: Function,
-  changeShow: Function,
+  // changeShow: Function,
   start: Boolean,
   myRecordList: Function,
 });
@@ -86,7 +86,7 @@ function rotateAngle(i) {
     showDialog({
       message: props.poolList[i - 1].awardName,
     }).then(() => {
-      props.changeShow();
+      // props.changeShow();
       // refresh();
     });
     props.changeIsTurnOver();

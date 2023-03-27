@@ -21,7 +21,6 @@
           :clickLottery="clickLottery"
           :changeIsTurnOver="changeIsTurnOver"
           :start="data.start"
-          :changeShow="changeShow"
           :qrImage="data.activity.qrImage"
           :background="data.activity.background"
         />
@@ -41,7 +40,6 @@
           :clickLottery="clickLottery"
           :changeIsTurnOver="changeIsTurnOver"
           :start="data.start"
-          :changeShow="changeShow"
         />
       </div>
     </main>
@@ -57,7 +55,7 @@
             {{ data.time ? data.time : 0 }}次
           </span>
           <span> 抽奖机会</span>
-          <div class="rule" @click="data.showRule = true">抽奖须知</div>
+          <div class="rule" @click="data.showRule = true"></div>
         </div>
       </div>
       <div class="fa-list">
@@ -69,7 +67,7 @@
               :src="
                 data.state == true
                   ? 'https://imgcdn.dahebao.cn/20230111/20230111171100784045.png'
-                  : 'https://imgcdn.dahebao.cn/20230111/20230111171326612090.png'
+                  : 'https://imgcdn.dahebao.cn/20230324/20230324151137568207.png'
               "
               alt="图片"
             />
@@ -79,7 +77,7 @@
               :src="
                 data.state == false
                   ? 'https://imgcdn.dahebao.cn/20230111/20230111171438503540.png'
-                  : 'https://imgcdn.dahebao.cn/20230111/20230111171503435848.png'
+                  : 'https://imgcdn.dahebao.cn/20230324/20230324152410621078.png'
               "
               alt="中奖信息"
             />
@@ -101,56 +99,18 @@
           <img
             v-if="data.state"
             class="line1"
-            src="https://imgcdn.dahebao.cn/20230111/20230111192157509483.png"
+            src="https://imgcdn.dahebao.cn/20230324/20230324151053437567.png"
             alt="线条"
           />
           <img
             v-else
             class="line2"
-            src="https://imgcdn.dahebao.cn/20230111/20230111192157509483.png"
+            src="https://imgcdn.dahebao.cn/20230324/20230324151053437567.png"
             alt="线条"
           />
         </div>
       </div>
     </footer>
-    <!--    无抽奖 -->
-    <!-- 遮罩层领奖 -->
-    <van-overlay :show="show" :lock-scroll="false">
-      <div class="wrapper">
-        <div class="block">
-          <div>请填写领奖信息</div>
-          <van-form @submit="onSubmit">
-            <van-cell-group inset>
-              <!-- 通过 pattern 进行正则校验 -->
-              <van-field
-                v-model="realName"
-                placeholder="请输入姓名"
-                :rules="[{ required: true, message: '请填写用户名' }]"
-              />
-              <!-- 通过 validator 进行函数校验 -->
-              <van-field
-                v-model="phone"
-                placeholder="请输入电话号码"
-                name="pattern"
-                :rules="[{ pattern, message: '请输入正确手机号' }]"
-              />
-              <!-- 通过 validator 返回错误提示 -->
-              <van-field
-                v-model="address"
-                placeholder="请输入地址"
-                :rules="[{ required: true, message: '请填写地址' }]"
-              />
-              <!-- 通过 validator 进行异步函数校验 -->
-            </van-cell-group>
-            <div style="margin: 16px">
-              <van-button round block type="primary" native-type="submit">
-                提交
-              </van-button>
-            </div>
-          </van-form>
-        </div>
-      </div>
-    </van-overlay>
     <!-- 遮罩层活动规则 -->
     <van-overlay
       class="overLayRule"
@@ -171,7 +131,7 @@
 <script setup lang="ts">
 import { reactive, ref } from "@vue/reactivity";
 import "vant/es/dialog/style";
-import { showToast, Dialog } from "vant";
+import { showToast } from "vant";
 import { onMounted } from "vue";
 import { useCounterStore } from "../../../stores/counter";
 import request from "@/api/Lottery/index";
@@ -204,8 +164,8 @@ interface dataType {
     activityRuleStyle?: string;
     dateStyle?: string;
   };
+  activityNo: string;
   time: number;
-  // activityNo: "",
   //转盘是否能转
   isTurnOver: boolean;
   //中奖人员名单
@@ -232,6 +192,7 @@ const data = reactive<dataType>({
     drawType: 0,
     poolList: [],
   },
+  activityNo: "7c121fd3e82c4617b4147af5f30fa040",
   time: 0,
   //转盘是否能转
   isTurnOver: true,
@@ -239,47 +200,6 @@ const data = reactive<dataType>({
   recordList: [],
   myRecordList: [],
 });
-const show = ref(false);
-const address = ref("");
-const realName = ref("");
-const phone = ref("");
-const recordNo = ref("");
-//姓名正则
-const pattern =
-  /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/;
-//正则校验表达
-function onSubmit() {
-  saveAddress();
-}
-//存入人员地址
-function saveAddress() {
-  request
-    .saveAddress(
-      `?userId=${store.userId}&activityNo=${store.activityNo}`,
-      JSON.stringify({
-        realName: realName.value,
-        recordNo: recordNo.value,
-        phone: phone.value,
-        activityNo: store.activityNo,
-        address: address.value,
-      })
-    )
-    .then(() => {
-      showToast("保存成功");
-      myRecordList();
-      changeShow();
-    })
-    .catch((err) => {
-      showToast(err);
-      changeShow();
-    });
-}
-//调起遮罩层
-function changeShow() {
-  if (data.activity.poolList[data.sum].awardFlag) {
-    show.value = !show.value;
-  }
-}
 //抽奖
 function clickLottery() {
   if (store.userId) {
@@ -293,7 +213,6 @@ function clickLottery() {
             activityNo: store.activityNo,
           })
           .then((res: any) => {
-            recordNo.value = res.recordNo;
             if (data.activity.drawType == 2) {
               for (let i in data.activity.poolList) {
                 if (
@@ -422,15 +341,16 @@ function changeIsTurnOver() {
   data.isTurnOver = true;
 }
 onMounted(() => {
+  if (!store.activityNo) {
+    store.changeActive(data.activityNo);
+  }
   //获取抽奖配置
   findDraw();
-  if (store.activityNo) {
-    //初始化获取抽奖次数
-    findCount();
-    //中奖人员名单
-    drawRecordList();
-    myRecordList();
-  }
+  //初始化获取抽奖次数
+  findCount();
+  //中奖人员名单
+  drawRecordList();
+  myRecordList();
 });
 </script>
 <style lang="less" scoped>
@@ -450,7 +370,7 @@ onMounted(() => {
     }
   }
   .main {
-    padding-top: 30px;
+    // padding-top: 30px;
     width: 750px;
     .title {
       width: 100vw;
@@ -543,14 +463,14 @@ onMounted(() => {
         .rule {
           margin-top: 32px;
           display: inline-block;
-          background-image: url("https://imgcdn.dahebao.cn/20230111/20230111145856628436.png");
+          background-image: url("https://imgcdn.dahebao.cn/20230324/20230324150523695228.png");
           background-size: 100% 100%;
           width: 551px;
           height: 101px;
-          line-height: 81px;
-          color: #fff;
-          font-weight: bold;
-          font-size: 42px;
+          // line-height: 81px;
+          // color: #fff;
+          // font-weight: bold;
+          // font-size: 42px;
         }
       }
     }

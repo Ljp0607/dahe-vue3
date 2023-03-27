@@ -17,7 +17,7 @@
       >
         <div class="tab_content">
           <List :info="data.info" :type="data.type" />
-          <div v-show="data.info.length != 0" class="button">
+          <div v-show="data.show && data.info.length != 0" class="button">
             <button @click="lastPage">上一页</button>
             <button @click="nextPage">下一页</button>
           </div>
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { reactive, ref, onMounted } from "vue";
 import List from "./list.vue";
-import { selectCity, getTypeNo } from "@/api/autoShow/index";
+import { selectCity, getTypeNo, selectTask } from "@/api/autoShow/index";
 import { showToast } from "vant";
 components: {
   List;
@@ -57,23 +57,39 @@ interface dataType {
   more?: string;
   current: number;
   type?: number;
+  show?: boolean;
 }
+// carShow
 const data = reactive<dataType>({
+  show: false,
   option: [],
   info: [],
   more: "more",
   current: 1,
-  type: 3,
+  type: 0,
 });
 const active = ref<number>(0);
 //切换tab栏
 const changeActive = (e: number) => {
-  // if()
-  console.log(e);
-
+  data.type = e;
   data.info = [];
   data.current = 1;
-  getCars(data.option[e].type_no);
+  if (e == 0) {
+    data.show = false;
+    selectTask("1").then((res: any) => {
+      if (res.state === 1) {
+        data.info = res.data;
+      }
+    });
+    return;
+  } else if (e == 2) {
+    getCars("1");
+    data.show = true;
+    return;
+  } else {
+    data.show = true;
+    getCars(data.option[e].type_no);
+  }
 };
 //获取当前tab栏中的车型
 const getCars = (id: string) => {
@@ -98,7 +114,7 @@ const getCars = (id: string) => {
 };
 //初始化获取tab栏
 const getParentTypeNo = () => {
-  getTypeNo("oppein").then(
+  getTypeNo("carShow").then(
     (
       res: Array<{
         parent_type_no: string;
@@ -108,6 +124,8 @@ const getParentTypeNo = () => {
       }>
     ) => {
       data.option = res;
+      console.log(res);
+
       getCars(data.option[active.value].type_no);
     }
   );

@@ -103,7 +103,7 @@ function RecordList() {
       data.recordList = res.recordList;
     });
 }
-//获取周中奖人员名单
+//获取人员名单
 function RecordListweek() {
   request
     .drawRecordList({

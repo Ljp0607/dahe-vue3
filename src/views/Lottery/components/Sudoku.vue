@@ -43,7 +43,7 @@ const props = defineProps({
   result: Number, //抽中的结果
   clickLottery: Function,
   changeIsTurnOver: Function, //抽奖的状态
-  changeShow: Function, //调领奖
+  // changeShow: Function, //调领奖
   background: String,
 });
 //抽奖链接
@@ -97,7 +97,7 @@ function getLottery(delay, index, sum, id) {
         showDialog({
           message: props.activity[order_arr[i]].awardName,
         }).then(() => {
-          props.changeShow();
+          // props.changeShow();
         });
         props.changeIsTurnOver();
       }

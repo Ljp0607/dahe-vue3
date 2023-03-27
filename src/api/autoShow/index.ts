@@ -3,7 +3,6 @@ import { useCounterStore } from "@/stores/counter";
 const store = useCounterStore();
 //获取城市接口
 // export const cityList = () => request.post("app/selectionActivity/cityList", {}, '')
-
 //获取
 export const selectCity =
     (creatorType: string, current: number) => request.post
@@ -11,13 +10,30 @@ export const selectCity =
             {
                 "userId": store.$state.userId,
                 "pageSize": "6",
-                "activityNo": "cefd017dbbe9496e968f7059ddd6d616",
+                "activityNo": "2a83900fbb174fe59980d56a238d01a2",
                 "creatorType": creatorType,
                 "currentPage": current,
             }, '')
 
+//获取排行
+export const selectTask =
+    (creatorType: string) => request.post
+        ("app/selectionActivity/video/list",
+            {
+                "userId": store.$state.userId,
+                "pageSize": "300",
+                "activityNo": "2a83900fbb174fe59980d56a238d01a2",
+                "creatorType": creatorType,
+                "currentPage": 1,
+            }, '')
 //上传
 export const saveCity = (data: any) => request.post("app/selectionActivity/video/save", data, '')
+
+//上传信息
+
+export const saveCar = (data: any) => request.post("app/selectionActivity/video/save", data, '')
+
+
 //投票
 export const poststhumbup = (data: any) => request.get("appposts/poststhumbup", { data: data }, '')
 //获取tabs
