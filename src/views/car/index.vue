@@ -1,8 +1,8 @@
 <template>
   <div class="content">
     <Title />
-    <Tabs />
     <Lottery />
+    <Tabs />
   </div>
 </template>
 <script setup lang="ts">

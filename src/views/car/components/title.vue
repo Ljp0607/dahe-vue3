@@ -1,15 +1,25 @@
 <template>
   <div class="title">
-    <router-link to="/carUpload">
-      <img
-        class="upload"
-        src="https://imgcdn.dahebao.cn/20230317/20230317165246930108.png"
-    /></router-link>
+    <img
+      @click="navigatUpload"
+      class="upload"
+      src="https://imgcdn.dahebao.cn/20230317/20230317165246930108.png"
+    />
   </div>
 </template>
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+import { goLogin } from "@/common/appRoute";
 import { useCounterStore } from "@/stores/counter";
 const store = useCounterStore();
+const router = useRouter();
+const navigatUpload = () => {
+  if (store.$state.userId == "") {
+    goLogin();
+  } else {
+    router.push("carUpload");
+  }
+};
 </script>
 <style lang="less" scoped>
 .title {

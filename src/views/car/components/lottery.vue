@@ -223,6 +223,7 @@ function clickLottery() {
                   let order_arr = [1, 2, 3, 8, 5, 4, 7, 6, 5];
                   data.result = order_arr[i];
                   data.start = !data.start;
+                  myRecordList();
                   return;
                 }
               }
@@ -328,7 +329,7 @@ function myRecordList() {
     .drawRecordList({
       myUserId: store.userId ? store.userId : "empty",
       activityNo: store.activityNo,
-      awardFlag: "1",
+      // awardFlag: "1",
       page_index: 0,
       page_count: 50,
     })
@@ -447,7 +448,6 @@ onMounted(() => {
         width: 100%;
         height: 100%;
         border-radius: 10px;
-
         border: 20px solid #ffab05;
         text-align: center;
 
@@ -478,7 +478,7 @@ onMounted(() => {
     .fa-list {
       margin: 0 auto;
       width: 667px;
-      height: 597px;
+      // height: 597px;
       border: 5px solid #461702;
       border-radius: 10px;
     }

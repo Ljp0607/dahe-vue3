@@ -16,7 +16,7 @@ const router = createRouter({
       name: 'carShow',
       component: () => import('@/views/car/carShow.vue'),
       meta: {
-        title: '国际车展'
+        title: '大河国际车展'
       }
     },
     {
@@ -24,14 +24,14 @@ const router = createRouter({
       name: 'carUpload',
       component: () => import('@/views/car/carUpload.vue'),
       meta: {
-        title: '国际车展'
+        title: '大河国际车展'
       }
     }, {
       path: '/car',
       name: 'car',
       component: () => import('@/views/car/index.vue'),
       meta: {
-        title: '国际车展'
+        title: '大河国际车展'
       }
     },
     {

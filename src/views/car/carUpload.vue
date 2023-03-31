@@ -47,7 +47,6 @@ interface infoType {
   creatorType: string; //地市编码 必传
   creator_type: string;
   posts_img: string;
-  // posts_content: string;
 }
 const Info = reactive<infoType>({
   posts_title: "", //标题 必传

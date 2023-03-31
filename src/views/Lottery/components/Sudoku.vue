@@ -18,8 +18,11 @@
         <div v-if="props.activity">
           <!-- 奖品图片 -->
           <img
-            v-show="props.activity[index].awardImage"
-            :src="props.activity[index].awardImage"
+            :src="
+              props.activity[index].awardImage
+                ? props.activity[index].awardImage
+                : 'https://imgcdn.dahebao.cn/20220930/20220930203357832439.png'
+            "
           />
           <!-- 奖品名字 -->
           <div class="giftName">
@@ -213,7 +216,6 @@ main {
   .giftName {
     margin: 5px 8px;
     font-size: 25px;
-    // text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -224,7 +226,6 @@ main {
   }
   .clickLott {
     width: 145px;
-    // #FC6804
     background: #fc6804;
     height: 140px;
     top: 260px;

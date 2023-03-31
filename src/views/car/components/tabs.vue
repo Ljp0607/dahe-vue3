@@ -16,7 +16,7 @@
         :key="index"
       >
         <div class="tab_content">
-          <List :info="data.info" :type="data.type" />
+          <List :getTask="getTask" :info="data.info" :type="data.type" />
           <div v-show="data.show && data.info.length != 0" class="button">
             <button @click="lastPage">上一页</button>
             <button @click="nextPage">下一页</button>
@@ -76,11 +76,7 @@ const changeActive = (e: number) => {
   data.current = 1;
   if (e == 0) {
     data.show = false;
-    selectTask("1").then((res: any) => {
-      if (res.state === 1) {
-        data.info = res.data;
-      }
-    });
+    getTask();
     return;
   } else if (e == 2) {
     getCars("1");
@@ -91,6 +87,15 @@ const changeActive = (e: number) => {
     getCars(data.option[e].type_no);
   }
 };
+//获取排行
+const getTask = () => {
+  selectTask("1").then((res: any) => {
+    if (res.state === 1) {
+      data.info = res.data;
+    }
+  });
+};
+
 //获取当前tab栏中的车型
 const getCars = (id: string) => {
   selectCity(id, data.current).then((res: any) => {
@@ -124,9 +129,8 @@ const getParentTypeNo = () => {
       }>
     ) => {
       data.option = res;
-      console.log(res);
-
-      getCars(data.option[active.value].type_no);
+      getTask();
+      // getCars(data.option[active.value].type_no);
     }
   );
 };
@@ -136,7 +140,11 @@ function nextPage() {
     showToast("没有更多数据了");
   } else {
     ++data.current;
-    getCars(data.option[active.value].type_no);
+    if (data.type == 1) {
+      getCars(data.option[active.value].type_no);
+    } else {
+      getCars("1");
+    }
   }
 }
 //上一页数据
@@ -146,10 +154,14 @@ function lastPage() {
     return;
   } else {
     --data.current;
-    getCars(data.option[active.value].type_no);
+    // getCars(data.option[active.value].type_no);
+    if (data.type == 1) {
+      getCars(data.option[active.value].type_no);
+    } else {
+      getCars("1");
+    }
   }
 }
-//监控滑动是否到达底部
 onMounted(() => {
   getParentTypeNo();
 });

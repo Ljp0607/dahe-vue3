@@ -10,6 +10,4 @@ interface cityType {
     text?: string
     value?: number
 }
-
-
 export type { cityType }

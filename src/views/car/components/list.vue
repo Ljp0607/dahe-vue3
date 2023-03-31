@@ -97,6 +97,7 @@ interface Props {
     ifThumb: number;
   }>;
   type?: number;
+  getTask?: Function;
 }
 const props = defineProps<Props>();
 
@@ -127,6 +128,7 @@ function postst(index: number) {
           props.info[index].hotData += 10;
           props.info[index].ifThumb = 1;
           showToast("投票成功");
+          props.getTask();
         } else {
           showToast(res);
         }
@@ -141,7 +143,7 @@ function postst(index: number) {
 .main {
   background: #5d7baa;
   width: 700px;
-  min-height: 1140px;
+  min-height: 980px;
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
