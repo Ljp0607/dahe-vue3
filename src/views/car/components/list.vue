@@ -9,7 +9,6 @@
     >
       <!-- 如果有图片,显示图片 -->
       <div class="img">
-        <!--       <div @click="navigetDetail(items.postsId)" class="img"> -->
         <img
           v-if="items.postsImg"
           class="postsImg"
