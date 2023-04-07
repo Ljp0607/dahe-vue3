@@ -10,9 +10,9 @@ export const saveCar = (data: any) => request.post("app/selectionActivity/video/
 export const poststhumbup = (data: any) => request.get("appposts/poststhumbup", { data: data }, '')
 //获取tabs
 export const getTypeNo = (TypeNo: string) => request.get('app/dict/listByParentTypeNo', { parentTypeNo: TypeNo }, '')
-
+//查找读书内容
 export const selectRead =
-    (creatorType: string, current: number) => request.post
+    (creatorType: string, current: number, options?: { [key: string]: string | number }) => request.post
         ("app/selectionActivity/video/list",
             {
                 "userId": store.$state.userId,
@@ -20,6 +20,7 @@ export const selectRead =
                 "activityNo": "4eba1b68cb7f4eb188b66ac4b68a17d4",
                 "creatorType": creatorType,
                 "currentPage": current,
+                ...(options || {})
             }, '')
 
 //提交读书信息
@@ -32,3 +33,6 @@ export const saveBook = async (options?: { [key: string]: string | number }) => 
         ...(options || {})
     }, '')
 }
+//获取视频
+// const getNewsInfo = (data: any) => request.get("appActivityNews/getNewsInfo", data, '')
+export const getNewsInfo = async () => { return request.post("appActivityNews/getNewsInfo", { type: 109, page_index: 0, page_count: 100 }, '') }

@@ -131,6 +131,16 @@ function navigetDetail(e: number) {
       height: 364px;
       background: linear-gradient(#fde8c4, #fec178);
       border-bottom: 10px solid #e56c33;
+      position: relative;
+      video {
+        position: absolute;
+        left: 2.5%;
+        top: 50%;
+        transform: translate(0,-50%);
+        width: 95%;
+        max-height: 100%;
+        background: #fff;
+      }
     }
     .item_empty {
       margin-left: 14px;
@@ -180,6 +190,10 @@ video::-webkit-media-controls-mute-button {
 video::-webkit-media-controls-volume-slider {
   display: none;
 }
+//播放按钮
+// video::-webkit-media-controls-play-button {
+//   display: none;
+// }
 .empty {
   margin-top: 100px;
   width: 100%;

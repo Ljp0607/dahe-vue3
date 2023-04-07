@@ -286,16 +286,23 @@ const router = createRouter({
           name: 'readIndex',
           component: () => import('@/views/read/index.vue'),
           meta: {
-            title: '推荐阅读官'
+            title: '我是阅读推荐官'
           }
         },
-
+        {
+          path: '/read/video',
+          name: 'readVideo',
+          component: () => import('@/views/read/components/video.vue'),
+          meta: {
+            title: '我是阅读推荐官'
+          }
+        },
         {
           path: '/read/upload',
           name: 'readUpload',
           component: () => import('@/views/read/components/upload.vue'),
           meta: {
-            title: '参赛分享'
+            title: '我是阅读推荐官'
           }
         },],
 

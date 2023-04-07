@@ -1,11 +1,11 @@
 <template>
   <div class="title">
-    <div class="bg1">
-      <video src=""></video>
+    <div @click="navigatVideo" class="bg1" v-show="data.show">
+      <!-- <video src=""></video> -->
+      <img v-show="data.img" class="bg1_navigat" :src="data.img" />
       <img
         class="bg1_img"
         src="https://imgcdn.dahebao.cn/20230403/20230403171415914110.png"
-        alt=""
       />
     </div>
     <span class="span1">
@@ -16,20 +16,40 @@
         class="bg2"
         src="https://imgcdn.dahebao.cn/20230403/20230403170850564395.png"
         alt=""
-    />
-  </router-link>
+      />
+    </router-link>
     <img
       class="bg3"
       src="https://imgcdn.dahebao.cn/20230404/20230404085339696743.png"
-      alt=""
     />
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { reactive } from "vue";
+import { getNewsInfo } from "@/api/read";
+import { useRouter } from "vue-router";
+const router = useRouter();
+interface dataType {
+  show: boolean;
+  content: string;
+  img: string;
+}
+const data = reactive<dataType>({ show: false, content: "", img: "" });
+const navigatVideo = () => {
+  router.push({ name: "readVideo", params: { list: data.content } });
+};
+getNewsInfo().then((res: any) => {
+  if (res.state == 1 && res.data.length > 0) {
+    data.img = res.data[0].activityNewsCover;
+    data.content = JSON.stringify(res.data);
+    data.show = true;
+  }
+});
+</script>
 <style lang="less" scoped>
 .title {
   width: 100vw;
-  background-image: url("https://imgcdn.dahebao.cn/20230403/20230403170639254503.png");
+  background-image: url("https://imgcdn.dahebao.cn/20230407/20230407155744342817.png");
   background-repeat: no-repeat;
   background-size: 100%;
   text-align: center;
@@ -53,9 +73,9 @@
       left: 50%;
       transform: translate(-50%, -60%);
     }
-    video {
-      width: 100%;
-      height: 100%;
+    .bg1_navigat {
+      width: 609px;
+      height: 331px;
       background: #ec9a64;
     }
   }

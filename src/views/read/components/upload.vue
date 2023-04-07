@@ -112,7 +112,7 @@ interface infoType {
   field3: string;
 }
 const Info = reactive<infoType>({
-  posts_title: "阅读,看见更大的世界", //标题 必传
+  posts_title: "阅读,看见更大的世界", //标题
   posts_img: "", //图片
   posts_video: "", //视频
   posts_video_img: "",
@@ -120,9 +120,9 @@ const Info = reactive<infoType>({
   creatorType: store.$state.city.city_id, //编码 必传
   creator_type: store.$state.city.city_id, //编码 必传
   field4: "",
-  field1: "",
-  field2: "",
-  field3: "",
+  field1: "", //姓名
+  field2: "", //年级
+  field3: "", //班级
 });
 //获取表单数据并提交
 const onFailed = () => {

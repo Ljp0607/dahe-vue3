@@ -2,11 +2,7 @@
   <div class="tabs">
     <div class="search">
       <img src="https://imgcdn.dahebao.cn/20230404/20230404113134180135.png" />
-      <input
-        type="text"
-        v-model="data.content"
-        placeholder="请输入姓名或学校搜索"
-      />
+      <input type="text" v-model="data.content" placeholder="请输入姓名搜索" />
       <van-button @click="changeText" class="search_button">搜索</van-button>
     </div>
     <van-tabs
@@ -25,12 +21,7 @@
         v-for="(item, index) in data.option"
         :title="item.type_name"
         :key="index"
-        style="{{
-          background:
-            index == active ? 'linear-gradient(#fef8f2, #fdd5a6)' : 'none',
-          borderBottom: index == active ? '2px solid #E55822' : 'none',
-          border: index == active ? '' : '2px solid #fff',
-        }}"
+        :title-class="index == active ? 'vanTab_btn' : ''"
       >
         <List :info="data.info" />
       </van-tab>
@@ -69,15 +60,8 @@ interface dataType {
   resh?: string;
   current: number;
   content: string;
-  stOption: Array<{
-    parent_type_no: string;
-    priority: number;
-    type_name: string;
-    type_no: string;
-  }>;
 }
 const data = reactive<dataType>({
-  stOption: [],
   option: [],
   info: [],
   resh: "more",
@@ -87,19 +71,19 @@ const data = reactive<dataType>({
 const active = ref<number>(0);
 
 const store = useCounterStore();
-//过滤数组
-const changeOption = () => {
-  if (data.content != "") {
-    data.option = data.stOption.filter(
-      (item) => item.type_name.indexOf(data.content) != -1
-    );
-  } else {
-    data.option = data.stOption;
-  }
-};
 //搜索
 const changeText = () => {
-  changeOption();
+  if (data.content) {
+    selectRead(data.option[active.value].type_no, 1, {
+      keywords: data.content,
+    }).then((res: any) => {
+      if (res.state == 1) {
+        data.info = res.data;
+      }
+    });
+  } else {
+    changeActive(active.value);
+  }
 };
 //切换tab栏
 const changeActive = (e: number) => {
@@ -159,8 +143,7 @@ const getParentTypeNo = () => {
         item.value = item.type_no;
       });
       store.changeSchool(res);
-      data.stOption = res;
-      changeOption();
+      data.option = res;
       getCars(data.option[active.value].type_no);
     }
   );
@@ -182,6 +165,7 @@ function refresh() {
         ? document.body.clientHeight
         : document.documentElement.clientHeight);
     if (scrollht <= 105) {
+      console.log(123);
       data.resh = "loading";
       ++data.current;
       moreCars(data.option[active.value].type_no);
@@ -232,18 +216,24 @@ onMounted(() => {
     background: #ce530a;
     text-align: center;
     color: #fff;
-    width: 120px;
+    width: 130px;
+    white-space: nowrap;
     height: 50px;
     border-radius: 25px;
   }
 }
 ::v-deep .van-tab {
   width: 265px;
-  // height: 112px;
-  // border: none;
   font-size: 31px;
   margin-right: 20px;
   font-weight: 900;
-  // background: linear-gradient(#fef8f2, #fdd5a6);
+  border: 4px solid #fff;
+}
+::v-deep .vanTab_btn {
+  color: red;
+  border: none;
+  border-bottom: 4px solid #e55822;
+  background: linear-gradient(#fef8f2, #fdd5a6);
+  // color: #ce530a;
 }
 </style>
