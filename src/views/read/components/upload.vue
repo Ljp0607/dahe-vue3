@@ -77,14 +77,20 @@ const data: any = reactive({
     },
     {
       isNull: false,
-      name: "年级",
+      name: "班级",
       length: 20,
       value: "",
     },
     {
       isNull: false,
-      name: "班级",
+      name: "推荐书目",
       length: 20,
+      value: "",
+    },
+    {
+      isNull: false,
+      name: "推荐理由",
+      length: 300,
       value: "",
     },
     {
@@ -110,6 +116,7 @@ interface infoType {
   field1: string;
   field2: string;
   field3: string;
+  field5: string;
 }
 const Info = reactive<infoType>({
   posts_title: "阅读,看见更大的世界", //标题
@@ -119,10 +126,11 @@ const Info = reactive<infoType>({
   tecent_video_id: "", //视频id
   creatorType: store.$state.city.city_id, //编码 必传
   creator_type: store.$state.city.city_id, //编码 必传
-  field4: "",
   field1: "", //姓名
   field2: "", //年级
-  field3: "", //班级
+  field3: "", //推荐书目
+  field4: "", //选择学校
+  field5: "", //推荐理由
 });
 //获取表单数据并提交
 const onFailed = () => {
@@ -143,8 +151,8 @@ const onFailed = () => {
   Info.field1 = data.info[0].value;
   Info.field2 = data.info[1].value;
   Info.field3 = data.info[2].value;
+  Info.field4 = data.info[3].value;
   console.log(Info);
-
   saveInfo();
 };
 // 上传
@@ -167,8 +175,6 @@ const afterRead = (file: any) => {
 function postImg(file: any) {
   let imgFile = new FormData();
   imgFile.append("file", file.file);
-  // http://cms.daheapp.com/dahe/
-  // https://news.dahebao.cn/dahe/
   axios
     .post("https://news.dahebao.cn/dahe/app/announce/uploadImg", imgFile, {
       headers: {
@@ -323,7 +329,6 @@ onMounted(() => {});
 .van-cell {
   align-items: center;
   min-height: 100px;
-  line-height: 100px;
 }
 .van-cell-group--inset {
   margin: 0;
@@ -336,44 +341,16 @@ onMounted(() => {});
   height: 72px;
 }
 ::v-deep .van-field__label {
-  width: 120px;
+  width: 180px;
   // margin-right: 0;
 }
-// ::v-deep .van-field__label {
-// }
-//全屏按钮
-// video::-webkit-media-controls-fullscreen-button {
-//   display: none;
-// }
-//播放按钮
-// video::-webkit-media-controls-play-button {
-//   display: none;
-// }
-// //进度条
 video::-webkit-media-controls-timeline {
   display: none;
 }
-// //观看的当前时间
-// video::-webkit-media-controls-current-time-display {
-//   display: none;
-// }
-// //剩余时间
-// video::-webkit-media-controls-time-remaining-display {
-//   display: none;
-// }
-// //音量按钮
 video::-webkit-media-controls-mute-button {
   display: none;
 }
-// video::-webkit-media-controls-toggle-closed-captions-button {
-//   display: none;
-// }
-// //音量的控制条
 video::-webkit-media-controls-volume-slider {
   display: none;
 }
-//所有控件
-// video::-webkit-media-controls-enclosure {
-//   display: none;
-// }
 </style>

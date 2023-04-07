@@ -14,13 +14,13 @@
     <router-link to="upload">
       <img
         class="bg2"
-        src="https://imgcdn.dahebao.cn/20230403/20230403170850564395.png"
+        src="https://imgcdn.dahebao.cn/20230407/20230407175433973870.png"
         alt=""
       />
     </router-link>
     <img
       class="bg3"
-      src="https://imgcdn.dahebao.cn/20230404/20230404085339696743.png"
+      src="https://imgcdn.dahebao.cn/20230407/20230407175451413776.png"
     />
   </div>
 </template>

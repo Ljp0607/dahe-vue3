@@ -19,9 +19,9 @@
           :poster="item.postsVideoImg ? item.postsVideoImg : ''"
         ></video>
       </div>
-      <div>{{ item.postsTitle }}</div>
-      <div>{{ item.postsTitle }}</div>
-      <div>{{ item.postsTitle }}</div>
+      <div class="item_text">学校: {{ item.field4 }}</div>
+      <div class="item_text">姓名:{{ item.field1 }}</div>
+      <div class="item_text">推荐书目:{{ item.field3 }}</div>
     </div>
   </div>
   <div v-else class="empty">
@@ -47,6 +47,11 @@ interface Props {
     postsVideoImg: string;
     userName: string;
     ifThumb: number;
+    field1: string;
+    field2: string;
+    field3: string;
+    field4: string;
+    field5: string;
   }>;
 }
 const props = defineProps<Props>();
@@ -121,7 +126,7 @@ function navigetDetail(e: number) {
     width: 303px;
     height: 500px;
 
-    text-align: center;
+    // text-align: center;
     span {
       color: #fff;
     }
@@ -136,10 +141,13 @@ function navigetDetail(e: number) {
         position: absolute;
         left: 2.5%;
         top: 50%;
-        transform: translate(0,-50%);
+        transform: translate(0, -50%);
         width: 95%;
         max-height: 100%;
         background: #fff;
+      }
+      .item_text {
+        text-align: left;
       }
     }
     .item_empty {
