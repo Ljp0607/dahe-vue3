@@ -11,6 +11,7 @@ const router = createRouter({
         title: '豫视频'
       }
     },
+    // 车展
     {
       path: '/carShow',
       name: 'carShow',
@@ -34,6 +35,7 @@ const router = createRouter({
         title: '大河国际车展'
       }
     },
+    // 工具
     {
       path: '/tool',
       name: 'tool',
@@ -42,6 +44,7 @@ const router = createRouter({
         title: '工具'
       }
     },
+    // 收纳月
     {
       path: '/autoShow',
       name: 'autoShow',
@@ -50,6 +53,7 @@ const router = createRouter({
         title: '大河收纳月'
       }
     },
+    // 新地标
     {
       path: '/vote',
       name: 'vote',
@@ -159,6 +163,7 @@ const router = createRouter({
         title: '邀请好友'
       }
     },
+    // 二十大
     {
       path: '/Congress',
       name: 'Congress',
@@ -167,6 +172,7 @@ const router = createRouter({
         title: '喜迎二十大'
       }
     },
+    // 新闻页
     {
       path: '/news',
       name: 'news',
@@ -175,6 +181,7 @@ const router = createRouter({
         title: '大河新闻'
       }
     },
+    // 大河温暖
     {
       path: '/heating',
       name: 'heating',
@@ -191,6 +198,7 @@ const router = createRouter({
         title: '你需药,这里有'
       }
     },
+    // 送药
     {
       path: '/uploadingHelp',
       name: 'uploadingHelp',
@@ -199,6 +207,7 @@ const router = createRouter({
         title: '你需药,这里有'
       }
     },
+    // 红旗渠
     {
       path: '/HongqiCanal',
       name: 'HongqiCanal',
@@ -239,6 +248,7 @@ const router = createRouter({
         title: '争做新时代红旗渠建设者'
       }
     },
+    // 家居榜
     {
       path: '/house',
       name: 'house',
@@ -247,6 +257,7 @@ const router = createRouter({
         title: '中原家居超凡品牌榜'
       }
     },
+    // 新春活动
     {
       path: '/spring',
       name: 'spring',
@@ -263,11 +274,33 @@ const router = createRouter({
         title: '新春活动'
       }
     },
-    // {uploading
-    //   //   // 找不到路由重定向到404页面
-    //   path: "/:pathMatch(.*)",
-    //   redirect: { name: "404" }
-    // },
+    // 
+    {
+      path: '/read',
+      name: 'read',
+      // component: () => import('@/views/read/index.vue'),
+      redirect: { name: 'readIndex' },
+      children: [
+        {
+          path: '/read/index',
+          name: 'readIndex',
+          component: () => import('@/views/read/index.vue'),
+          meta: {
+            title: '推荐阅读官'
+          }
+        },
+
+        {
+          path: '/read/upload',
+          name: 'readUpload',
+          component: () => import('@/views/read/components/upload.vue'),
+          meta: {
+            title: '参赛分享'
+          }
+        },],
+
+    },
+
   ]
 })
 

@@ -7,6 +7,7 @@ export const useCounterStore = defineStore({
     userId: "",
     activityNo: "",
     citys: [],
+    school: [],
     city: {
       city_id: "",
       city_name: ""
@@ -35,6 +36,9 @@ export const useCounterStore = defineStore({
     },
     changeDetail(e: { postsVideo: string, postsImg: string, postsTitle: string }) {
       this.detail = e
-    }
+    },
+    changeSchool(e: {}[]) {
+      this.school = e
+    },
   }
 })
