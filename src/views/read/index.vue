@@ -5,6 +5,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref } from "vue";
 import Title from "./components/title.vue";
 import Tabs from "./components/tabs.vue";
 import getShare from "@/common/wx-share";
@@ -12,6 +13,7 @@ components: {
   Title;
   Tabs;
 }
+const data = ref<string>();
 //二次分享
 getShare(
   "我是阅读推荐官",

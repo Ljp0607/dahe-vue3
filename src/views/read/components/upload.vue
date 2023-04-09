@@ -5,7 +5,7 @@
       <van-form @submit="onFailed">
         <van-cell-group class="group" inset>
           <van-field
-            v-model="Info.field4"
+            v-model="Info.field7"
             is-link
             readonly
             label="学校"
@@ -106,20 +106,22 @@ const data: any = reactive({
 //用户填写信息
 interface infoType {
   posts_title: string;
+  posts_content: string;
   tecent_video_id: string;
   posts_video: string;
   posts_video_img: string;
   creatorType: string; //地市编码 必传
   creator_type: string;
   posts_img: string;
-  field4: string;
+  field7: string;
   field1: string;
   field2: string;
-  field3: string;
-  field5: string;
+  field6: string;
+  field8: string;
 }
 const Info = reactive<infoType>({
-  posts_title: "阅读,看见更大的世界", //标题
+  posts_title: "", //标题
+  posts_content: "", //标题
   posts_img: "", //图片
   posts_video: "", //视频
   posts_video_img: "",
@@ -128,9 +130,9 @@ const Info = reactive<infoType>({
   creator_type: store.$state.city.city_id, //编码 必传
   field1: "", //姓名
   field2: "", //年级
-  field3: "", //推荐书目
-  field4: "", //选择学校
-  field5: "", //推荐理由
+  field6: "", //推荐书目
+  field7: "", //选择学校
+  field8: "", //推荐理由
 });
 //获取表单数据并提交
 const onFailed = () => {
@@ -150,9 +152,8 @@ const onFailed = () => {
   }
   Info.field1 = data.info[0].value;
   Info.field2 = data.info[1].value;
-  Info.field3 = data.info[2].value;
-  Info.field4 = data.info[3].value;
-  console.log(Info);
+  Info.field6 = data.info[2].value;
+  Info.field8 = data.info[3].value;
   saveInfo();
 };
 // 上传
@@ -226,8 +227,16 @@ function postVideo(file: any) {
 }
 //发送表单数据
 function saveInfo() {
+  Info.posts_content =
+    "#我是阅读推荐官·" +
+    Info.field7 +
+    "# " +
+    "\r\n" +
+    "大家好,我推荐的书目是: " +
+    Info.field6 +
+    "\r\n" +
+    Info.field8;
   saveBook(Info).then((res: any) => {
-    console.log(res);
     if (res.state == 1) {
       showToast(res.data);
       data.info.map((item: any) => {
@@ -237,7 +246,9 @@ function saveInfo() {
       data.file = [];
       data.accept = "image/*,video/*";
       data.max = 9;
-      Info.field4 = "";
+      Info.field7 = "";
+      Info.posts_title = "";
+      Info.posts_content = "";
       Info.posts_img = ""; //图片
       Info.posts_video_img = ""; //视频
       Info.posts_video = ""; //视频
@@ -255,9 +266,9 @@ function changeDelete() {
 }
 //选择城市
 function onConfirm({ selectedOptions }) {
-  console.log(selectedOptions);
   showPicker.value = false;
-  Info.field4 = selectedOptions[0].text;
+  Info.field7 = selectedOptions[0].text;
+  Info.posts_title = "我是阅读推荐官·" + selectedOptions[0].text;
   Info.creator_type = selectedOptions[0].value;
   Info.creatorType = selectedOptions[0].value;
 }
@@ -280,7 +291,6 @@ async function getVideoBase64(url: string) {
     dataURL = canvas.toDataURL("image/jpeg"); //转换为base64
     data.file[0].content = dataURL;
     data.file[0].file = "";
-    console.log(dataURL);
   });
 }
 onMounted(() => {});

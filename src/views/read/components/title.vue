@@ -11,13 +11,12 @@
     <span class="span1">
       发布的文图或短视频必须为原创，内容为我的特色寒假作业发布成功即为参与成功。其中，文字可以直接写或以截图的形式呈现，最多不超过800字；视频时长不超过3分钟。最多不超过800字；视频时长不超过3分钟。
     </span>
-    <router-link to="upload">
-      <img
-        class="bg2"
-        src="https://imgcdn.dahebao.cn/20230407/20230407175433973870.png"
-        alt=""
-      />
-    </router-link>
+    <img
+      @click="navigatUpload"
+      class="bg2"
+      src="https://imgcdn.dahebao.cn/20230407/20230407175433973870.png"
+      alt=""
+    />
     <img
       class="bg3"
       src="https://imgcdn.dahebao.cn/20230407/20230407175451413776.png"
@@ -28,7 +27,12 @@
 import { reactive } from "vue";
 import { getNewsInfo } from "@/api/read";
 import { useRouter } from "vue-router";
+import setting from "@/common/setting";
+import { showToast } from "vant";
+import { useCounterStore } from "@/stores/counter";
+import { goLogin } from "@/common/appRoute.js";
 const router = useRouter();
+const store = useCounterStore();
 interface dataType {
   show: boolean;
   content: string;
@@ -37,6 +41,25 @@ interface dataType {
 const data = reactive<dataType>({ show: false, content: "", img: "" });
 const navigatVideo = () => {
   router.push({ name: "readVideo", params: { list: data.content } });
+};
+const navigatUpload = () => {
+  //如果在微信浏览器,跳转下载页
+  if (store.$state.userId == "" && setting()) {
+    showToast("请在豫视频App内报名");
+    setTimeout(() => {
+      location.href =
+        "https://news.dahebao.cn/appdownload/index.html?Type=28&openUrl=https://news.dahebao.cn/dahe/h5/activity/index.html#/read/index";
+    }, 500);
+  }
+  // read/index
+  //如果在其他浏览器,跳转下载页
+  else if (store.$state.userId == "" && !setting()) {
+    //跳转登录
+    goLogin();
+  } else {
+    //跳转帖子
+    router.push("upload");
+  }
 };
 getNewsInfo().then((res: any) => {
   if (res.state == 1 && res.data.length > 0) {

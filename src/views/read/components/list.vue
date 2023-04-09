@@ -19,9 +19,9 @@
           :poster="item.postsVideoImg ? item.postsVideoImg : ''"
         ></video>
       </div>
-      <div class="item_text">学校: {{ item.field4 }}</div>
-      <div class="item_text">姓名:{{ item.field1 }}</div>
-      <div class="item_text">推荐书目:{{ item.field3 }}</div>
+      <div class="item_text">学校 : {{ item.field7 }}</div>
+      <div class="item_text">姓名 : {{ item.field1 }}</div>
+      <div class="item_text">推荐书目:{{ item.field6 }}</div>
     </div>
   </div>
   <div v-else class="empty">
@@ -35,24 +35,7 @@ import setting from "@/common/setting";
 import { goLogin, goPosts } from "@/common/appRoute";
 const store = useCounterStore();
 interface Props {
-  info?: Array<{
-    activityNo: string;
-    creatorType: number;
-    hotData: number;
-    postsId: number;
-    postsImg: string;
-    postsThumbUpNum: number;
-    postsTitle: string;
-    postsVideo: string;
-    postsVideoImg: string;
-    userName: string;
-    ifThumb: number;
-    field1: string;
-    field2: string;
-    field3: string;
-    field4: string;
-    field5: string;
-  }>;
+  info?: API.infoList;
 }
 const props = defineProps<Props>();
 //投票
@@ -98,7 +81,7 @@ function navigetDetail(e: number) {
     showToast("请在豫视频App查看详情");
     setTimeout(() => {
       location.href =
-        "https://news.dahebao.cn/appdownload/index.html?Type=104&openUrl=https://news.dahebao.cn/dahe/h5/cityvote/index.html#/autoShow";
+        "https://news.dahebao.cn/appdownload/index.html?Type=28&openUrl=https://news.dahebao.cn/dahe/h5/activity/index.html#/read/index";
     }, 500);
   }
   //如果在其他浏览器,跳转下载页
@@ -121,11 +104,10 @@ function navigetDetail(e: number) {
   padding: 0px 43px 50px 43px;
   justify-content: space-between;
   .item {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 30px;
     width: 303px;
-    height: 500px;
-
+    height: 480px;
     // text-align: center;
     span {
       color: #fff;
@@ -146,9 +128,14 @@ function navigetDetail(e: number) {
         max-height: 100%;
         background: #fff;
       }
-      .item_text {
-        text-align: left;
-      }
+    }
+    .item_text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: left;
+      font-size: 26px;
+      width: 100%;
+      text-overflow: ellipsis;
     }
     .item_empty {
       margin-left: 14px;

@@ -44,19 +44,7 @@ interface dataType {
     type_name: string;
     type_no: string;
   }>;
-  info?: Array<{
-    activityNo: string;
-    creatorType: number;
-    hotData: number;
-    postsId: number;
-    postsImg: string;
-    postsThumbUpNum: number;
-    postsTitle: string;
-    postsVideo: string;
-    postsVideoImg: string;
-    userName: string;
-    ifThumb: number;
-  }>;
+  info?: API.infoList;
   resh?: string;
   current: number;
   content: string;
@@ -73,6 +61,7 @@ const active = ref<number>(0);
 const store = useCounterStore();
 //搜索
 const changeText = () => {
+  window.removeEventListener("scroll", refresh, true);
   if (data.content) {
     selectRead(data.option[active.value].type_no, 1, {
       keywords: data.content,
@@ -150,7 +139,6 @@ const getParentTypeNo = () => {
 };
 //监控滑动是否到达底部
 function refresh() {
-  // console.log("监控");
   if (data.resh == "loading" || data.resh == "no-more") {
     return;
   } else {
@@ -165,10 +153,11 @@ function refresh() {
         ? document.body.clientHeight
         : document.documentElement.clientHeight);
     if (scrollht <= 105) {
-      console.log(123);
       data.resh = "loading";
       ++data.current;
+      // if (data.option[active.value]) {
       moreCars(data.option[active.value].type_no);
+      // }
     }
   }
 }
@@ -223,16 +212,17 @@ onMounted(() => {
   }
 }
 ::v-deep .van-tab {
-  width: 265px;
+  min-width: 265px;
   font-size: 31px;
   margin-right: 20px;
   font-weight: 900;
   border: 4px solid #fff;
+  box-sizing: border-box;
 }
 ::v-deep .vanTab_btn {
   color: red;
   border: none;
-  border-bottom: 4px solid #e55822;
+  border-bottom: 6px solid #e55822;
   background: linear-gradient(#fef8f2, #fdd5a6);
   // color: #ce530a;
 }

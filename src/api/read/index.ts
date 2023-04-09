@@ -3,7 +3,6 @@ import { useCounterStore } from "@/stores/counter";
 const store = useCounterStore();
 //上传
 export const saveCity = (data: any) => request.post("app/selectionActivity/video/save", data, '')
-
 //上传信息
 export const saveCar = (data: any) => request.post("app/selectionActivity/video/save", data, '')
 //投票
@@ -17,7 +16,7 @@ export const selectRead =
             {
                 "userId": store.$state.userId,
                 "pageSize": "10",
-                "activityNo": "4eba1b68cb7f4eb188b66ac4b68a17d4",
+                "activityNo": store.$state.activityNo ? store.$state.activityNo : "12bcba64f0f844cd8a9330460f1def18",
                 "creatorType": creatorType,
                 "currentPage": current,
                 ...(options || {})
@@ -26,10 +25,10 @@ export const selectRead =
 //提交读书信息
 export const saveBook = async (options?: { [key: string]: string | number }) => {
     return request.post("app/selectionActivity/video/save", {
-        posts_content: "#阅读看见更大的世界# ", //详细介绍
+        // posts_content: "#阅读看见更大的世界# ", //详细介绍
         user_id: store.$state.userId, //用户
         source: "0",
-        activityNo: "4eba1b68cb7f4eb188b66ac4b68a17d4", //评选活动编码 必传
+        activityNo: store.$state.activityNo ? store.$state.activityNo : "12bcba64f0f844cd8a9330460f1def18", //评选活动编码 必传
         ...(options || {})
     }, '')
 }
