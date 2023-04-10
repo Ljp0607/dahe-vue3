@@ -12,12 +12,16 @@
         </div>
       </div>
       <!-- 如果是视频,则为: -->
-      <div v-else class="item_img">
-        <video
-          controls
-          :src="item.postsVideo"
-          :poster="item.postsVideoImg ? item.postsVideoImg : ''"
-        ></video>
+      <div v-else class="item_img" @click="navigetDetail(item.postsId)">
+        <img
+          class="videoImg"
+          :src="item.postsVideoImg ? item.postsVideoImg : ''"
+        />
+        <img
+          class="videoBg"
+          src="https://imgcdn.dahebao.cn/20221011/20221011094515515822.png"
+          alt=""
+        />
       </div>
       <div class="item_text">学校 : {{ item.field7 }}</div>
       <div class="item_text">姓名 : {{ item.field1 }}</div>
@@ -119,14 +123,22 @@ function navigetDetail(e: number) {
       background: linear-gradient(#fde8c4, #fec178);
       border-bottom: 10px solid #e56c33;
       position: relative;
-      video {
+
+      .videoImg {
         position: absolute;
-        left: 2.5%;
-        top: 50%;
-        transform: translate(0, -50%);
-        width: 95%;
+        transform: translate(-50%, -50%);
+        max-width: 100%;
         max-height: 100%;
-        background: #fff;
+        left: 50%;
+        top: 50%;
+      }
+      .videoBg {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 80px;
+        height: 80px;
+        left: 50%;
+        top: 50%;
       }
     }
     .item_text {
@@ -144,9 +156,11 @@ function navigetDetail(e: number) {
       background: #fff;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
     img {
-      width: 275px;
+      max-width: 275px;
+      max-height: 100%;
     }
     video {
       width: 275px;
@@ -174,21 +188,6 @@ function navigetDetail(e: number) {
     }
   }
 }
-video::-webkit-media-controls-timeline {
-  display: none;
-}
-// //音量按钮
-video::-webkit-media-controls-mute-button {
-  display: none;
-}
-// //音量的控制条
-video::-webkit-media-controls-volume-slider {
-  display: none;
-}
-//播放按钮
-// video::-webkit-media-controls-play-button {
-//   display: none;
-// }
 .empty {
   margin-top: 100px;
   width: 100%;

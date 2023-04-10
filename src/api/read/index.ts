@@ -21,7 +21,6 @@ export const selectRead =
                 "currentPage": current,
                 ...(options || {})
             }, '')
-
 //提交读书信息
 export const saveBook = async (options?: { [key: string]: string | number }) => {
     return request.post("app/selectionActivity/video/save", {
@@ -32,6 +31,5 @@ export const saveBook = async (options?: { [key: string]: string | number }) => 
         ...(options || {})
     }, '')
 }
-//获取视频
-// const getNewsInfo = (data: any) => request.get("appActivityNews/getNewsInfo", data, '')
-export const getNewsInfo = async () => { return request.post("appActivityNews/getNewsInfo", { type: 109, page_index: 0, page_count: 100 }, '') }
+//获取视频地址
+export const getNewsInfo = async () => { return request.post("appActivityNews/getNewsInfo", { type: 110, page_index: 0, page_count: 100 }, '') }
