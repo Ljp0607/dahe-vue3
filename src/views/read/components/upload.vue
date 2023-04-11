@@ -299,7 +299,7 @@ onMounted(() => {});
 .container {
   width: 750px;
   background: #f79254;
-  background-image: url("https://imgcdn.dahebao.cn/20230403/20230403170639254503.png");
+  background-image: url("https://imgcdn.dahebao.cn/20230411/20230411082720812919.png");
   background-size: 100%;
   background-repeat: no-repeat;
   min-height: 100vh;

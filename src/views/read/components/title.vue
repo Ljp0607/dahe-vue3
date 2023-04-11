@@ -72,7 +72,7 @@ getNewsInfo().then((res: any) => {
 <style lang="less" scoped>
 .title {
   width: 100vw;
-  background-image: url("https://imgcdn.dahebao.cn/20230407/20230407155744342817.png");
+  background-image: url("https://imgcdn.dahebao.cn/20230411/20230411082720812919.png");
   background-repeat: no-repeat;
   background-size: 100%;
   text-align: center;
