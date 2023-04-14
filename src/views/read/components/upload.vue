@@ -136,6 +136,12 @@ const Info = reactive<infoType>({
 });
 //获取表单数据并提交
 const onFailed = () => {
+  //避免用户重复提交
+  showLoadingToast({
+    duration: 0,
+    message: "正在提交",
+    forbidClick: true,
+  });
   if (data.max == 9 && data.file[0].url) {
     let array: any = [];
     data.file.map((item: any) => {
@@ -237,6 +243,7 @@ function saveInfo() {
     "\r\n" +
     Info.field8;
   saveBook(Info).then((res: any) => {
+    closeToast();
     if (res.state == 1) {
       showToast(res.data);
       data.info.map((item: any) => {
