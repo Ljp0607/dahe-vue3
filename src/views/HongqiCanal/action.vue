@@ -22,7 +22,7 @@
       <img
         class="hammer"
         ref="contentRef"
-        src="https://imgcdn.dahebao.cn/20221228/20221228131931414997.png"
+        src="https://imgcdn.dahebao.cn/20230423/20230423143723898640.png"
       />
       <img
         @click="getMouseXY"
@@ -115,12 +115,17 @@
       />
     </div>
     <div class="over">
-      <div class="btnvi" ref="clickRef">点击传承红旗渠精神</div>
+      <div class="btnvi" ref="clickRef">
+        <img
+          src="https://imgcdn.dahebao.cn/20230423/20230423151710559121.png"
+        />
+      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { reactive, ref, onMounted } from "vue";
+import axios from "axios";
 import { useRouter } from "vue-router";
 interface dataType {
   distance: number;
@@ -201,6 +206,9 @@ const addText = () => {
 };
 //开始
 const startClick = () => {
+  axios.get(
+    "https://news.dahebao.cn/dahe/noLoginApi/downloadChannel/clickSave.do?startDate=&endDate=&typeNo=100002"
+  );
   bgRef.value.id = "upload";
   //卸载第一个页面
   setTimeout(() => {
@@ -336,7 +344,7 @@ onMounted(() => {});
   .over {
     width: 100vw;
     height: 100vh;
-    background-image: url("https://imgcdn.dahebao.cn/20230112/20230112105559813924.png");
+    background-image: url("https://imgcdn.dahebao.cn/20230423/20230423151507106753.png");
     z-index: 2;
     background-size: 100% 100%;
     position: relative;
@@ -456,12 +464,18 @@ onMounted(() => {});
   }
 }
 .btnvi {
+  width: 335px;
+  height: 62px;
   position: fixed;
-  bottom: 60px;
+  bottom: 80px;
   font-size: 35px;
   left: 50%;
   transform: translate(-50%);
   color: #fff;
+  img {
+    height: 100%;
+    width: 100%;
+  }
 }
 #textIn_btn {
   animation: startupload 3s;

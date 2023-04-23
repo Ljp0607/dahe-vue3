@@ -41,23 +41,20 @@ onMounted(() => {
   width: 100vw;
   min-height: 100vh;
   background: #fb8e4d;
-  background-image: url("https://imgcdn.dahebao.cn/20230407/20230407155744342817.png");
+  background-image: url("https://imgcdn.dahebao.cn/20230411/20230411082720812919.png");
   background-repeat: no-repeat;
   background-size: 100%;
   text-align: center;
+  padding-bottom: 30px;
   padding-top: 950px;
   .itemVideo {
-    margin: 30px auto;
+    margin: 50px auto;
     border-radius: 10px;
     width: 660px;
-    background: #fff;
-    height: 365px;
     position: relative;
-    margin-bottom: 50px;
     video {
       width: 100%;
-      min-height: 90%;
-      max-height: 100%;
+      height: 100%;
       border-radius: 10px;
     }
     .item_start {

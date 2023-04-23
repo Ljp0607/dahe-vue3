@@ -227,23 +227,6 @@ const router = createRouter({
       path: '/share/index',
       name: 'share',
       component: () => import('../views/HongqiCanal/share/index.vue'),
-      children: [
-        {
-          path: '/share/index',
-          name: 'shareHome',
-          component: () => import('../views/HongqiCanal/share/home.vue'),
-        },
-        // {
-        //   path: '/share/credential',
-        //   name: 'credential',
-        //   component: () => import('../views/HongqiCanal/share/book.vue'),
-        // },
-        {
-          path: '/share/profile',
-          name: 'profile',
-          component: () => import('../views/HongqiCanal/share/picker.vue')
-        },
-      ],
       meta: {
         title: '争做新时代红旗渠建设者'
       }
