@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="state < 1" ref="coverRef" class="cover">
-      <Cover :changeActive="changeActive" />
+      <!-- <Cover :changeActive="changeActive" /> -->
     </div>
     <div v-if="state < 2" ref="firstRef" class="first" @click="clickFirst">
       <First :changeActives="changeActives" ref="firsts" />
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import Cover from "./cover.vue";
+// import Cover from "./cover.vue";
 import First from "./first.vue";
 import Second from "./second.vue";
 import { useRouter } from "vue-router";
@@ -27,7 +27,7 @@ import { ref, onMounted } from "vue";
 import getShare from "@/common/wx-share";
 
 components: {
-  Cover;
+  // Cover;
   First;
   Second;
 }
@@ -84,6 +84,7 @@ onMounted(() => {
     },
     false
   );
+  changeActive();
 });
 getShare(
   { type: 22, share_url: window.location.href },

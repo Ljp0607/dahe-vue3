@@ -6,7 +6,7 @@
         class="contion"
         src="https://imgcdn.dahebao.cn/20221228/20221228131756225222.png"
       />
-      <div class="startClick" @click.stop="startClick">点击开凿隧道</div>
+      <div class="startClick" @click.stop="startClick">点击开始建渠</div>
     </div>
     <div class="action" ref="actionRef">
       <img
@@ -114,7 +114,9 @@
         src="https://imgcdn.dahebao.cn/20221228/20221228142257263533.jpeg"
       />
     </div>
-    <div class="over"><div class="btnvi" ref="clickRef">点击跳转</div></div>
+    <div class="over">
+      <div class="btnvi" ref="clickRef">点击传承红旗渠精神</div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">

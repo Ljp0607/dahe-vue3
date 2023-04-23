@@ -38,7 +38,7 @@
       ref="foreRef"
       src="https://imgcdn.dahebao.cn/20221227/20221227225801159933.png"
     />
-    <div class="btnvi" ref="clickRef">点击跳转</div>
+    <div class="btnvi" ref="clickRef">点击参与</div>
   </div>
 </template>
 <script setup lang="ts">
