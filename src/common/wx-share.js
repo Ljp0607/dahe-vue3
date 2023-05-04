@@ -1,5 +1,5 @@
 import jWeixin from "weixin-js-sdk";
-import axios from "axios";
+import { getShareInfo } from '../api/index/share'
 function wxShareInit(shareData) {
   console.log(shareData);
   if (!shareData) return;
@@ -51,26 +51,18 @@ function wxShareInit(shareData) {
     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
   });
 }
-function getShare(title, description, img) {
-  axios({
-    method: "post",
-    url: "https://news.dahebao.cn/dahe/appshare/getshareinfo",
-    headers: {
-      "Content-Type": "application/json;charset=UTF-8",
-    },
-    params: {
-      sign: "637586292ebf2c5fabab863734fc6a12",
-      data: {
-        type: 22,
-        share_url: window.location.href
-      },
-    },
-  }).then((res) => {
-    let dataShare = res.data
-    dataShare.img = img;
-    dataShare.title = title;
-    dataShare.description = description;
-    wxShareInit(dataShare)
-  });
+/**
+ * 分享
+ * @param param
+ * title string
+ */
+const getShare = (title, description, imgUrl) => {
+  getShareInfo().then(res => {
+    let data = res
+    data.title = title
+    data.img = imgUrl
+    data.description = description
+    wxShareInit(data)
+  })
 }
-export default getShare;
+export default getShare

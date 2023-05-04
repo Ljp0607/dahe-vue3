@@ -62,9 +62,6 @@ const icon = reactive([
   "logistics",
   "user-circle-o",
 ]);
-console.log(123);
-
-// console.log(router.options.routes);
 </script>
 <style lang="less" scoped>
 .nav {

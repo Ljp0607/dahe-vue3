@@ -210,26 +210,37 @@ const router = createRouter({
     // 红旗渠
     {
       path: '/HongqiCanal',
-      name: 'HongqiCanal',
-      component: () => import('@/views/HongqiCanal/index.vue'),
+      name: 'construct',
+      component: () => import('@/views/HongqiCanal/construct.vue'),
       meta: {
-        title: '争做新时代红旗渠建设者'
-      }
-    },
-    {
-      path: '/action',
-      name: 'action',
-      component: () => import('../views/HongqiCanal/action.vue'),
-      meta: {
-        title: '争做新时代红旗渠建设者'
-      }
-    }, {
-      path: '/share/index',
-      name: 'share',
-      component: () => import('../views/HongqiCanal/share/index.vue'),
-      meta: {
-        title: '争做新时代红旗渠建设者'
-      }
+        title: '信不信?咱们用锤子砸出一条天河!'
+      },
+      children: [
+        {
+          path: '/HongqiCanal',
+          name: 'HongqiCanal',
+          component: () => import('@/views/HongqiCanal/index.vue'),
+          meta: {
+            title: '信不信?咱们用锤子砸出一条天河!'
+          }
+        },
+        {
+          path: '/action',
+          name: 'action',
+          component: () => import('../views/HongqiCanal/action.vue'),
+          meta: {
+            title: '信不信?咱们用锤子砸出一条天河!'
+          }
+        },
+        {
+          path: '/share/index',
+          name: 'share',
+          component: () => import('../views/HongqiCanal/share/index.vue'),
+          meta: {
+            title: '信不信?咱们用锤子砸出一条天河!'
+          }
+        },
+      ]
     },
     // 家居榜
     {

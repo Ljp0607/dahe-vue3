@@ -19,13 +19,11 @@
   </div>
 </template>
 <script setup lang="ts">
-// import Cover from "./cover.vue";
 import First from "./first.vue";
 import Second from "./second.vue";
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import getShare from "@/common/wx-share";
-
 components: {
   // Cover;
   First;
@@ -87,9 +85,10 @@ onMounted(() => {
   changeActive();
 });
 getShare(
-  { type: 22, share_url: window.location.href },
-  "你愿意成为那1/100000的修渠人吗？",
-  "争做新时代红旗渠建设者!"
+  "信不信？咱们用锤子砸出一条天河！",
+  "分享自@大河报*豫视频",
+  "https://imgcdn.dahebao.cn/20230501/20230501184623337868.jpeg"
+  // { type: 22, share_url: window.location.href },
 );
 </script>
 <style lang="less" scoped>
