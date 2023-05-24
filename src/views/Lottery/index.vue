@@ -75,7 +75,7 @@
             :src="
               data.state == true
                 ? 'https://imgcdn.dahebao.cn/20230111/20230111171100784045.png'
-                : 'https://imgcdn.dahebao.cn/20230111/20230111171326612090.png'
+                : 'https://imgcdn.dahebao.cn/20230330/20230330152219957900.png'
             "
             alt="图片"
           />
@@ -85,7 +85,7 @@
             :src="
               data.state == false
                 ? 'https://imgcdn.dahebao.cn/20230111/20230111171438503540.png'
-                : 'https://imgcdn.dahebao.cn/20230111/20230111171503435848.png'
+                : 'https://imgcdn.dahebao.cn/20230330/20230330152201453192.png'
             "
             alt="中奖信息"
           />
@@ -369,6 +369,7 @@ function findDraw() {
         activityNo: store.activityNo,
       })
       .then((res: any) => {
+        document.title = res.drawActivityConfig.activityRuleStyle;
         if (
           res.drawActivityConfig.drawType == 2 &&
           res.drawActivityConfig.poolList.length == 8
@@ -610,11 +611,9 @@ onMounted(() => {
         justify-content: space-around;
         height: 42px;
         border-bottom: 6px solid #4e1a02;
-
         .img1 {
           width: 138px;
         }
-
         .img2 {
           width: 219px;
         }
