@@ -1,6 +1,10 @@
 <template>
   <!-- 抽奖区域 -->
-  <main>
+  <main
+    :style="{
+      background: props.background ? `url(${props.background})` : '',
+    }"
+  >
     <div class="wrapper">
       <div
         class="panel"
@@ -38,7 +42,10 @@ const props = defineProps({
   // changeShow: Function,
   start: Boolean,
   myRecordList: Function,
+  background: String,
 });
+console.log(props.background);
+
 //抽奖链接
 const data = reactive({
   rotateAngle: 0,
@@ -100,6 +107,15 @@ watch(
 );
 </script>
 <style lang="less" scoped>
+main {
+  padding-top: 60px;
+  width: 691px;
+  height: 660px;
+  box-sizing: border-box;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  // background: red;
+}
 .wrapper {
   position: relative;
   height: 563px;

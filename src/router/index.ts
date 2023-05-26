@@ -268,12 +268,15 @@ const router = createRouter({
         title: '新春活动'
       }
     },
-    // 
+    // 阅读推荐官
     {
       path: '/read',
       name: 'read',
       // component: () => import('@/views/read/index.vue'),
       redirect: { name: 'readIndex' },
+      meta: {
+        title: '我是阅读推荐官'
+      },
       children: [
         {
           path: '/read/index',
@@ -301,7 +304,42 @@ const router = createRouter({
         },],
 
     },
+    // 阅读推荐官-洛阳新安县
+    {
+      path: '/readBook',
+      name: 'readBook',
+      // component: () => import('@/views/read/index.vue'),
+      redirect: { name: 'readBookIndex' },
+      meta: {
+        title: '我是阅读推荐官'
+      },
+      children: [
+        {
+          path: '/readBook/index',
+          name: 'readBookIndex',
+          component: () => import('@/views/readBook/index.vue'),
+          meta: {
+            title: '我是阅读推荐官'
+          }
+        },
+        {
+          path: '/readBook/video',
+          name: 'readBookVideo',
+          component: () => import('@/views/readBook/components/video.vue'),
+          meta: {
+            title: '我是阅读推荐官'
+          }
+        },
+        {
+          path: '/readBook/upload',
+          name: 'readBookUpload',
+          component: () => import('@/views/readBook/components/upload.vue'),
+          meta: {
+            title: '我是阅读推荐官'
+          }
+        },],
 
+    },
   ]
 })
 

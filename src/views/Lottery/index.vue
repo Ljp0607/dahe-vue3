@@ -49,6 +49,7 @@
           }}
         </div>
         <Corona
+          :background="data.activity.background"
           :poolList="data.activity.poolList"
           :result="data.result"
           :clickLottery="clickLottery"
@@ -182,6 +183,7 @@ import { useCounterStore } from "../../stores/counter";
 import request from "@/api/Lottery/index";
 import Sudoku from "./components/Sudoku.vue";
 import Corona from "./components/Corona.vue";
+import getShare from "@/common/wx-share";
 import { goLogin } from "@/common/appRoute.js";
 import setting from "@/common/setting";
 components: {
@@ -201,6 +203,9 @@ interface dataType {
   activity: {
     qrImage?: string;
     background?: string;
+    drawRecordStyle?: string;
+    drawCountFontStyle?: string;
+    drawCountStyle?: string;
     drawType: number;
     poolList: Array<any>;
     activityRuleImage?: string;
@@ -361,9 +366,9 @@ function findCount() {
     });
 }
 //获取活动编码和配置
-function findDraw() {
+async function findDraw() {
   if (store.activityNo) {
-    request
+    await request
       .findDraw({
         userId: store.userId,
         activityNo: store.activityNo,
@@ -394,6 +399,14 @@ function findDraw() {
   } else {
     showToast("暂无抽奖");
   }
+  //二次分享
+  getShare(
+    data.activity.drawRecordStyle,
+    data.activity.drawCountFontStyle,
+    data.activity.drawCountStyle
+      ? data.activity.drawCountStyle
+      : "https://imgcdn.dahebao.cn/20230525/20230525175547884726.png"
+  );
 }
 //抽奖人员名单
 function drawRecordList() {
@@ -448,29 +461,9 @@ onMounted(() => {
   position: relative;
   min-height: 450px;
   header {
-    // min-height: 458px;
+    min-height: 238px;
     width: 750px;
     position: relative;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    position: relative;
-    // font-size: 0px;
-    .activityRule {
-      color: #fff;
-      height: 50px;
-      line-height: 50px;
-      min-width: 180px;
-      box-sizing: border-box;
-      text-align: center;
-      position: absolute;
-      right: 0px;
-      top: 50px;
-      border-radius: 20px 0px 0px 20px;
-    }
-    .header_title {
-      width: 750px;
-      height: 209px;
-    }
     .one {
       display: block;
       width: 100vw;
@@ -510,7 +503,7 @@ onMounted(() => {
         font-size: 50px;
         font-weight: 600;
         line-height: 100px;
-        margin-bottom: 40px;
+        // margin-bottom: 40px;
         background: linear-gradient(#feefc1, #fcd14a);
       }
     }

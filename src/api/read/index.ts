@@ -33,3 +33,5 @@ export const saveBook = async (options?: { [key: string]: string | number }) => 
 }
 //获取视频地址
 export const getNewsInfo = async () => { return request.post("appActivityNews/getNewsInfo", { type: 109, page_index: 0, page_count: 100 }, '') }
+// 获取视频地址 114
+export const geNewsBookInfo = async () => { return request.post("appActivityNews/getNewsInfo", { type: 114, page_index: 0, page_count: 100 }, '') }
