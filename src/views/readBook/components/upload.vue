@@ -63,8 +63,6 @@ import { saveBook } from "@/api/read";
 import { useCounterStore } from "@/stores/counter";
 import TcVod from "vod-js-sdk-v6";
 const store = useCounterStore();
-console.log(store.$state);
-
 const showPicker = ref(false);
 //获取info和图片视频保存地址
 const data: any = reactive({
@@ -235,7 +233,7 @@ function postVideo(file: any) {
     });
 }
 //发送表单数据
-function saveInfo() {
+async function saveInfo() {
   Info.posts_content =
     "#我是阅读推荐官·" +
     Info.field7 +
@@ -245,10 +243,8 @@ function saveInfo() {
     Info.field6 +
     "\r\n" +
     Info.field8;
-  saveBook(Info).then((res: any) => {
-    closeToast();
+  await saveBook(Info).then((res: any) => {
     if (res.state == 1) {
-      showToast(res.data);
       data.info.map((item: any) => {
         item.value = "";
       });
@@ -263,7 +259,10 @@ function saveInfo() {
       Info.posts_video_img = ""; //视频
       Info.posts_video = ""; //视频
       Info.tecent_video_id = ""; //视频id
+      closeToast();
+      showToast(res.data);
     } else {
+      closeToast();
       showToast(res.message);
     }
   });

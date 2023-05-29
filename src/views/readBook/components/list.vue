@@ -5,7 +5,11 @@
       <div v-if="!item.postsVideo" class="item_img">
         <div class="item_empty">
           <img
-            :src="JSON.parse(item.postsImg)[0].imgUrl + '/pc_600'"
+            :src="
+              item.postsImg
+                ? JSON.parse(item.postsImg)[0].imgUrl + '/pc_600'
+                : 'https://imgcdn.dahebao.cn/20230529/20230529130201713689.png'
+            "
             :alt="item.postsTitle"
             @click="navigetDetail(item.postsId)"
           />
@@ -45,7 +49,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 //跳转详情页
-function navigetDetail(e: number) {
+function navigetDetail(e: string) {
   //如果在微信浏览器,跳转下载页
   if (store.$state.userId == "" && setting()) {
     showToast("请在豫视频App查看详情");

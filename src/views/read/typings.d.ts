@@ -4,7 +4,7 @@ declare namespace API {
         activityNo: string;
         creatorType: number;
         hotData: number;
-        postsId: number;
+        postsId: string;
         postsImg: string;
         postsThumbUpNum: number;
         postsTitle: string;

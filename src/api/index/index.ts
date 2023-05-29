@@ -6,7 +6,7 @@ import { Toast } from "vant";
 // axios.defaults.baseURL = "http://152.136.144.141/dahe";//测试环境路径
 axios.defaults.baseURL = "https://news.dahebao.cn/dahe";  //正式环境路径
 // 超时时间（ms）
-axios.defaults.timeout = 2000 * 1000;
+axios.defaults.timeout = 5 * 1000;
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 // 响应拦截
 axios.interceptors.response.use((result) => {
