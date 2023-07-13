@@ -177,7 +177,7 @@
 <script setup lang="ts">
 import { reactive, ref } from "@vue/reactivity";
 import "vant/es/dialog/style";
-import { showToast, Dialog } from "vant";
+import { showToast, Dialog, Toast } from "vant";
 import { onMounted } from "vue";
 import { useCounterStore } from "../../stores/counter";
 import request from "@/api/Lottery/index";
@@ -202,6 +202,7 @@ interface dataType {
   result: number;
   activity: {
     qrImage?: string;
+    coverImage?: string;
     background?: string;
     drawRecordStyle?: string;
     drawCountFontStyle?: string;
@@ -232,7 +233,8 @@ const data = reactive<dataType>({
   start: true,
   result: 0,
   activity: {
-    qrImage: "",
+    coverImage: "",
+    qrImage: "", //下载渠道编码
     dateStyle: "",
     background: "",
     activityRuleStyle: "",
@@ -303,6 +305,10 @@ function clickLottery() {
             activityNo: store.activityNo,
           })
           .then((res: any) => {
+            if (res == "") {
+              showToast("请刷新重试");
+              return;
+            }
             recordNo.value = res.recordNo;
             if (data.activity.drawType == 2) {
               for (let i in data.activity.poolList) {
@@ -347,8 +353,7 @@ function clickLottery() {
     }
   } else {
     if (setting()) {
-      location.href =
-        "https://news.dahebao.cn/appdownload/index.html?Type=101&openUrl=https://news.dahebao.cn/dahe/h5/Lottery/index.html#/Lottery";
+      location.href = `https://news.dahebao.cn/appdownload/index.html?Type=${data.activity.coverImage}`;
     } else {
       goLogin();
     }
