@@ -92,6 +92,7 @@ function rotateAngle(i) {
   setTimeout(function () {
     showDialog({
       message: props.poolList[i - 1].awardName,
+      theme: "round-button",
     }).then(() => {
       props.changeShow();
       // refresh();

@@ -99,6 +99,7 @@ function getLottery(delay, index, sum, id) {
       if (index == sum && Number(i) == order_arr.length - 1) {
         showDialog({
           message: props.activity[order_arr[i]].awardName,
+          theme: "round-button",
         }).then(() => {
           props.changeShow();
         });

@@ -119,7 +119,6 @@
         />
       </div>
     </footer>
-    <!--    无抽奖 -->
     <!-- 遮罩层领奖 -->
     <van-overlay :show="show" :lock-scroll="false">
       <div class="wrapper">
@@ -167,6 +166,7 @@
       <div class="wrapperRule">{{ data.activity.activityRule }}</div>
     </van-overlay>
   </div>
+
   <div class="empty_img" v-else>
     <img
       src="https://imgcdn.dahebao.cn/20221027/20221027113957273185.png"
@@ -176,8 +176,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from "@vue/reactivity";
-import "vant/es/dialog/style";
-import { showToast, Dialog, Toast } from "vant";
+import { showToast } from "vant";
 import { onMounted } from "vue";
 import { useCounterStore } from "../../stores/counter";
 import request from "@/api/Lottery/index";
@@ -201,6 +200,7 @@ interface dataType {
   start: boolean;
   result: number;
   activity: {
+    limitNum?: string;
     qrImage?: string;
     coverImage?: string;
     background?: string;
@@ -233,6 +233,7 @@ const data = reactive<dataType>({
   start: true,
   result: 0,
   activity: {
+    limitNum: "0",
     coverImage: "",
     qrImage: "", //下载渠道编码
     dateStyle: "",
@@ -288,7 +289,7 @@ function saveAddress() {
 }
 //调起遮罩层
 function changeShow() {
-  if (data.activity.poolList[data.sum].awardFlag) {
+  if (data.activity.poolList[data.sum].awardFlag && data.activity.limitNum) {
     show.value = !show.value;
   }
 }

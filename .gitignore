@@ -13,7 +13,8 @@ activity
 dist-ssr
 dist.zip
 *.local
-
+*.zip
+node_modules
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
